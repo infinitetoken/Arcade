@@ -10,7 +10,7 @@ import Foundation
 
 public struct Arcade {
 
-    private var adapter: Adapter
+    private let adapter: Adapter
     
     public init(adapter: Adapter) {
         self.adapter = adapter
@@ -33,7 +33,7 @@ extension Arcade: Adapter {
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
-        return Future(value: nil)
+        return self.adapter.find(table: table, uuid: uuid)
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
