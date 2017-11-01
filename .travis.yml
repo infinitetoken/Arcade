@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: Arcade.xcodeproj # path to your xcodeproj folder
+xcode_scheme: Arcade
+xcode_scheme: ArcadeMobile
