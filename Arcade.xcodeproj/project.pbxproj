@@ -7,12 +7,66 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
+		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
+		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
+		F004FF141FAA1E48008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
+		F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
+		F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
+		F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
+		F08E0A3C1FA9FA8F00763001 /* ComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */; };
+		F08E0A3D1FA9FA8F00763001 /* ComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */; };
+		F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A411FA9FAC700763001 /* ExpressionTests.swift */; };
+		F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A411FA9FAC700763001 /* ExpressionTests.swift */; };
+		F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A441FA9FAD000763001 /* QueryTests.swift */; };
+		F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A441FA9FAD000763001 /* QueryTests.swift */; };
+		F08E0A481FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */; };
+		F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */; };
+		F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
+		F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
+		F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
+		F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
+		F0B33B7A1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */; };
+		F0B33B7B1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */; };
+		F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5000E1FA9D9F700F42111 /* Arcade.framework */; };
+		F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F500101FA9D9F700F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500271FA9DAF500F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F0F5002A1FA9DB2000F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500291FA9DB1700F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F0F5FFF81FA9D9C300F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5FFEE1FA9D9C300F42111 /* Arcade.framework */; };
 		F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
 		F0F5FFFF1FA9D9C300F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F5FFF11FA9D9C300F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0F86D151FA9F2F10036124E /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0A1FA9F2F00036124E /* Expression.swift */; };
+		F0F86D161FA9F2F10036124E /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0A1FA9F2F00036124E /* Expression.swift */; };
+		F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */; };
+		F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */; };
+		F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */; };
+		F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */; };
+		F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0D1FA9F2F00036124E /* Adapter.swift */; };
+		F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0D1FA9F2F00036124E /* Adapter.swift */; };
+		F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */; };
+		F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */; };
+		F0F86D1F1FA9F2F10036124E /* Arcade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0F1FA9F2F00036124E /* Arcade.swift */; };
+		F0F86D201FA9F2F10036124E /* Arcade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0F1FA9F2F00036124E /* Arcade.swift */; };
+		F0F86D211FA9F2F10036124E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
+		F0F86D221FA9F2F10036124E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
+		F0F86D231FA9F2F10036124E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D111FA9F2F00036124E /* Query.swift */; };
+		F0F86D241FA9F2F10036124E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D111FA9F2F00036124E /* Query.swift */; };
+		F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D121FA9F2F00036124E /* Comparison.swift */; };
+		F0F86D261FA9F2F10036124E /* Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D121FA9F2F00036124E /* Comparison.swift */; };
+		F0F86D271FA9F2F10036124E /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D131FA9F2F00036124E /* Table.swift */; };
+		F0F86D281FA9F2F10036124E /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D131FA9F2F00036124E /* Table.swift */; };
+		F0F86D291FA9F2F10036124E /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D141FA9F2F00036124E /* Storable.swift */; };
+		F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D141FA9F2F00036124E /* Storable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F0F500181FA9D9F700F42111 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0F5FFE51FA9D9C300F42111 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0F5000D1FA9D9F700F42111;
+			remoteInfo = ArcadeMobile;
+		};
 		F0F5FFF91FA9D9C300F42111 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F0F5FFE51FA9D9C300F42111 /* Project object */;
@@ -23,19 +77,65 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
+		F08E0A381FA9FA6D00763001 /* FutureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureTests.swift; sourceTree = "<group>"; };
+		F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonTests.swift; sourceTree = "<group>"; };
+		F08E0A411FA9FAC700763001 /* ExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTests.swift; sourceTree = "<group>"; };
+		F08E0A441FA9FAD000763001 /* QueryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
+		F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryAdapterTests.swift; sourceTree = "<group>"; };
+		F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAdapterTests.swift; sourceTree = "<group>"; };
+		F0B33B741FAA023B009BCB0A /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
+		F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WidgetEntity+CoreDataStorable.swift"; sourceTree = "<group>"; };
+		F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F0F5000E1FA9D9F700F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0F500101FA9D9F700F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
+		F0F500111FA9D9F700F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0F500161FA9D9F700F42111 /* ArcadeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArcadeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0F5001D1FA9D9F700F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0F500271FA9DAF500F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F0F500291FA9DB1700F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		F0F5FFEE1FA9D9C300F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F5FFF11FA9D9C300F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
 		F0F5FFF21FA9D9C300F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0F5FFF71FA9D9C300F42111 /* ArcadeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArcadeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeTests.swift; sourceTree = "<group>"; };
 		F0F5FFFE1FA9D9C300F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0F86CF21FA9DC0E0036124E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		F0F86D0A1FA9F2F00036124E /* Expression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAdapter.swift; sourceTree = "<group>"; };
+		F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryAdapter.swift; sourceTree = "<group>"; };
+		F0F86D0D1FA9F2F00036124E /* Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStorable.swift; sourceTree = "<group>"; };
+		F0F86D0F1FA9F2F00036124E /* Arcade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arcade.swift; sourceTree = "<group>"; };
+		F0F86D101FA9F2F00036124E /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
+		F0F86D111FA9F2F00036124E /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		F0F86D121FA9F2F00036124E /* Comparison.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comparison.swift; sourceTree = "<group>"; };
+		F0F86D131FA9F2F00036124E /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		F0F86D141FA9F2F00036124E /* Storable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F0F5000A1FA9D9F700F42111 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F5002A1FA9DB2000F42111 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F500131FA9D9F700F42111 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5FFEA1FA9D9C300F42111 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,11 +150,122 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F08E0A3E1FA9FA9600763001 /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */,
+				F08E0A411FA9FAC700763001 /* ExpressionTests.swift */,
+				F08E0A441FA9FAD000763001 /* QueryTests.swift */,
+			);
+			name = Query;
+			sourceTree = "<group>";
+		};
+		F08E0A3F1FA9FAA000763001 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */,
+				F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */,
+			);
+			name = Adapters;
+			sourceTree = "<group>";
+		};
+		F08E0A401FA9FAA900763001 /* Future */ = {
+			isa = PBXGroup;
+			children = (
+				F08E0A381FA9FA6D00763001 /* FutureTests.swift */,
+			);
+			name = Future;
+			sourceTree = "<group>";
+		};
+		F0B33B731FAA020A009BCB0A /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */,
+				F0B33B741FAA023B009BCB0A /* Widget.swift */,
+				F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */,
+				F004FF101FAA1154008EAD16 /* WidgetTable.swift */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
+		F0F500081FA9D9D000F42111 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0F5FFF21FA9D9C300F42111 /* Info.plist */,
+				F0F5FFF11FA9D9C300F42111 /* Arcade.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F0F5000F1FA9D9F700F42111 /* ArcadeMobile */ = {
+			isa = PBXGroup;
+			children = (
+				F0F500251FA9DA0900F42111 /* Supporting Files */,
+			);
+			path = ArcadeMobile;
+			sourceTree = "<group>";
+		};
+		F0F5001A1FA9D9F700F42111 /* ArcadeMobileTests */ = {
+			isa = PBXGroup;
+			children = (
+				F0F5001D1FA9D9F700F42111 /* Info.plist */,
+			);
+			path = ArcadeMobileTests;
+			sourceTree = "<group>";
+		};
+		F0F500251FA9DA0900F42111 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0F500111FA9D9F700F42111 /* Info.plist */,
+				F0F500101FA9D9F700F42111 /* Arcade.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F0F500261FA9DAF500F42111 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0F500291FA9DB1700F42111 /* CoreData.framework */,
+				F0F500271FA9DAF500F42111 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F0F5002B1FA9DB9500F42111 /* ArcadeShared */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D0F1FA9F2F00036124E /* Arcade.swift */,
+				F0F86D2C1FA9F37E0036124E /* Adapters */,
+				F0F86D2D1FA9F3A60036124E /* Query */,
+				F0F86D2E1FA9F3BA0036124E /* Future */,
+				F0F86D301FA9F3FB0036124E /* Protocols */,
+				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
+			);
+			path = ArcadeShared;
+			sourceTree = "<group>";
+		};
+		F0F5002C1FA9DB9C00F42111 /* ArcadeTestsShared */ = {
+			isa = PBXGroup;
+			children = (
+				F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */,
+				F08E0A3F1FA9FAA000763001 /* Adapters */,
+				F08E0A3E1FA9FA9600763001 /* Query */,
+				F08E0A401FA9FAA900763001 /* Future */,
+				F0B33B731FAA020A009BCB0A /* Fixtures */,
+			);
+			path = ArcadeTestsShared;
+			sourceTree = "<group>";
+		};
 		F0F5FFE41FA9D9C300F42111 = {
 			isa = PBXGroup;
 			children = (
+				F0F5002B1FA9DB9500F42111 /* ArcadeShared */,
 				F0F5FFF01FA9D9C300F42111 /* Arcade */,
+				F0F5000F1FA9D9F700F42111 /* ArcadeMobile */,
+				F0F5002C1FA9DB9C00F42111 /* ArcadeTestsShared */,
 				F0F5FFFB1FA9D9C300F42111 /* ArcadeTests */,
+				F0F5001A1FA9D9F700F42111 /* ArcadeMobileTests */,
+				F0F500261FA9DAF500F42111 /* Frameworks */,
 				F0F5FFEF1FA9D9C300F42111 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +275,8 @@
 			children = (
 				F0F5FFEE1FA9D9C300F42111 /* Arcade.framework */,
 				F0F5FFF71FA9D9C300F42111 /* ArcadeTests.xctest */,
+				F0F5000E1FA9D9F700F42111 /* Arcade.framework */,
+				F0F500161FA9D9F700F42111 /* ArcadeMobileTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -71,8 +284,7 @@
 		F0F5FFF01FA9D9C300F42111 /* Arcade */ = {
 			isa = PBXGroup;
 			children = (
-				F0F5FFF11FA9D9C300F42111 /* Arcade.h */,
-				F0F5FFF21FA9D9C300F42111 /* Info.plist */,
+				F0F500081FA9D9D000F42111 /* Supporting Files */,
 			);
 			path = Arcade;
 			sourceTree = "<group>";
@@ -80,15 +292,84 @@
 		F0F5FFFB1FA9D9C300F42111 /* ArcadeTests */ = {
 			isa = PBXGroup;
 			children = (
-				F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */,
 				F0F5FFFE1FA9D9C300F42111 /* Info.plist */,
 			);
 			path = ArcadeTests;
 			sourceTree = "<group>";
 		};
+		F0F86CF11FA9DBFF0036124E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86CF21FA9DC0E0036124E /* README.md */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F0F86D2B1FA9F3700036124E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */,
+				F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		F0F86D2C1FA9F37E0036124E /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D2B1FA9F3700036124E /* CoreData */,
+				F0F86D2F1FA9F3CC0036124E /* InMemory */,
+			);
+			name = Adapters;
+			sourceTree = "<group>";
+		};
+		F0F86D2D1FA9F3A60036124E /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D121FA9F2F00036124E /* Comparison.swift */,
+				F0F86D0A1FA9F2F00036124E /* Expression.swift */,
+				F0F86D111FA9F2F00036124E /* Query.swift */,
+			);
+			name = Query;
+			sourceTree = "<group>";
+		};
+		F0F86D2E1FA9F3BA0036124E /* Future */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D101FA9F2F00036124E /* Future.swift */,
+			);
+			name = Future;
+			sourceTree = "<group>";
+		};
+		F0F86D2F1FA9F3CC0036124E /* InMemory */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */,
+			);
+			name = InMemory;
+			sourceTree = "<group>";
+		};
+		F0F86D301FA9F3FB0036124E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D0D1FA9F2F00036124E /* Adapter.swift */,
+				F0F86D131FA9F2F00036124E /* Table.swift */,
+				F0F86D141FA9F2F00036124E /* Storable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F0F5000B1FA9D9F700F42111 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5FFEB1FA9D9C300F42111 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,6 +381,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F0F5000D1FA9D9F700F42111 /* ArcadeMobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0F5001F1FA9D9F700F42111 /* Build configuration list for PBXNativeTarget "ArcadeMobile" */;
+			buildPhases = (
+				F0F500091FA9D9F700F42111 /* Sources */,
+				F0F5000A1FA9D9F700F42111 /* Frameworks */,
+				F0F5000B1FA9D9F700F42111 /* Headers */,
+				F0F5000C1FA9D9F700F42111 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArcadeMobile;
+			productName = ArcadeMobile;
+			productReference = F0F5000E1FA9D9F700F42111 /* Arcade.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F0F500151FA9D9F700F42111 /* ArcadeMobileTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0F500221FA9D9F700F42111 /* Build configuration list for PBXNativeTarget "ArcadeMobileTests" */;
+			buildPhases = (
+				F0F500121FA9D9F700F42111 /* Sources */,
+				F0F500131FA9D9F700F42111 /* Frameworks */,
+				F0F500141FA9D9F700F42111 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F0F500191FA9D9F700F42111 /* PBXTargetDependency */,
+			);
+			name = ArcadeMobileTests;
+			productName = ArcadeMobileTests;
+			productReference = F0F500161FA9D9F700F42111 /* ArcadeMobileTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F0F5FFED1FA9D9C300F42111 /* Arcade */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0F500021FA9D9C300F42111 /* Build configuration list for PBXNativeTarget "Arcade" */;
@@ -146,8 +463,18 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "A.C. Wright Design";
 				TargetAttributes = {
+					F0F5000D1FA9D9F700F42111 = {
+						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+					};
+					F0F500151FA9D9F700F42111 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
 					F0F5FFED1FA9D9C300F42111 = {
 						CreatedOnToolsVersion = 9.0.1;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					F0F5FFF61FA9D9C300F42111 = {
@@ -170,11 +497,27 @@
 			targets = (
 				F0F5FFED1FA9D9C300F42111 /* Arcade */,
 				F0F5FFF61FA9D9C300F42111 /* ArcadeTests */,
+				F0F5000D1FA9D9F700F42111 /* ArcadeMobile */,
+				F0F500151FA9D9F700F42111 /* ArcadeMobileTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F0F5000C1FA9D9F700F42111 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F500141FA9D9F700F42111 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5FFEC1FA9D9C300F42111 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,10 +535,57 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F0F500091FA9D9F700F42111 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
+				F0F86D221FA9F2F10036124E /* Future.swift in Sources */,
+				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
+				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
+				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
+				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
+				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
+				F0F86D281FA9F2F10036124E /* Table.swift in Sources */,
+				F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
+				F0F86D261FA9F2F10036124E /* Comparison.swift in Sources */,
+				F0F86D201FA9F2F10036124E /* Arcade.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F500121FA9D9F700F42111 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08E0A3D1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
+				F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
+				F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */,
+				F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */,
+				F0B33B7B1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */,
+				F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */,
+				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
+				F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
+				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
+				F004FF141FAA1E48008EAD16 /* Model.xcdatamodeld in Sources */,
+				F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5FFE91FA9D9C300F42111 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
+				F0F86D211FA9F2F10036124E /* Future.swift in Sources */,
+				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
+				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
+				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,
+				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
+				F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
+				F0F86D271FA9F2F10036124E /* Table.swift in Sources */,
+				F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
+				F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */,
+				F0F86D1F1FA9F2F10036124E /* Arcade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,13 +593,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F08E0A3C1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
+				F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
+				F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */,
+				F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */,
+				F0B33B7A1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */,
+				F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */,
+				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
+				F08E0A481FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
+				F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */,
+				F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F0F500191FA9D9F700F42111 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0F5000D1FA9D9F700F42111 /* ArcadeMobile */;
+			targetProxy = F0F500181FA9D9F700F42111 /* PBXContainerItemProxy */;
+		};
 		F0F5FFFA1FA9D9C300F42111 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F0F5FFED1FA9D9C300F42111 /* Arcade */;
@@ -333,6 +738,7 @@
 		F0F500031FA9D9C300F42111 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -348,6 +754,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -355,6 +762,7 @@
 		F0F500041FA9D9C300F42111 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -377,6 +785,7 @@
 		F0F500061FA9D9C300F42111 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RLF8EEWY2Z;
@@ -391,6 +800,7 @@
 		F0F500071FA9D9C300F42111 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RLF8EEWY2Z;
@@ -399,6 +809,95 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		F0F500201FA9D9F700F42111 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArcadeMobile/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
+				PRODUCT_NAME = Arcade;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F0F500211FA9D9F700F42111 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArcadeMobile/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
+				PRODUCT_NAME = Arcade;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F0F500231FA9D9F700F42111 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				INFOPLIST_FILE = ArcadeMobileTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobileTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F0F500241FA9D9F700F42111 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				INFOPLIST_FILE = ArcadeMobileTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobileTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -423,6 +922,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		F0F5001F1FA9D9F700F42111 /* Build configuration list for PBXNativeTarget "ArcadeMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F500201FA9D9F700F42111 /* Debug */,
+				F0F500211FA9D9F700F42111 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0F500221FA9D9F700F42111 /* Build configuration list for PBXNativeTarget "ArcadeMobileTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F500231FA9D9F700F42111 /* Debug */,
+				F0F500241FA9D9F700F42111 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0F5FFE81FA9D9C300F42111 /* Build configuration list for PBXProject "Arcade" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -433,6 +950,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */,
+			);
+			currentVersion = F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F0F5FFE51FA9D9C300F42111 /* Project object */;
 }
