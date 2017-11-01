@@ -14,7 +14,7 @@ public class InMemoryAdapter {
     
 }
 
-extension InMemoryAdapter {
+public extension InMemoryAdapter {
     
     private class AdapterTable {
         var storables: [Storable] = []

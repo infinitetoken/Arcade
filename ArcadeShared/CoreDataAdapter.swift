@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-enum CoreDataAdapterError: Error {
+public enum CoreDataAdapterError: Error {
     case parameterNotGiven
     case entityNotFound
     case entityNotStorable
