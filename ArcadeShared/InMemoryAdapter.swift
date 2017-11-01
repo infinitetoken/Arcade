@@ -12,6 +12,8 @@ public class InMemoryAdapter {
     
     private var store: [String : AdapterTable?] = [:]
     
+    public init() {}
+    
 }
 
 public extension InMemoryAdapter {
