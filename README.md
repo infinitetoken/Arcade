@@ -1,8 +1,11 @@
 # Arcade
 
 ![Carthage](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)
+![Build Status](https://travis-ci.org/infinitetoken/Arcade.svg?branch=master)
 
-### Installation with Carthage
+Arcade is a lightweight persistence layer for Swift structures!
+
+## Installation with Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
 
@@ -20,3 +23,14 @@ github "infinitetoken/Arcade" ~> 1.0
 ```
 
 Run `carthage update` to build the framework and drag the built `Arcade.framework` into your Xcode project.
+
+## Usage
+
+### Adapter
+
+```swift
+import Arcade
+
+let arcade = Arcade(adapter: InMemoryAdapter())
+
+```
