@@ -15,17 +15,11 @@ public enum Result<T> {
 
 public struct Future<T> {
     
-    
-    
     public typealias ResultType = Result<T>
     
     
-    
-    
     private let operation: ( @escaping (ResultType) -> ()) -> ()
-    
-    
-    
+
     
     public init(_ result: ResultType) {
         self.init(operation: { completion in
@@ -33,22 +27,17 @@ public struct Future<T> {
         })
     }
     
-    
     public init(_ value: T) {
         self.init(.success(value))
     }
-    
     
     public init(_ error: Error) {
         self.init(.failure(error))
     }
     
-    
     public init(operation: @escaping ( @escaping (ResultType) -> ()) -> ()) {
         self.operation = operation
     }
-    
-    
     
     
     fileprivate func then(_ completion: @escaping (ResultType) -> ()) {
@@ -56,8 +45,6 @@ public struct Future<T> {
             completion(result)
         }
     }
-    
-    
     
     
     public func subscribe(onNext: @escaping (T) -> Void = { _ in }, onError: @escaping (Error) -> Void = { _ in }) {

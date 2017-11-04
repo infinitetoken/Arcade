@@ -32,13 +32,11 @@ public extension InMemoryAdapter {
         
         func fetch(_ query: Query?) -> [Storable] {
             guard let query = query else { return self.storables }
-            
             return self.storables.filter { $0.query(query: query) }
         }
         
         func update(_ storable: Storable) -> Bool {
             guard let existingStorable = self.find(storable.uuid) else { return false }
-            
             return (self.delete(existingStorable) && self.insert(storable))
         }
         
@@ -81,31 +79,26 @@ extension InMemoryAdapter: Adapter {
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
         guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(nil) }
-        
         return Future(adapterTable.find(uuid) as? I)
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
         guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future([]) }
-        
         return Future(adapterTable.fetch(query) as! [I])
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
-        
         return Future(adapterTable.update(storable))
     }
     
     public func delete<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
-        
         return Future(adapterTable.delete(storable))
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
         guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(0) }
-        
         return Future(adapterTable.count(query: query))
     }
     
