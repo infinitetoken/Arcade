@@ -1,7 +1,6 @@
 # Arcade
 
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Build Status](https://travis-ci.org/infinitetoken/Arcade.svg?branch=master)](https://travis-ci.org/infinitetoken/Arcade)
 
 Arcade is a lightweight persistence layer for Swift structures!
 
