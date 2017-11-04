@@ -39,7 +39,7 @@ extension CoreDataAdapter: Adapter {
     public func connect() -> Future<Bool> {
         return Future { completion in
             guard let name = self.persistentContainerName else {
-                completion(Result.failure(CoreDataAdapterError.parameterNotGiven))
+                completion(.failure(CoreDataAdapterError.parameterNotGiven))
                 return
             }
             
@@ -55,33 +55,34 @@ extension CoreDataAdapter: Adapter {
             
             self.persistentContainer.loadPersistentStores { (desc: NSPersistentStoreDescription, error: Error?) in
                 if let error = error {
-                    completion(Result.failure(CoreDataAdapterError.error(error: error)))
+                    completion(.failure(CoreDataAdapterError.error(error: error)))
                 } else {
-                    completion(Result.success(true))
+                    completion(.success(true))
                 }
             }
         }
     }
     
     public func disconnect() -> Future<Bool> {
-        return Future(value: true)
+        return Future(true)
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(CoreDataAdapterError.entityNotFound) }
        
-        if let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable {
-            return object.update(dictionary: storable.dictionary) ? Future(result: self.save()) : Future(value: false)
-        } else {
-            return Future(error: CoreDataAdapterError.entityNotStorable)
+        guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable else {
+            return Future(CoreDataAdapterError.entityNotStorable)
         }
+        
+        return object.update(dictionary: storable.dictionary) ? Future(self.save()) : Future(false)
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
-        guard let entityName = entity.name else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
+            let entityName = entity.name
+            else { return Future(CoreDataAdapterError.entityNotFound) }
         
         let predicate = NSPredicate(format: "uuid = %@", uuid as NSUUID)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
@@ -91,7 +92,7 @@ extension CoreDataAdapter: Adapter {
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                    operation(Result.failure(CoreDataAdapterError.noResult))
+                    operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
@@ -100,22 +101,23 @@ extension CoreDataAdapter: Adapter {
                         return object.storable
                     }).first
         
-                    operation(Result.success(object as! I?))
+                    operation(.success(object as! I?))
                 }
             }
             
             do {
                 try managedObjectContext.execute(asynchronousFetchRequest)
             } catch {
-                operation(Result.failure(CoreDataAdapterError.error(error: error)))
+                operation(.failure(CoreDataAdapterError.error(error: error)))
             }
         }
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
-        guard let entityName = entity.name else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
+            let entityName = entity.name
+            else { return Future(CoreDataAdapterError.entityNotFound) }
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = query?.predicate()
@@ -123,7 +125,7 @@ extension CoreDataAdapter: Adapter {
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                    operation(Result.failure(CoreDataAdapterError.noResult))
+                    operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
@@ -132,22 +134,23 @@ extension CoreDataAdapter: Adapter {
                         return object.storable
                     })
                     
-                    operation(Result.success(objects as! [I]))
+                    operation(.success(objects as! [I]))
                 }
             }
             
             do {
                 try managedObjectContext.execute(asynchronousFetchRequest)
             } catch {
-                operation(Result.failure(CoreDataAdapterError.error(error: error)))
+                operation(.failure(CoreDataAdapterError.error(error: error)))
             }
         }
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
-        guard let entityName = entity.name else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
+            let entityName = entity.name
+            else { return Future(CoreDataAdapterError.entityNotFound) }
         
         let predicate = NSPredicate(format: "uuid = %@", storable.uuid as NSUUID)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
@@ -157,15 +160,15 @@ extension CoreDataAdapter: Adapter {
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                    operation(Result.failure(CoreDataAdapterError.noResult))
+                    operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(dictionary: storable.dictionary) ? operation(self.save()) : operation(Result.success(false))
+                        object.update(dictionary: storable.dictionary) ? operation(self.save()) : operation(.success(false))
                     } else {
-                        operation(Result.success(false))
+                        operation(.success(false))
                     }
                 }
             }
@@ -173,15 +176,16 @@ extension CoreDataAdapter: Adapter {
             do {
                 try managedObjectContext.execute(asynchronousFetchRequest)
             } catch {
-                operation(Result.failure(CoreDataAdapterError.error(error: error)))
+                operation(.failure(CoreDataAdapterError.error(error: error)))
             }
         }
     }
     
     public func delete<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
-        guard let entityName = entity.name else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
+            let entityName = entity.name
+            else { return Future(CoreDataAdapterError.entityNotFound) }
         
         let predicate = NSPredicate(format: "uuid = %@", storable.uuid as NSUUID)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
@@ -191,7 +195,7 @@ extension CoreDataAdapter: Adapter {
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                    operation(Result.failure(CoreDataAdapterError.noResult))
+                    operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
@@ -200,7 +204,7 @@ extension CoreDataAdapter: Adapter {
                         self.persistentContainer.viewContext.delete(object as! NSManagedObject)
                         operation(self.save())
                     } else {
-                        operation(Result.success(false))
+                        operation(.success(false))
                     }
                 }
             }
@@ -208,23 +212,24 @@ extension CoreDataAdapter: Adapter {
             do {
                 try managedObjectContext.execute(asynchronousFetchRequest)
             } catch {
-                operation(Result.failure(CoreDataAdapterError.error(error: error)))
+                operation(.failure(CoreDataAdapterError.error(error: error)))
             }
         }
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
         let managedObjectContext = self.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(error: CoreDataAdapterError.entityNotFound) }
-        guard let entityName = entity.name else { return Future(error: CoreDataAdapterError.entityNotFound) }
+        guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
+            let entityName = entity.name
+            else { return Future(CoreDataAdapterError.entityNotFound) }
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = query?.predicate()
         
         do {
-            return Future(value: try self.persistentContainer.viewContext.count(for: fetchRequest))
+            return Future(try self.persistentContainer.viewContext.count(for: fetchRequest))
         } catch {
-            return Future(error: CoreDataAdapterError.error(error: error))
+            return Future(CoreDataAdapterError.error(error: error))
         }
     }
     
@@ -234,9 +239,9 @@ extension CoreDataAdapter: Adapter {
         do {
             try managedObjectContext.save()
         } catch {
-            return Result.failure(CoreDataAdapterError.error(error: error))
+            return .failure(CoreDataAdapterError.error(error: error))
         }
         
-        return Result.success(true)
+        return .success(true)
     }
 }
