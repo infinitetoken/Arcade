@@ -27,13 +27,13 @@ public extension InMemoryAdapter {
         }
         
         func find(_ uuid: UUID) -> Storable? {
-            return self.storables.filter { return $0.uuid == uuid }.first
+            return self.storables.filter { $0.uuid == uuid }.first
         }
         
         func fetch(_ query: Query?) -> [Storable] {
             guard let query = query else { return self.storables }
             
-            return self.storables.filter { return $0.query(query: query) }
+            return self.storables.filter { $0.query(query: query) }
         }
         
         func update(_ storable: Storable) -> Bool {
@@ -45,7 +45,7 @@ public extension InMemoryAdapter {
         func delete(_ storable: Storable) -> Bool {
             guard let storable = self.find(storable.uuid) else { return false }
             
-            self.storables = self.storables.filter { return $0.uuid != storable.uuid }
+            self.storables = self.storables.filter { $0.uuid != storable.uuid }
             return true
         }
         
