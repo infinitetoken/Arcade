@@ -74,11 +74,11 @@ let arcade = Arcade(adapter: InMemoryAdapter())
 import Arcade
 
 arcade.connect().subscribe(onNext: { (success) in
-    if success {
-        // Connected!
-    } else {
+    guard success else {
         // Connection Failed...
     }
+
+    // Connected!
 }) { (error) in
     // Error
 }
@@ -92,11 +92,11 @@ import Arcade
 let widget = Widget(uuid: UUID(), name: "Foo")
 
 arcade.insert(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    if success {
-        // Inserted!
-    } else {
+    guard success else {
         // Something went wrong...
     }
+
+    // Inserted!
 }) { (error) in
     // Error
 }
@@ -110,11 +110,11 @@ import Arcade
 widget.name = "Bar"
 
 arcade.update(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    if success {
-        // Updated!
-    } else {
+    guard success else {
         // Something went wrong...
     }
+
+    // Updated!
 }) { (error) in
     // Error
 }
@@ -126,11 +126,11 @@ arcade.update(table: AppTable.widget, storable: widget).subscribe(onNext: { (suc
 import Arcade
 
 arcade.delete(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    if success {
-        // Deleted!
-    } else {
+    guard success else {
         // Something went wrong...
     }
+
+    // Deleted!
 }) { (error) in
     // Error
 }
@@ -143,12 +143,14 @@ To find a specific item by UUID:
 ```swift
 import Arcade
 
-arcade.find(table: AppTable.widget, uuid: widget.uuid).subscribe(onNext: { (widget) in
-    if let widget = widget {
-        // Found it!
-    } else {
+let future: Future<Widget> = arcade.find(table: AppTable.widget, uuid: widget.uuid)
+
+future.subscribe(onNext: { (widget) in
+    guard let widget = widget else {
         // Not found
     }
+
+    // Found it!
 }) { (error) in
     // Error
 }
@@ -161,8 +163,9 @@ import Arcade
 
 let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
+let future Future<Widget> = arcade.fetch(table: AppTable.widget, query: query)
 
-arcade.fetch(table: AppTable.widget, query: query).subscribe(onNext: { (widgets) in
+future.subscribe(onNext: { (widgets) in
     // Do something with widgets...
 }) { (error) in
     // Error
