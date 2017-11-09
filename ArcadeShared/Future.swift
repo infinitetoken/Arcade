@@ -17,9 +17,7 @@ public struct Future<T> {
     
     public typealias ResultType = Result<T>
     
-    
     private let operation: ( @escaping (ResultType) -> ()) -> ()
-
     
     public init(_ result: ResultType) {
         self.init { $0(result) }
@@ -37,11 +35,9 @@ public struct Future<T> {
         self.operation = operation
     }
     
-    
     fileprivate func then(_ completion: @escaping (ResultType) -> ()) {
         self.operation() { completion($0) }
     }
-    
     
     public func subscribe(onNext: @escaping (T) -> Void = { _ in }, onError: @escaping (Error) -> Void = { _ in }) {
         self.then { result in
@@ -51,12 +47,11 @@ public struct Future<T> {
             }
         }
     }
+    
 }
 
-
-
-
 extension Future {
+    
     public func map<U>(_ f: @escaping (T) throws -> U) -> Future<U> {
         return Future<U> { completion in
             self.then { result in
@@ -85,4 +80,6 @@ extension Future {
             }
         }
     }
+    
 }
+
