@@ -68,8 +68,9 @@ extension JSONAdapter: Adapter {
         return Future<Bool> { operation in
             guard var adapterTable = self.store[table.name] as? AdapterTable else {
                 var adapterTable = AdapterTable()
+                let result = adapterTable.insert(storable)
                 self.store[table.name] = adapterTable
-                operation(.success(adapterTable.insert(storable)))
+                operation(.success(result))
                 return
             }
             
@@ -92,12 +93,18 @@ extension JSONAdapter: Adapter {
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
-        return Future(adapterTable.update(storable))
+        let result = adapterTable.update(storable)
+        self.store[table.name] = adapterTable
+        
+        return Future(result)
     }
     
     public func delete<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
-        return Future(adapterTable.delete(storable))
+        let result = adapterTable.delete(storable)
+        self.store[table.name] = adapterTable
+        
+        return Future(result)
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
