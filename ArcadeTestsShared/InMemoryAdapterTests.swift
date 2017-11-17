@@ -42,7 +42,7 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanDisconnect() {
-        let expectation = XCTestExpectation(description: "Connect")
+        let expectation = XCTestExpectation(description: "Disconnect")
         
         self.adapter.disconnect().subscribe(onNext: { (success) in
             XCTAssertTrue(success)
@@ -113,7 +113,7 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanUpdate() {
-        let expectation = XCTestExpectation(description: "Find")
+        let expectation = XCTestExpectation(description: "Update")
         
         var widget = Widget(uuid: UUID(), name: "Test")
         
@@ -142,7 +142,7 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanDelete() {
-        let expectation = XCTestExpectation(description: "Find")
+        let expectation = XCTestExpectation(description: "Delete")
         
         let widget = Widget(uuid: UUID(), name: "Test")
         

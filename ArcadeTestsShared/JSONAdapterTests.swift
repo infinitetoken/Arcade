@@ -1,38 +1,21 @@
 //
-//  CoreDataAdapterTests.swift
+//  JSONAdapterTests.swift
 //  Arcade
 //
-//  Created by A.C. Wright Design on 11/1/17.
+//  Created by A.C. Wright Design on 11/17/17.
 //  Copyright © 2017 A.C. Wright Design. All rights reserved.
 //
 
 import XCTest
 @testable import Arcade
 
-class CoreDataAdapterTests: XCTestCase {
-
-    var adapter: CoreDataAdapter!
+class JSONAdapterTests: XCTestCase {
+    
+    var adapter: JSONAdapter!
     
     override func setUp() {
         super.setUp()
-        
-        let url = Bundle(for: CoreDataAdapterTests.self).url(forResource: "Model", withExtension: "momd")
-        let model = NSManagedObjectModel(contentsOf: url!)
-        let persistentStoreDescription = NSPersistentStoreDescription()
-        persistentStoreDescription.type = NSInMemoryStoreType
-        
-        self.adapter = CoreDataAdapter(persistentContainerName: "Model", persistentStoreDescriptions: [persistentStoreDescription], managedObjectModel: model)
-        
-        let expectation = XCTestExpectation(description: "Setup")
-        
-        self.adapter.connect().subscribe(onNext: { (success) in
-            XCTAssertTrue(success)
-            expectation.fulfill()
-        }) { (error) in
-            XCTFail(error.localizedDescription)
-        }
-        
-        wait(for: [expectation], timeout: 5.0)
+        self.adapter = JSONAdapter()
     }
     
     override func tearDown() {
