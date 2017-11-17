@@ -10,37 +10,44 @@ import Foundation
 
 public class JSONAdapter {
     
-    private var store: [String : AdapterTable?] = [:]
+    private var store: [String : Any] = [:]
     
     public init() {}
     
 }
 
+
+private protocol AnyAdapterTable {
+    func count(query: Query?) -> Int
+}
+
+
 public extension JSONAdapter {
     
-    private struct AdapterTable {
-        var storables: [Storable] = []
+    private struct AdapterTable<T: Storable>: Codable, AnyAdapterTable {
         
-        mutating func insert(_ storable: Storable) -> Bool {
+        var storables: [T] = []
+        
+        mutating func insert(_ storable: T) -> Bool {
             self.storables.append(storable)
             return true
         }
         
-        func find(_ uuid: UUID) -> Storable? {
+        func find(_ uuid: UUID) -> T? {
             return self.storables.filter { $0.uuid == uuid }.first
         }
         
-        func fetch(_ query: Query?) -> [Storable] {
+        func fetch(_ query: Query?) -> [T] {
             guard let query = query else { return self.storables }
             return self.storables.filter { $0.query(query: query) }
         }
         
-        mutating func update(_ storable: Storable) -> Bool {
+        mutating func update(_ storable: T) -> Bool {
             guard let existingStorable = self.find(storable.uuid) else { return false }
             return (self.delete(existingStorable) && self.insert(storable))
         }
         
-        mutating func delete(_ storable: Storable) -> Bool {
+        mutating func delete(_ storable: T) -> Bool {
             guard let storable = self.find(storable.uuid) else { return false }
             
             self.storables = self.storables.filter { $0.uuid != storable.uuid }
@@ -66,8 +73,8 @@ extension JSONAdapter: Adapter {
     
     public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         return Future<Bool> { operation in
-            guard var adapterTable = self.store[table.name] as? AdapterTable else {
-                var adapterTable = AdapterTable()
+            guard var adapterTable = self.store[table.name] as? AdapterTable<I> else {
+                var adapterTable = AdapterTable<I>()
                 let result = adapterTable.insert(storable)
                 self.store[table.name] = adapterTable
                 operation(.success(result))
@@ -82,17 +89,17 @@ extension JSONAdapter: Adapter {
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
-        guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(nil) }
-        return Future(adapterTable.find(uuid) as? I)
+        guard let adapterTable = self.store[table.name] as? AdapterTable<I> else { return Future(nil) }
+        return Future(adapterTable.find(uuid))
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
-        guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future([]) }
-        return Future(adapterTable.fetch(query) as! [I])
+        guard let adapterTable = self.store[table.name] as? AdapterTable<I> else { return Future([]) }
+        return Future(adapterTable.fetch(query))
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
+        guard var adapterTable = self.store[table.name] as? AdapterTable<I> else { return Future(false) }
         let result = adapterTable.update(storable)
         self.store[table.name] = adapterTable
         
@@ -100,7 +107,7 @@ extension JSONAdapter: Adapter {
     }
     
     public func delete<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name] as? AdapterTable else { return Future(false) }
+        guard var adapterTable = self.store[table.name] as? AdapterTable<I> else { return Future(false) }
         let result = adapterTable.delete(storable)
         self.store[table.name] = adapterTable
         
@@ -108,7 +115,7 @@ extension JSONAdapter: Adapter {
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
-        guard let adapterTable = self.store[table.name] as? AdapterTable else { return Future(0) }
+        guard let adapterTable = self.store[table.name] as? AnyAdapterTable else { return Future(0) }
         return Future(adapterTable.count(query: query))
     }
     
