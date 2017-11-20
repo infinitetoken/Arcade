@@ -10,21 +10,51 @@ import Foundation
 
 public class JSONAdapter {
     
-    private var store: [String : Any] = [:]
+    private var store: [String : AnyAdapterTable] = [:]
+    
     
     public init() {}
     
 }
 
 
-private protocol AnyAdapterTable {
+
+//////////////////////////////LOOK AT THIS PART//////////////////////////////////////////////
+
+public extension JSONAdapter {
+    func encode<U: Storable>(table: Table) -> EncodeResult<U> {
+        guard let adapterTable = self.store[table.name] as? AdapterTable<U> else { return EncodeResult(data: nil) }
+        
+        let encoder = JSONEncoder()
+        
+        var data: Data?
+        
+        do {
+            data = try encoder.encode(adapterTable)
+        } catch {
+            print(error)
+        }
+        
+        return EncodeResult(data: data)
+    }
+}
+
+
+public struct EncodeResult<U: Storable> {
+    let data: Data?
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+private protocol AnyAdapterTable: Codable {
     func count(query: Query?) -> Int
 }
 
 
 public extension JSONAdapter {
     
-    private struct AdapterTable<T: Storable>: Codable, AnyAdapterTable {
+    private struct AdapterTable<T: Storable>: AnyAdapterTable {
         
         var storables: [T] = []
         
@@ -57,6 +87,8 @@ public extension JSONAdapter {
         func count(query: Query?) -> Int {
             return self.fetch(query).count
         }
+        
+        
     }
     
 }
@@ -115,7 +147,7 @@ extension JSONAdapter: Adapter {
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
-        guard let adapterTable = self.store[table.name] as? AnyAdapterTable else { return Future(0) }
+        guard let adapterTable = self.store[table.name] else { return Future(0) }
         return Future(adapterTable.count(query: query))
     }
     
