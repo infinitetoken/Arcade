@@ -8,11 +8,19 @@
 
 import Foundation
 
-public struct Arcade {
 
-    private let adapter: Adapter
+
+public enum ArcadeError: Error {
+    case failedToConnect
+}
+
+
+
+public struct Arcade<T: Adapter> {
+
+    private let adapter: T
     
-    public init(adapter: Adapter) {
+    public init(adapter: T) {
         self.adapter = adapter
     }
     
@@ -20,16 +28,20 @@ public struct Arcade {
 
 extension Arcade: Adapter {
     
-    public func connect() -> Future<Bool> {
-        return self.adapter.connect()
+    public func connect() -> Future<Arcade> {
+        return self.adapter.connect().flatMap { (adapter) -> Future<Arcade> in
+            return Future(Arcade(adapter: adapter))
+        }
     }
     
     public func disconnect() -> Future<Bool> {
         return self.adapter.disconnect()
     }
     
-    public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        return self.adapter.insert(table: table, storable: storable)
+    public func insert<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
+        return self.adapter.insert(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+            return Future(Arcade(adapter: adapter))
+        }
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
@@ -40,12 +52,16 @@ extension Arcade: Adapter {
         return self.adapter.fetch(table: table, query: query)
     }
     
-    public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        return self.adapter.update(table: table, storable: storable)
+    public func update<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
+        return self.adapter.update(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+            return Future(Arcade(adapter: adapter))
+        }
     }
     
-    public func delete<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        return self.adapter.delete(table: table, storable: storable)
+    public func delete<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
+        return self.adapter.delete(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+            return Future(Arcade(adapter: adapter))
+        }
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {

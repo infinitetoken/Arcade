@@ -10,14 +10,14 @@ import Foundation
 
 public protocol Adapter {
     
-    func connect() -> Future<Bool>
+    func connect() -> Future<Self>
     func disconnect() -> Future<Bool>
-    func insert<I, T>(table: T, storable: I) -> Future<Bool> where I: Storable, T: Table
+    func insert<I, T>(table: T, storable: I) -> Future<Self> where I: Storable, T: Table
     func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I: Storable, T: Table
     func fetch<I, T>(_ table: T) -> Future<[I]> where I: Storable, T: Table
     func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I: Storable, T: Table
-    func update<I, T>(table: T, storable: I) -> Future<Bool> where I: Storable, T: Table
-    func delete<I, T>(table: T, storable: I) -> Future<Bool> where I: Storable, T: Table
+    func update<I, T>(table: T, storable: I) -> Future<Self> where I: Storable, T: Table
+    func delete<I, T>(table: T, storable: I) -> Future<Self> where I: Storable, T: Table
     func count<T>(_ table: T) -> Future<Int> where T: Table
     func count<T>(table: T, query: Query?) -> Future<Int> where T: Table
     
