@@ -143,7 +143,7 @@ class InMemoryAdapterTests: XCTestCase {
         let widget = Widget(uuid: UUID(), name: "Test")
         
         self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (adapter) -> Future<InMemoryAdapter> in
-            return adapter.delete(table: WidgetTable.widget, storable: widget)
+            return adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
         }).flatMap({ (adapter) -> Future<Int> in
             return adapter.count(table: WidgetTable.widget, query: nil)
         }).subscribe(onNext: { (count) in

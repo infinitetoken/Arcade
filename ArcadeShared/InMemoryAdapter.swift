@@ -50,13 +50,11 @@ public extension InMemoryAdapter {
         
         mutating func update(_ storable: Storable) -> Bool {
             guard let existingStorable = self.find(storable.uuid) else { return false }
-            return (self.delete(existingStorable) && self.insert(storable))
+            return (self.delete(existingStorable.uuid) && self.insert(storable))
         }
         
-        mutating func delete(_ storable: Storable) -> Bool {
-            guard let storable = self.find(storable.uuid) else { return false }
-            
-            self.storables = self.storables.filter { $0.uuid != storable.uuid }
+        mutating func delete(_ uuid: UUID) -> Bool {
+            self.storables = self.storables.filter { $0.uuid != uuid }
             return true
         }
         
@@ -123,9 +121,9 @@ extension InMemoryAdapter: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, storable: I) -> Future<InMemoryAdapter> where I : Storable, T : Table {
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<InMemoryAdapter> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
-        let success = adapterTable.delete(storable)
+        let success = adapterTable.delete(uuid)
         var store = self.store
         
         store[table.name] = adapterTable

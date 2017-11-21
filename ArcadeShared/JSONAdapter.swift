@@ -58,13 +58,11 @@ public extension JSONAdapter {
         
         mutating func update(_ storable: Storable) -> Bool {
             guard let existingStorable = self.find(storable.uuid) else { return false }
-            return (self.delete(existingStorable) && self.insert(storable))
+            return (self.delete(existingStorable.uuid) && self.insert(storable))
         }
         
-        mutating func delete(_ storable: Storable) -> Bool {
-            guard let storable = self.find(storable.uuid) else { return false }
-            
-            self.storables = self.storables.filter { $0.uuid != storable.uuid }
+        mutating func delete(_ uuid: UUID) -> Bool {
+            self.storables = self.storables.filter { $0.uuid != uuid }
             return true
         }
         
@@ -146,8 +144,8 @@ extension JSONAdapter: Adapter {
         return Future(JSONAdapter(store, directory: directory))
     }
     
-    public func delete<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name], adapterTable.delete(storable)
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<JSONAdapter> where I : Storable, T : Table {
+        guard var adapterTable = self.store[table.name], adapterTable.delete(uuid)
             else { return Future(JSONAdapterError.deleteFailed) }
         guard self.save(table: table, storables: adapterTable.storables as! [I])
             else { return Future(JSONAdapterError.saveFailed) }
