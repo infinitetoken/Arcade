@@ -12,6 +12,7 @@ public enum JSONAdapterError: Error {
     case insertFailed
     case updateFailed
     case deleteFailed
+    case saveFailed
     case encodeFailed(error: Error)
     case decodeFailed(error: Error)
     case noURL
@@ -88,22 +89,17 @@ extension JSONAdapter: Adapter {
     public func insert<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
         var store = self.store
         let directory = self.directory
-        var success = false
         
-        if var adapterTable = self.store[table.name] {
-            success = adapterTable.insert(storable) && self.save(table: table, storables: adapterTable.storables as! [I])
-            store[table.name] = adapterTable
-        } else {
-            var adapterTable = AdapterTable()
-            success = adapterTable.insert(storable) && self.save(table: table, storables: adapterTable.storables as! [I])
-            store[table.name] = adapterTable
-        }
+        var adapterTable = self.store[table.name] ?? AdapterTable()
         
-        if success {
-            return Future<JSONAdapter> { $0(.success(JSONAdapter(store, directory: directory))) }
-        } else {
-            return Future(JSONAdapterError.insertFailed)
-        }
+        guard adapterTable.insert(storable)
+            else { return Future(JSONAdapterError.insertFailed) }
+        guard self.save(table: table, storables: adapterTable.storables as! [I])
+            else { return Future(JSONAdapterError.saveFailed) }
+        
+        store[table.name] = adapterTable
+        
+        return Future(JSONAdapter(store, directory: directory))
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
@@ -137,35 +133,31 @@ extension JSONAdapter: Adapter {
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name] else { return Future(JSONAdapterError.updateFailed) }
+        guard var adapterTable = self.store[table.name], adapterTable.update(storable)
+            else { return Future(JSONAdapterError.updateFailed) }
+        guard self.save(table: table, storables: adapterTable.storables as! [I])
+            else { return Future(JSONAdapterError.saveFailed) }
         
-        let success = adapterTable.update(storable) && self.save(table: table, storables: adapterTable.storables as! [I])
         var store = self.store
         let directory = self.directory
         
         store[table.name] = adapterTable
         
-        if success {
-            return Future(JSONAdapter(store, directory: directory))
-        } else {
-            return Future(JSONAdapterError.updateFailed)
-        }
+        return Future(JSONAdapter(store, directory: directory))
     }
     
     public func delete<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name] else { return Future(JSONAdapterError.deleteFailed) }
+        guard var adapterTable = self.store[table.name], adapterTable.delete(storable)
+            else { return Future(JSONAdapterError.deleteFailed) }
+        guard self.save(table: table, storables: adapterTable.storables as! [I])
+            else { return Future(JSONAdapterError.saveFailed) }
         
-        let success = adapterTable.delete(storable) && self.save(table: table, storables: adapterTable.storables as! [I])
         var store = self.store
         let directory = self.directory
         
         store[table.name] = adapterTable
         
-        if success {
-            return Future(JSONAdapter(store, directory: directory))
-        } else {
-            return Future(JSONAdapterError.deleteFailed)
-        }
+        return Future(JSONAdapter(store, directory: directory))
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
