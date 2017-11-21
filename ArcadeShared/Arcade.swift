@@ -60,10 +60,10 @@ extension Arcade: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.delete(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Arcade> where I : Storable, T : Table {
+        return self.adapter.delete(table: table, uuid: uuid, type: type).flatMap({ (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
-        }
+        })
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {

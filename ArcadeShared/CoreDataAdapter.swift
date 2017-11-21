@@ -184,13 +184,13 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, storable: I) -> Future<CoreDataAdapter> where I : Storable, T : Table {
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<CoreDataAdapter> where I : Storable, T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid = %@", storable.uuid as NSUUID)
+        let predicate = NSPredicate(format: "uuid = %@", uuid as NSUUID)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = predicate
