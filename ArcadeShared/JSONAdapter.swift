@@ -132,8 +132,7 @@ extension JSONAdapter: Adapter {
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name]
-            else { return Future(JSONAdapterError.tableNotFound) }
+        var adapterTable = AdapterTable()
         
         adapterTable.storables = self.load(table: table) as [I]
         
@@ -151,14 +150,15 @@ extension JSONAdapter: Adapter {
     }
     
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<JSONAdapter> where I : Storable, T : Table {
-        guard var adapterTable = self.store[table.name] else { return Future(JSONAdapterError.tableNotFound) }
+        var adapterTable = AdapterTable()
         
         adapterTable.storables = self.load(table: table) as [I]
         
-        guard adapterTable.delete(uuid) else { return Future(JSONAdapterError.deleteFailed) }
-        
+        guard adapterTable.delete(uuid)
+            else { return Future(JSONAdapterError.deleteFailed) }
         guard self.save(table: table, storables: adapterTable.storables as! [I])
             else { return Future(JSONAdapterError.saveFailed) }
+        
         var store = self.store
         let directory = self.directory
         
