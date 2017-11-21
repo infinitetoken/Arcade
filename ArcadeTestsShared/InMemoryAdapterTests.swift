@@ -43,8 +43,8 @@ class InMemoryAdapterTests: XCTestCase {
     func testCanDisconnect() {
         let expectation = XCTestExpectation(description: "Disconnect")
         
-        self.adapter.disconnect().subscribe(onNext: { (success) in
-            XCTAssertTrue(success)
+        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+            XCTAssertNotNil(adapter)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)

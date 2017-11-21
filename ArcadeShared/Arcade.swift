@@ -34,8 +34,10 @@ extension Arcade: Adapter {
         }
     }
     
-    public func disconnect() -> Future<Bool> {
-        return self.adapter.disconnect()
+    public func disconnect() -> Future<Arcade> {
+        return self.adapter.disconnect().flatMap { (adapter) -> Future<Arcade> in
+            return Future(Arcade(adapter: adapter))
+        }
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {

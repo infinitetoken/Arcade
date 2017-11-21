@@ -11,7 +11,7 @@ import Foundation
 public protocol Adapter {
     
     func connect() -> Future<Self>
-    func disconnect() -> Future<Bool>
+    func disconnect() -> Future<Self>
     func insert<I, T>(table: T, storable: I) -> Future<Self> where I: Storable, T: Table
     func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I: Storable, T: Table
     func fetch<I, T>(_ table: T) -> Future<[I]> where I: Storable, T: Table

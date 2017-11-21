@@ -12,39 +12,67 @@ import XCTest
 class JSONAdapterTests: XCTestCase {
     
     var adapter: JSONAdapter!
+    var uuid: UUID = UUID()
+    var directory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
     
     override func setUp() {
         super.setUp()
-        self.adapter = JSONAdapter()
+        
+        print("Directory: \(self.directory)")
+        
+        self.adapter = JSONAdapter(directory: self.directory)
+        
+        let expectation = XCTestExpectation(description: "Setup")
+        
+        self.adapter.connect().subscribe(onNext: { (adapter) in
+            self.adapter = adapter
+            expectation.fulfill()
+        }) { (error) in
+            XCTFail(error.localizedDescription)
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
     }
     
     override func tearDown() {
+        let expectation = XCTestExpectation(description: "Teardown")
+        
+        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+            self.adapter = adapter
+            expectation.fulfill()
+        }) { (error) in
+            XCTFail(error.localizedDescription)
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
         self.adapter = nil
+        
         super.tearDown()
     }
     
     func testCanInitialize() {
         XCTAssertNotNil(self.adapter)
     }
-    
+
     func testCanConnect() {
         let expectation = XCTestExpectation(description: "Connect")
-        
+
         self.adapter.connect().subscribe(onNext: { (adapter) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
     
     func testCanDisconnect() {
         let expectation = XCTestExpectation(description: "Disconnect")
         
-        self.adapter.disconnect().subscribe(onNext: { (success) in
-            XCTAssertTrue(success)
+        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+            XCTAssertNotNil(adapter)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -112,8 +140,7 @@ class JSONAdapterTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Update")
         
         var widget = Widget(uuid: UUID(), name: "Test")
-        var adapter = JSONAdapter()
-        
+        var adapter = JSONAdapter(directory: self.directory)
         
         self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (newAdapter) -> Future<Widget?> in
             adapter = newAdapter

@@ -36,7 +36,19 @@ class CoreDataAdapterTests: XCTestCase {
     }
     
     override func tearDown() {
+        let expectation = XCTestExpectation(description: "Teardown")
+        
+        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+            self.adapter = adapter
+            expectation.fulfill()
+        }) { (error) in
+            XCTFail(error.localizedDescription)
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
         self.adapter = nil
+        
         super.tearDown()
     }
     
@@ -60,8 +72,8 @@ class CoreDataAdapterTests: XCTestCase {
     func testCanDisconnect() {
         let expectation = XCTestExpectation(description: "Disconnect")
         
-        self.adapter.disconnect().subscribe(onNext: { (success) in
-            XCTAssertTrue(success)
+        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+            XCTAssertNotNil(adapter)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)

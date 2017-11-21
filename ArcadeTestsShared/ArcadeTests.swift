@@ -11,9 +11,9 @@ import XCTest
 
 class ArcadeTests: XCTestCase {
     
-    func testCanInitialize() {
-        let arcade = Arcade(adapter: InMemoryAdapter())
-        XCTAssertNotNil(arcade)
-    }
+//    func testCanInitialize() {
+//        let arcade = Arcade(adapter: InMemoryAdapter())
+//        XCTAssertNotNil(arcade)
+//    }
     
 }

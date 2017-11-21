@@ -37,6 +37,7 @@ public struct CoreDataAdapter {
 extension CoreDataAdapter: Adapter {
     
     public func connect() -> Future<CoreDataAdapter> {
+        
         return Future { completion in
             guard let name = self.persistentContainerName else {
                 completion(.failure(CoreDataAdapterError.parameterNotGiven))
@@ -65,8 +66,8 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func disconnect() -> Future<Bool> {
-        return Future(true)
+    public func disconnect() -> Future<CoreDataAdapter> {
+        return Future(self)
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<CoreDataAdapter> where I : Storable, T : Table {
@@ -247,3 +248,4 @@ extension CoreDataAdapter: Adapter {
         return .success(self)
     }
 }
+
