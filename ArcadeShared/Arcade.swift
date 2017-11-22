@@ -8,15 +8,7 @@
 
 import Foundation
 
-
-
-public enum ArcadeError: Error {
-    case failedToConnect
-}
-
-
-
-public struct Arcade<T: Adapter> {
+public final class Arcade<T: Adapter> {
 
     private let adapter: T
     
@@ -29,19 +21,19 @@ public struct Arcade<T: Adapter> {
 extension Arcade: Adapter {
     
     public func connect() -> Future<Arcade> {
-        return self.adapter.connect().flatMap { (adapter) -> Future<Arcade> in
+        return self.adapter.connect().then { (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
         }
     }
     
     public func disconnect() -> Future<Arcade> {
-        return self.adapter.disconnect().flatMap { (adapter) -> Future<Arcade> in
+        return self.adapter.disconnect().then { (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
         }
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.insert(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+        return self.adapter.insert(table: table, storable: storable).then { (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
         }
     }
@@ -55,13 +47,13 @@ extension Arcade: Adapter {
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.update(table: table, storable: storable).flatMap { (adapter) -> Future<Arcade> in
+        return self.adapter.update(table: table, storable: storable).then { (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
         }
     }
     
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.delete(table: table, uuid: uuid, type: type).flatMap({ (adapter) -> Future<Arcade> in
+        return self.adapter.delete(table: table, uuid: uuid, type: type).then({ (adapter) -> Future<Arcade> in
             return Future(Arcade(adapter: adapter))
         })
     }

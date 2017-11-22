@@ -16,7 +16,7 @@ public enum InMemoryAdapterError: Error {
     case error(error: Error)
 }
 
-public struct InMemoryAdapter {
+public final class InMemoryAdapter {
     
     private var store: [String : AdapterTable] = [:]
     
@@ -77,20 +77,19 @@ extension InMemoryAdapter: Adapter {
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<InMemoryAdapter> where I : Storable, T : Table {
-        var store = self.store
         var success = false
         
         if var adapterTable = self.store[table.name] {
             success = adapterTable.insert(storable)
-            store[table.name] = adapterTable
+            self.store[table.name] = adapterTable
         } else {
             var adapterTable = AdapterTable()
             success = adapterTable.insert(storable)
-            store[table.name] = adapterTable
+            self.store[table.name] = adapterTable
         }
         
         if success {
-            return Future<InMemoryAdapter> { $0(.success(InMemoryAdapter(store))) }
+            return Future(self)
         } else {
             return Future(InMemoryAdapterError.insertFailed)
         }
@@ -110,12 +109,11 @@ extension InMemoryAdapter: Adapter {
     public func update<I, T>(table: T, storable: I) -> Future<InMemoryAdapter> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] else { return Future(InMemoryAdapterError.updateFailed) }
         let success = adapterTable.update(storable)
-        var store = self.store
         
-        store[table.name] = adapterTable
+        self.store[table.name] = adapterTable
         
         if success {
-            return Future(InMemoryAdapter(store))
+            return Future(self)
         } else {
             return Future(InMemoryAdapterError.updateFailed)
         }
@@ -124,12 +122,11 @@ extension InMemoryAdapter: Adapter {
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<InMemoryAdapter> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
         let success = adapterTable.delete(uuid)
-        var store = self.store
         
-        store[table.name] = adapterTable
+        self.store[table.name] = adapterTable
         
         if success {
-            return Future(InMemoryAdapter(store))
+            return Future(self)
         } else {
             return Future(InMemoryAdapterError.deleteFailed)
         }

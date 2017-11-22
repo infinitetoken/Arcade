@@ -28,6 +28,8 @@
 		F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */; };
 		F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
 		F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
+		F0A07B2D1FC4E5A7008421AB /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
+		F0A07B2E1FC4E5A9008421AB /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
 		F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
 		F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
 		F0B33B7A1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */; };
@@ -51,8 +53,6 @@
 		F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */; };
 		F0F86D1F1FA9F2F10036124E /* Arcade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0F1FA9F2F00036124E /* Arcade.swift */; };
 		F0F86D201FA9F2F10036124E /* Arcade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0F1FA9F2F00036124E /* Arcade.swift */; };
-		F0F86D211FA9F2F10036124E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
-		F0F86D221FA9F2F10036124E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
 		F0F86D231FA9F2F10036124E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D111FA9F2F00036124E /* Query.swift */; };
 		F0F86D241FA9F2F10036124E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D111FA9F2F00036124E /* Query.swift */; };
 		F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D121FA9F2F00036124E /* Comparison.swift */; };
@@ -90,6 +90,7 @@
 		F08E0A441FA9FAD000763001 /* QueryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
 		F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryAdapterTests.swift; sourceTree = "<group>"; };
 		F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAdapterTests.swift; sourceTree = "<group>"; };
+		F0A07B271FC4DF52008421AB /* Arcade.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Arcade.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F0B33B741FAA023B009BCB0A /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WidgetEntity+CoreDataStorable.swift"; sourceTree = "<group>"; };
 		F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -274,6 +275,7 @@
 		F0F5FFE41FA9D9C300F42111 = {
 			isa = PBXGroup;
 			children = (
+				F0A07B271FC4DF52008421AB /* Arcade.playground */,
 				F0F5002B1FA9DB9500F42111 /* ArcadeShared */,
 				F0F5FFF01FA9D9C300F42111 /* Arcade */,
 				F0F5000F1FA9D9F700F42111 /* ArcadeMobile */,
@@ -556,12 +558,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
-				F0F86D221FA9F2F10036124E /* Future.swift in Sources */,
 				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
+				F0A07B2E1FC4E5A9008421AB /* Future.swift in Sources */,
 				F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */,
 				F0F86D281FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
@@ -594,12 +596,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
-				F0F86D211FA9F2F10036124E /* Future.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
 				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,
 				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
+				F0A07B2D1FC4E5A7008421AB /* Future.swift in Sources */,
 				F01AE62A1FBF711900C21931 /* JSONAdapter.swift in Sources */,
 				F0F86D271FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
@@ -767,6 +769,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Arcade/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -791,6 +797,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Arcade/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -843,6 +853,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = ArcadeMobile/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -869,6 +883,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = ArcadeMobile/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

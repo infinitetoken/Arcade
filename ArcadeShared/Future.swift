@@ -35,14 +35,14 @@ public struct Future<T> {
         self.operation = operation
     }
     
-    fileprivate func then(_ completion: @escaping (ResultType) -> ()) {
+    fileprivate func next(_ completion: @escaping (ResultType) -> ()) {
         self.operation() { completion($0) }
     }
     
-    public func subscribe(onNext: @escaping (T) -> Void = { _ in }, onError: @escaping (Error) -> Void = { _ in }) {
-        self.then { result in
+    public func subscribe(_ onComplete: @escaping (T) -> Void = { _ in }, _ onError: @escaping (Error) -> Void = { _ in }) {
+        self.next { result in
             switch result {
-            case .success(let value): onNext(value)
+            case .success(let value): onComplete(value)
             case .failure(let error): onError(error)
             }
         }
@@ -52,9 +52,9 @@ public struct Future<T> {
 
 extension Future {
     
-    public func map<U>(_ f: @escaping (T) throws -> U) -> Future<U> {
+    public func transform<U>(_ f: @escaping (T) throws -> U) -> Future<U> {
         return Future<U> { completion in
-            self.then { result in
+            self.next { result in
                 switch result {
                 case .success(let resultValue):
                     do {
@@ -70,11 +70,11 @@ extension Future {
         }
     }
     
-    public func flatMap<U>(_ f: @escaping (T) -> Future<U>) -> Future<U> {
+    public func then<U>(_ f: @escaping (T) -> Future<U>) -> Future<U> {
         return Future<U> { completion in
-            self.then { firstFutureResult in
+            self.next { firstFutureResult in
                 switch firstFutureResult {
-                case .success(let value): f(value).then(completion)
+                case .success(let value): f(value).next(completion)
                 case .failure(let error): completion(.failure(error))
                 }
             }

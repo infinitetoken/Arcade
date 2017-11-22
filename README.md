@@ -73,11 +73,7 @@ let arcade = Arcade(adapter: InMemoryAdapter())
 ```swift
 import Arcade
 
-arcade.connect().subscribe(onNext: { (success) in
-    guard success else {
-        // Connection Failed...
-    }
-
+arcade.connect().subscribe({ (arcade) in
     // Connected!
 }) { (error) in
     // Error
@@ -91,11 +87,7 @@ import Arcade
 
 let widget = Widget(uuid: UUID(), name: "Foo")
 
-arcade.insert(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    guard success else {
-        // Something went wrong...
-    }
-
+arcade.insert(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
     // Inserted!
 }) { (error) in
     // Error
@@ -109,11 +101,7 @@ import Arcade
 
 widget.name = "Bar"
 
-arcade.update(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    guard success else {
-        // Something went wrong...
-    }
-
+arcade.update(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
     // Updated!
 }) { (error) in
     // Error
@@ -125,11 +113,9 @@ arcade.update(table: AppTable.widget, storable: widget).subscribe(onNext: { (suc
 ```swift
 import Arcade
 
-arcade.delete(table: AppTable.widget, storable: widget).subscribe(onNext: { (success) in
-    guard success else {
-        // Something went wrong...
-    }
+let uuid = widget.uuid
 
+arcade.delete(table: AppTable.widget, uuid: uuid, type: Widget.self).subscribe({ (arcade) in
     // Deleted!
 }) { (error) in
     // Error
@@ -145,7 +131,7 @@ import Arcade
 
 let future: Future<Widget> = arcade.find(table: AppTable.widget, uuid: widget.uuid)
 
-future.subscribe(onNext: { (widget) in
+future.subscribe({ (widget) in
     guard let widget = widget else {
         // Not found
     }
@@ -165,7 +151,7 @@ let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
 let future Future<Widget> = arcade.fetch(table: AppTable.widget, query: query)
 
-future.subscribe(onNext: { (widgets) in
+future.subscribe({ (widgets) in
     // Do something with widgets...
 }) { (error) in
     // Error

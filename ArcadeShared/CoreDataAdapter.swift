@@ -18,7 +18,7 @@ public enum CoreDataAdapterError: Error {
     case error(error: Error)
 }
 
-public struct CoreDataAdapter {
+public final class CoreDataAdapter {
     
     public let persistentContainerName: String?
     public let persistentStoreDescriptions: [NSPersistentStoreDescription]

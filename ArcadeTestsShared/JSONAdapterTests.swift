@@ -24,7 +24,7 @@ class JSONAdapterTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "Setup")
         
-        self.adapter.connect().subscribe(onNext: { (adapter) in
+        self.adapter.connect().subscribe({ (adapter) in
             self.adapter = adapter
             expectation.fulfill()
         }) { (error) in
@@ -37,7 +37,7 @@ class JSONAdapterTests: XCTestCase {
     override func tearDown() {
         let expectation = XCTestExpectation(description: "Teardown")
         
-        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+        self.adapter.disconnect().subscribe({ (adapter) in
             self.adapter = adapter
             expectation.fulfill()
         }) { (error) in
@@ -58,7 +58,7 @@ class JSONAdapterTests: XCTestCase {
     func testCanConnect() {
         let expectation = XCTestExpectation(description: "Connect")
 
-        self.adapter.connect().subscribe(onNext: { (adapter) in
+        self.adapter.connect().subscribe({ (adapter) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -71,7 +71,7 @@ class JSONAdapterTests: XCTestCase {
     func testCanDisconnect() {
         let expectation = XCTestExpectation(description: "Disconnect")
         
-        self.adapter.disconnect().subscribe(onNext: { (adapter) in
+        self.adapter.disconnect().subscribe({ (adapter) in
             XCTAssertNotNil(adapter)
             expectation.fulfill()
         }) { (error) in
@@ -87,7 +87,7 @@ class JSONAdapterTests: XCTestCase {
         
         let widget = Widget(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).subscribe(onNext: { (adapter) in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).subscribe({ (adapter) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -102,9 +102,9 @@ class JSONAdapterTests: XCTestCase {
         
         let widget = Widget(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (adapter) -> Future<Widget?> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<Widget?> in
             return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
-        }).subscribe(onNext: { (widget) in
+        }).subscribe({ (widget) in
             XCTAssertNotNil(widget)
             expectation.fulfill()
         }) { (error) in
@@ -123,9 +123,9 @@ class JSONAdapterTests: XCTestCase {
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (adapter) -> Future<[Widget]> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<[Widget]> in
             return adapter.fetch(table: WidgetTable.widget, query: query)
-        }).subscribe(onNext: { (widgets) in
+        }).subscribe({ (widgets) in
             XCTAssertEqual(widgets.count, 1)
             expectation.fulfill()
         }) { (error) in
@@ -142,18 +142,18 @@ class JSONAdapterTests: XCTestCase {
         var widget = Widget(uuid: UUID(), name: "Test")
         var adapter = JSONAdapter(directory: self.directory)
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (newAdapter) -> Future<Widget?> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (newAdapter) -> Future<Widget?> in
             adapter = newAdapter
             return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
-        }).flatMap({ (fetchedWidget) -> Future<JSONAdapter> in
+        }).then({ (fetchedWidget) -> Future<JSONAdapter> in
             XCTAssertNotNil(fetchedWidget)
             
             widget.name = "Foo"
             
             return adapter.update(table: WidgetTable.widget, storable: widget)
-        }).flatMap({ (adapter) -> Future<Widget?> in
+        }).then({ (adapter) -> Future<Widget?> in
             return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
-        }).subscribe(onNext: { (fetchedWidget) in
+        }).subscribe({ (fetchedWidget) in
             XCTAssertNotNil(fetchedWidget)
             XCTAssertEqual(fetchedWidget?.name, "Foo")
             expectation.fulfill()
@@ -170,11 +170,11 @@ class JSONAdapterTests: XCTestCase {
         
         let widget = Widget(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (adapter) -> Future<JSONAdapter> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<JSONAdapter> in
             return adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
-        }).flatMap({ (adapter) -> Future<Int> in
+        }).then({ (adapter) -> Future<Int> in
             return adapter.count(table: WidgetTable.widget, query: nil)
-        }).subscribe(onNext: { (count) in
+        }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
         }) { (error) in
@@ -193,9 +193,9 @@ class JSONAdapterTests: XCTestCase {
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).flatMap({ (adapter) -> Future<Int> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<Int> in
             return adapter.count(table: WidgetTable.widget, query: query)
-        }).subscribe(onNext: { (count) in
+        }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()
         }) { (error) in
