@@ -15,6 +15,8 @@ public enum Expression {
     case equal(KeyPath, Constant)
     case notEqual(KeyPath, Constant)
     case comparison(KeyPath, Comparison, Constant)
+    case isNil(KeyPath)
+    case isNotNil(KeyPath)
 }
 
 extension Expression {
@@ -28,6 +30,8 @@ extension Expression {
                 let modifier = NSComparisonPredicate.Modifier.direct
                 let type = comparison.type()
                 return NSComparisonPredicate(leftExpression: leftExpression, rightExpression: rightExpression, modifier: modifier, type: type, options: [])
+            case let .isNil(keyPath): return NSPredicate(format: "%K = nil", keyPath)
+            case let .isNotNil(keyPath): return NSPredicate(format: "%K != nil", keyPath)
         }
     }
 }
@@ -38,6 +42,8 @@ extension Expression: CustomStringConvertible {
             case let .equal(keyPath, constant): return "\(keyPath) \(Comparison.equalTo) \(constant)"
             case let .notEqual(keyPath, constant): return "\(keyPath) \(Comparison.notEqualTo) \(constant)"
             case let .comparison(keyPath, comparison, constant): return "\(keyPath) \(comparison) \(constant)"
+            case let .isNil(keyPath): return "\(keyPath) \(Comparison.equalTo) nil"
+            case let .isNotNil(keyPath): return "\(keyPath) \(Comparison.notEqualTo) nil"
         }
     }
 }
