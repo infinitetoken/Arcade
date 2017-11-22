@@ -96,7 +96,7 @@ class InMemoryAdapterTests: XCTestCase {
         let query = Query.expression(expression)
         
         self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<[Widget]> in
-            return adapter.fetch(table: WidgetTable.widget, query: query)
+            return self.adapter.fetch(table: WidgetTable.widget, query: query)
         }).subscribe({ (widgets) in
             XCTAssertEqual(widgets.count, 1)
             expectation.fulfill()
@@ -112,19 +112,17 @@ class InMemoryAdapterTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Update")
         
         var widget = Widget(uuid: UUID(), name: "Test")
-        var adapter = InMemoryAdapter()
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (newAdapter) -> Future<Widget?> in
-            adapter = newAdapter
-            return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
-        }).then({ (fetchedWidget) -> Future<InMemoryAdapter> in
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Widget?> in
+            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+        }).then({ (fetchedWidget) -> Future<Bool> in
             XCTAssertNotNil(fetchedWidget)
             
             widget.name = "Foo"
             
-            return adapter.update(table: WidgetTable.widget, storable: widget)
+            return self.adapter.update(table: WidgetTable.widget, storable: widget)
         }).then({ (adapter) -> Future<Widget?> in
-            return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
         }).subscribe({ (fetchedWidget) in
             XCTAssertNotNil(fetchedWidget)
             XCTAssertEqual(fetchedWidget?.name, "Foo")
@@ -142,10 +140,10 @@ class InMemoryAdapterTests: XCTestCase {
         
         let widget = Widget(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<InMemoryAdapter> in
-            return adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Bool> in
+            return self.adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
         }).then({ (adapter) -> Future<Int> in
-            return adapter.count(table: WidgetTable.widget, query: nil)
+            return self.adapter.count(table: WidgetTable.widget, query: nil)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
@@ -165,8 +163,8 @@ class InMemoryAdapterTests: XCTestCase {
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<Int> in
-            return adapter.count(table: WidgetTable.widget, query: query)
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Int> in
+            return self.adapter.count(table: WidgetTable.widget, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()

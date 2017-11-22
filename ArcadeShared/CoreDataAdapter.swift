@@ -20,57 +20,62 @@ public enum CoreDataAdapterError: Error {
 
 public final class CoreDataAdapter {
     
-    public let persistentContainerName: String?
-    public let persistentStoreDescriptions: [NSPersistentStoreDescription]
-    public let managedObjectModel: NSManagedObjectModel?
+    public var persistentContainerName: String?
+    public var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
+    public var managedObjectModel: NSManagedObjectModel?
     
-    internal let persistentContainer: NSPersistentContainer?
+    private var persistentContainer: NSPersistentContainer?
     
-    public init(persistentContainerName: String?, persistentStoreDescriptions: [NSPersistentStoreDescription], managedObjectModel: NSManagedObjectModel?, persistentContainer: NSPersistentContainer? = nil) {
+    public convenience init(persistentContainerName: String?, persistentStoreDescriptions: [NSPersistentStoreDescription], managedObjectModel: NSManagedObjectModel?) {
+        self.init()
+        
         self.persistentContainerName = persistentContainerName
         self.persistentStoreDescriptions = persistentStoreDescriptions
         self.managedObjectModel = managedObjectModel
-        self.persistentContainer = persistentContainer
     }
+    
 }
 
 extension CoreDataAdapter: Adapter {
     
-    public func connect() -> Future<CoreDataAdapter> {
+    public func connect() -> Future<Bool> {
         
         return Future { completion in
+            if let _ = self.persistentContainer {
+                completion(.success(true))
+                return
+            }
+            
             guard let name = self.persistentContainerName else {
                 completion(.failure(CoreDataAdapterError.parameterNotGiven))
                 return
             }
             
-            var persistentContainer: NSPersistentContainer?
-            
             if let model = self.managedObjectModel {
-                persistentContainer = NSPersistentContainer(name: name, managedObjectModel: model)
+                self.persistentContainer = NSPersistentContainer(name: name, managedObjectModel: model)
             } else {
-                persistentContainer = NSPersistentContainer(name: name)
+                self.persistentContainer = NSPersistentContainer(name: name)
             }
             
             if self.persistentStoreDescriptions.count > 0 {
-                persistentContainer?.persistentStoreDescriptions = self.persistentStoreDescriptions
+                self.persistentContainer?.persistentStoreDescriptions = self.persistentStoreDescriptions
             }
             
-            persistentContainer?.loadPersistentStores { (desc: NSPersistentStoreDescription, error: Error?) in
+            self.persistentContainer?.loadPersistentStores { (desc: NSPersistentStoreDescription, error: Error?) in
                 if let error = error {
                     completion(.failure(CoreDataAdapterError.error(error: error)))
                 } else {
-                    completion(.success(CoreDataAdapter(persistentContainerName: name, persistentStoreDescriptions: self.persistentStoreDescriptions, managedObjectModel: self.managedObjectModel, persistentContainer: persistentContainer)))
+                    completion(.success(true))
                 }
             }
         }
     }
     
-    public func disconnect() -> Future<CoreDataAdapter> {
-        return Future(self)
+    public func disconnect() -> Future<Bool> {
+        return Future(true)
     }
     
-    public func insert<I, T>(table: T, storable: I) -> Future<CoreDataAdapter> where I : Storable, T : Table {
+    public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext) else { return Future(CoreDataAdapterError.entityNotFound) }
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable else {
@@ -149,7 +154,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I, T>(table: T, storable: I) -> Future<CoreDataAdapter> where I : Storable, T : Table {
+    public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -184,7 +189,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<CoreDataAdapter> where I : Storable, T : Table {
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -236,7 +241,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    private func save() -> Result<CoreDataAdapter> {
+    private func save() -> Result<Bool> {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return .failure(CoreDataAdapterError.notConnected) }
         
         do {
@@ -245,7 +250,7 @@ extension CoreDataAdapter: Adapter {
             return .failure(CoreDataAdapterError.error(error: error))
         }
         
-        return .success(self)
+        return .success(true)
     }
 }
 

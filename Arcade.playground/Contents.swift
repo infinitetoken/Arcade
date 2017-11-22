@@ -17,10 +17,12 @@ struct Widget: Storable {
 }
 
 let widget = Widget(uuid: UUID(), name: "Hello")
-let arcade = Arcade(adapter: InMemoryAdapter())
+let adapter = InMemoryAdapter()
+let arcade = Arcade.shared
+arcade.addAdapter(adapter, forKey: "InMemory")
 
-arcade.insert(table: PlaygroundTable.widget, storable: widget).then({ (arcade) -> Future<[Widget]> in
-    return arcade.fetch(table: PlaygroundTable.widget, query: nil)
+adapter.insert(table: PlaygroundTable.widget, storable: widget).then({ (arcade) -> Future<[Widget]> in
+    return adapter.fetch(table: PlaygroundTable.widget, query: nil)
 }).subscribe({ (widgets) in
     print(widgets)
 }) { (error) in

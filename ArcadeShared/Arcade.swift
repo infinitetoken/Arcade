@@ -8,58 +8,22 @@
 
 import Foundation
 
-public final class Arcade<T: Adapter> {
+public final class Arcade {
+    
+    public static var shared: Arcade = Arcade()
 
-    private let adapter: T
+    private var adapters: [String: Adapter] = [:]
     
-    public init(adapter: T) {
-        self.adapter = adapter
+    public func addAdapter(_ adapter: Adapter, forKey key: String) {
+        self.adapters[key] = adapter
     }
     
-}
-
-extension Arcade: Adapter {
-    
-    public func connect() -> Future<Arcade> {
-        return self.adapter.connect().then { (adapter) -> Future<Arcade> in
-            return Future(Arcade(adapter: adapter))
-        }
+    public func removeAdapter(forKey key: String) {
+        self.adapters.removeValue(forKey: key)
     }
     
-    public func disconnect() -> Future<Arcade> {
-        return self.adapter.disconnect().then { (adapter) -> Future<Arcade> in
-            return Future(Arcade(adapter: adapter))
-        }
-    }
-    
-    public func insert<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.insert(table: table, storable: storable).then { (adapter) -> Future<Arcade> in
-            return Future(Arcade(adapter: adapter))
-        }
-    }
-    
-    public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
-        return self.adapter.find(table: table, uuid: uuid)
-    }
-    
-    public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
-        return self.adapter.fetch(table: table, query: query)
-    }
-    
-    public func update<I, T>(table: T, storable: I) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.update(table: table, storable: storable).then { (adapter) -> Future<Arcade> in
-            return Future(Arcade(adapter: adapter))
-        }
-    }
-    
-    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Arcade> where I : Storable, T : Table {
-        return self.adapter.delete(table: table, uuid: uuid, type: type).then({ (adapter) -> Future<Arcade> in
-            return Future(Arcade(adapter: adapter))
-        })
-    }
-    
-    public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
-        return self.adapter.count(table: table, query: query)
+    public func adapter(forKey key: String) -> Adapter? {
+        return self.adapters[key]
     }
     
 }

@@ -68,15 +68,15 @@ public extension InMemoryAdapter {
 
 extension InMemoryAdapter: Adapter {
     
-    public func connect() -> Future<InMemoryAdapter> {
-        return Future(self)
+    public func connect() -> Future<Bool> {
+        return Future(true)
     }
     
-    public func disconnect() -> Future<InMemoryAdapter> {
-        return Future(self)
+    public func disconnect() -> Future<Bool> {
+        return Future(true)
     }
     
-    public func insert<I, T>(table: T, storable: I) -> Future<InMemoryAdapter> where I : Storable, T : Table {
+    public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         var success = false
         
         if var adapterTable = self.store[table.name] {
@@ -89,7 +89,7 @@ extension InMemoryAdapter: Adapter {
         }
         
         if success {
-            return Future(self)
+            return Future(true)
         } else {
             return Future(InMemoryAdapterError.insertFailed)
         }
@@ -106,27 +106,27 @@ extension InMemoryAdapter: Adapter {
         return Future(adapterTable.fetch(query) as! [I])
     }
     
-    public func update<I, T>(table: T, storable: I) -> Future<InMemoryAdapter> where I : Storable, T : Table {
+    public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] else { return Future(InMemoryAdapterError.updateFailed) }
         let success = adapterTable.update(storable)
         
         self.store[table.name] = adapterTable
         
         if success {
-            return Future(self)
+            return Future(true)
         } else {
             return Future(InMemoryAdapterError.updateFailed)
         }
     }
     
-    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<InMemoryAdapter> where I : Storable, T : Table {
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
         let success = adapterTable.delete(uuid)
         
         self.store[table.name] = adapterTable
         
         if success {
-            return Future(self)
+            return Future(true)
         } else {
             return Future(InMemoryAdapterError.deleteFailed)
         }

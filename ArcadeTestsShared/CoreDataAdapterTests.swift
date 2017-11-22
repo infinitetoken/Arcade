@@ -24,29 +24,27 @@ class CoreDataAdapterTests: XCTestCase {
         self.adapter = CoreDataAdapter(persistentContainerName: "Model", persistentStoreDescriptions: [persistentStoreDescription], managedObjectModel: model)
         
         let expectation = XCTestExpectation(description: "Setup")
-        
-        self.adapter.connect().subscribe({ (adapter) in
-            self.adapter = adapter
+
+        self.adapter.connect().subscribe({ (result) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
     
     override func tearDown() {
         let expectation = XCTestExpectation(description: "Teardown")
-        
-        self.adapter.disconnect().subscribe({ (adapter) in
-            self.adapter = adapter
+
+        self.adapter.disconnect().subscribe({ (result) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
-        
+
         self.adapter = nil
         
         super.tearDown()
@@ -58,28 +56,29 @@ class CoreDataAdapterTests: XCTestCase {
     
     func testCanConnect() {
         let expectation = XCTestExpectation(description: "Connect")
-        
-        self.adapter.connect().subscribe({ (adapter) in
+
+        self.adapter.connect().subscribe({ (result) in
+            XCTAssertTrue(result)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanDisconnect() {
         let expectation = XCTestExpectation(description: "Disconnect")
-        
-        self.adapter.disconnect().subscribe({ (adapter) in
-            XCTAssertNotNil(adapter)
+
+        self.adapter.disconnect().subscribe({ (result) in
+            XCTAssertTrue(result)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
     
@@ -88,7 +87,9 @@ class CoreDataAdapterTests: XCTestCase {
         
         let widget = Widget(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).subscribe({ (adapter) in
+        self.adapter.connect().then({ (result) -> Future<Bool> in
+            return self.adapter.insert(table: WidgetTable.widget, storable: widget)
+        }).subscribe({ (result) in
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -100,11 +101,11 @@ class CoreDataAdapterTests: XCTestCase {
     
     func testCanFind() {
         let expectation = XCTestExpectation(description: "Find")
-        
+
         let widget = Widget(uuid: UUID(), name: "Test")
-        
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<Widget?> in
-            return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Widget?> in
+            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
         }).subscribe({ (widget) in
             XCTAssertNotNil(widget)
             expectation.fulfill()
@@ -112,20 +113,20 @@ class CoreDataAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanFetch() {
         let expectation = XCTestExpectation(description: "Fetch")
-        
+
         let widget = Widget(uuid: UUID(), name: "Test")
-        
+
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
-        
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<[Widget]> in
-            return adapter.fetch(table: WidgetTable.widget, query: query)
+
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<[Widget]> in
+            return self.adapter.fetch(table: WidgetTable.widget, query: query)
         }).subscribe({ (widgets) in
             XCTAssertEqual(widgets.count, 1)
             expectation.fulfill()
@@ -133,26 +134,25 @@ class CoreDataAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanUpdate() {
         let expectation = XCTestExpectation(description: "Update")
-        
+
         var widget = Widget(uuid: UUID(), name: "Test")
-        
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (newAdapter) -> Future<Widget?> in
-            self.adapter = newAdapter
+
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Widget?> in
             return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
-        }).then({ (fetchedWidget) -> Future<CoreDataAdapter> in
+        }).then({ (fetchedWidget) -> Future<Bool> in
             XCTAssertNotNil(fetchedWidget)
-            
+
             widget.name = "Foo"
-            
+
             return self.adapter.update(table: WidgetTable.widget, storable: widget)
         }).then({ (adapter) -> Future<Widget?> in
-            return adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
         }).subscribe({ (fetchedWidget) in
             XCTAssertNotNil(fetchedWidget)
             XCTAssertEqual(fetchedWidget?.name, "Foo")
@@ -161,19 +161,19 @@ class CoreDataAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanDelete() {
         let expectation = XCTestExpectation(description: "Delete")
-        
+
         let widget = Widget(uuid: UUID(), name: "Test")
-        
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<CoreDataAdapter> in
-            return adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
+
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Bool> in
+            return self.adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
         }).then({ (adapter) -> Future<Int> in
-            return adapter.count(table: WidgetTable.widget, query: nil)
+            return self.adapter.count(table: WidgetTable.widget, query: nil)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
@@ -181,20 +181,20 @@ class CoreDataAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanCount() {
         let expectation = XCTestExpectation(description: "Count")
-        
+
         let widget = Widget(uuid: UUID(), name: "Test")
-        
+
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
-        
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (adapter) -> Future<Int> in
-            return adapter.count(table: WidgetTable.widget, query: query)
+
+        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Int> in
+            return self.adapter.count(table: WidgetTable.widget, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()
@@ -202,7 +202,7 @@ class CoreDataAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
     

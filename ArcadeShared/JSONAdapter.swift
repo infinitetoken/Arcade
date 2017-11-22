@@ -77,15 +77,15 @@ public extension JSONAdapter {
 
 extension JSONAdapter: Adapter {
     
-    public func connect() -> Future<JSONAdapter> {
-        return Future(self)
+    public func connect() -> Future<Bool> {
+        return Future(true)
     }
     
-    public func disconnect() -> Future<JSONAdapter> {
-        return Future(self)
+    public func disconnect() -> Future<Bool> {
+        return Future(true)
     }
     
-    public func insert<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
+    public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         var adapterTable = self.store[table.name] ?? AdapterTable()
         
         guard adapterTable.insert(storable)
@@ -95,7 +95,7 @@ extension JSONAdapter: Adapter {
         
         self.store[table.name] = adapterTable
         
-        return Future(self)
+        return Future(true)
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
@@ -124,7 +124,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I, T>(table: T, storable: I) -> Future<JSONAdapter> where I : Storable, T : Table {
+    public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         var adapterTable = self.store[table.name] ?? AdapterTable()
         
         guard adapterTable.update(storable) else { return Future(JSONAdapterError.updateFailed) }
@@ -132,10 +132,10 @@ extension JSONAdapter: Adapter {
         
         self.store[table.name] = adapterTable
         
-        return Future(self)
+        return Future(true)
     }
     
-    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<JSONAdapter> where I : Storable, T : Table {
+    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
         var adapterTable = self.store[table.name] ?? AdapterTable()
         
         guard adapterTable.delete(uuid) else { return Future(JSONAdapterError.deleteFailed) }
@@ -143,7 +143,7 @@ extension JSONAdapter: Adapter {
         
         self.store[table.name] = adapterTable
         
-        return Future(self)
+        return Future(true)
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
