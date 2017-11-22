@@ -99,36 +99,23 @@ extension JSONAdapter: Adapter {
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
-        if var adapterTable = self.store[table.name] {
-            adapterTable.storables = self.load(table: table) as [I]
-            self.store[table.name] = adapterTable
-            return Future(adapterTable.find(uuid) as? I)
-        } else {
-            var adapterTable = AdapterTable()
-            adapterTable.storables = self.load(table: table) as [I]
-            self.store[table.name] = adapterTable
-            return Future(adapterTable.find(uuid) as? I)
-        }
+        let adapterTable = AdapterTable(storables: self.load(table: table) as [I])
+        self.store[table.name] = adapterTable
+        return Future(adapterTable.find(uuid) as? I)
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
-        if var adapterTable = self.store[table.name] {
-            adapterTable.storables = self.load(table: table) as [I]
-            self.store[table.name] = adapterTable
-            return Future(adapterTable.fetch(query) as! [I])
-        } else {
-            var adapterTable = AdapterTable()
-            adapterTable.storables = self.load(table: table) as [I]
-            self.store[table.name] = adapterTable
-            return Future(adapterTable.fetch(query) as! [I])
-        }
+        let adapterTable = AdapterTable(storables: self.load(table: table) as [I])
+        self.store[table.name] = adapterTable
+        return Future(adapterTable.fetch(query) as! [I])
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         var adapterTable = self.store[table.name] ?? AdapterTable()
         
         guard adapterTable.update(storable) else { return Future(JSONAdapterError.updateFailed) }
-        guard self.save(table: table, storables: adapterTable.storables as! [I]) else { return Future(JSONAdapterError.saveFailed) }
+        guard self.save(table: table, storables: adapterTable.storables as! [I])
+            else { return Future(JSONAdapterError.saveFailed) }
         
         self.store[table.name] = adapterTable
         
@@ -139,7 +126,8 @@ extension JSONAdapter: Adapter {
         var adapterTable = self.store[table.name] ?? AdapterTable()
         
         guard adapterTable.delete(uuid) else { return Future(JSONAdapterError.deleteFailed) }
-        guard self.save(table: table, storables: adapterTable.storables as! [I]) else { return Future(JSONAdapterError.saveFailed) }
+        guard self.save(table: table, storables: adapterTable.storables as! [I])
+            else { return Future(JSONAdapterError.saveFailed) }
         
         self.store[table.name] = adapterTable
         
