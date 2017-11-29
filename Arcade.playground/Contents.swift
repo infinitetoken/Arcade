@@ -29,3 +29,5 @@ adapter.insert(table: PlaygroundTable.widget, storable: widget).then({ (arcade) 
     print(error)
 }
 
+let expression = Expression.comparison("name", Comparison.contains, "Bob", [.caseInsensitive, .diacriticInsensitive])
+print(expression.description)

@@ -15,7 +15,8 @@ class ExpressionTests: XCTestCase {
         XCTAssertEqual(Expression.equal("foo", "bar").description, "foo = bar")
         XCTAssertEqual(Expression.equal("foo", 1).description, "foo = 1")
         XCTAssertEqual(Expression.notEqual("foo", "bar").description, "foo != bar")
-        XCTAssertEqual(Expression.comparison("foo", Comparison.equalTo, "bar").description, "foo = bar")
+        XCTAssertEqual(Expression.comparison("foo", Comparison.equalTo, "bar", []).description, "foo = bar")
+        XCTAssertEqual(Expression.comparison("foo", Comparison.contains, "bar", [.caseInsensitive]).description, "foo contains[c] bar")
     }
     
     func testPredicate() {
