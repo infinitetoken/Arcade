@@ -26,6 +26,8 @@ public final class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
+    public var prettyPrinted: Bool = false
+    
     public init(directory: URL) {
         self.directory = directory
     }
@@ -143,6 +145,10 @@ extension JSONAdapter: Adapter {
         guard let directory = self.directory else { return false }
         
         let encoder = JSONEncoder()
+        
+        if self.prettyPrinted {
+            encoder.outputFormatting = .prettyPrinted
+        }
         
         do {
             let data = try encoder.encode(storables)
