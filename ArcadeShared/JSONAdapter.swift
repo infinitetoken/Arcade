@@ -146,7 +146,7 @@ extension JSONAdapter: Adapter {
         
         do {
             let data = try encoder.encode(storables)
-            try data.write(to: directory.appendingPathComponent(table.name))
+            try data.write(to: directory.appendingPathComponent("\(table.name).json"))
             return true
         } catch {
             return false
@@ -159,7 +159,7 @@ extension JSONAdapter: Adapter {
         let decoder = JSONDecoder()
         
         do {
-            let data = try Data(contentsOf: directory.appendingPathComponent(table.name))
+            let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
             let storables = try decoder.decode([I].self, from: data)
             return storables
         } catch {
