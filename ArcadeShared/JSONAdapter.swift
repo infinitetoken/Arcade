@@ -95,7 +95,7 @@ extension JSONAdapter: Adapter {
             
             self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                completion(.success(true))
+                completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
             }
@@ -134,7 +134,7 @@ extension JSONAdapter: Adapter {
             
             self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                completion(.success(true))
+                completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
             })
@@ -149,7 +149,7 @@ extension JSONAdapter: Adapter {
             
             self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                completion(.success(true))
+                completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
             })
@@ -157,8 +157,11 @@ extension JSONAdapter: Adapter {
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
-        guard let adapterTable = self.store[table.name] else { return Future(0) }
-        return Future(adapterTable.count(query: query))
+        return Future<Int> { completion in
+            guard let adapterTable = self.store[table.name] else { completion(.success(0)); return }
+            
+            completion(.success(adapterTable.count(query: query)))
+        }
     }
     
     private func save<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
@@ -192,7 +195,7 @@ extension JSONAdapter: Adapter {
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             
             let decoder = JSONDecoder()
-            
+
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
