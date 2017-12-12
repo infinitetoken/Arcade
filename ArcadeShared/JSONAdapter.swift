@@ -175,9 +175,13 @@ extension JSONAdapter: Adapter {
                 do {
                     let data = try encoder.encode(storables)
                     try data.write(to: directory.appendingPathComponent("\(table.name).json"))
-                    completion(.success(true))
+                    DispatchQueue.main.async {
+                        completion(.success(true))
+                    }
                 } catch {
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }
@@ -193,9 +197,13 @@ extension JSONAdapter: Adapter {
                 do {
                     let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
                     let storables = try decoder.decode([I].self, from: data)
-                    completion(.success(storables))
+                    DispatchQueue.main.async {
+                        completion(.success(storables))
+                    }
                 } catch {
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }
