@@ -16,7 +16,7 @@ public enum JSONAdapterError: Error {
     case tableNotFound
     case encodeFailed(error: Error)
     case decodeFailed(error: Error)
-    case noURL
+    case noDirectory
     case noResult
     case error(error: Error)
 }
@@ -88,52 +88,72 @@ extension JSONAdapter: Adapter {
     }
     
     public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        var adapterTable = self.store[table.name] ?? AdapterTable()
-        
-        guard adapterTable.insert(storable)
-            else { return Future(JSONAdapterError.insertFailed) }
-        guard self.save(table: table, storables: adapterTable.storables as! [I])
-            else { return Future(JSONAdapterError.saveFailed) }
-        
-        self.store[table.name] = adapterTable
-        
-        return Future(true)
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.insert(storable) else { completion(.failure(JSONAdapterError.insertFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(true))
+            }) { (error) in
+                completion(.failure(error))
+            }
+        }
     }
     
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
-        let adapterTable = AdapterTable(storables: self.load(table: table) as [I])
-        self.store[table.name] = adapterTable
-        return Future(adapterTable.find(uuid) as? I)
+        return Future<I?> { completion in
+            self.load(table: table).subscribe({ (storables: [I]) in
+                let adapterTable = AdapterTable(storables: storables)
+                self.store[table.name] = adapterTable
+                completion(.success(adapterTable.find(uuid) as? I))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
-        let adapterTable = AdapterTable(storables: self.load(table: table) as [I])
-        self.store[table.name] = adapterTable
-        return Future(adapterTable.fetch(query) as! [I])
+        return Future<[I]> { completion in
+            self.load(table: table).subscribe({ (storables: [I]) in
+                let adapterTable = AdapterTable(storables: storables)
+                self.store[table.name] = adapterTable
+                completion(.success(adapterTable.fetch(query) as! [I]))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
     }
     
     public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
-        var adapterTable = self.store[table.name] ?? AdapterTable()
-        
-        guard adapterTable.update(storable) else { return Future(JSONAdapterError.updateFailed) }
-        guard self.save(table: table, storables: adapterTable.storables as! [I])
-            else { return Future(JSONAdapterError.saveFailed) }
-        
-        self.store[table.name] = adapterTable
-        
-        return Future(true)
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.update(storable) else { completion(.failure(JSONAdapterError.updateFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(true))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
     }
     
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
-        var adapterTable = self.store[table.name] ?? AdapterTable()
-        
-        guard adapterTable.delete(uuid) else { return Future(JSONAdapterError.deleteFailed) }
-        guard self.save(table: table, storables: adapterTable.storables as! [I])
-            else { return Future(JSONAdapterError.saveFailed) }
-        
-        self.store[table.name] = adapterTable
-        
-        return Future(true)
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.delete(uuid) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(true))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
     }
     
     public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
@@ -141,35 +161,43 @@ extension JSONAdapter: Adapter {
         return Future(adapterTable.count(query: query))
     }
     
-    private func save<I, T>(table: T, storables: [I]) -> Bool where I : Storable, T : Table {
-        guard let directory = self.directory else { return false }
-        
-        let encoder = JSONEncoder()
-        
-        if self.prettyPrinted {
-            encoder.outputFormatting = .prettyPrinted
-        }
-        
-        do {
-            let data = try encoder.encode(storables)
-            try data.write(to: directory.appendingPathComponent("\(table.name).json"))
-            return true
-        } catch {
-            return false
+    private func save<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+        return Future<Bool> { completion in
+            guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
+            
+            let encoder = JSONEncoder()
+            
+            if self.prettyPrinted {
+                encoder.outputFormatting = .prettyPrinted
+            }
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    let data = try encoder.encode(storables)
+                    try data.write(to: directory.appendingPathComponent("\(table.name).json"))
+                    completion(.success(true))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
         }
     }
     
-    private func load<I, T>(table: T) -> [I] where I : Storable, T : Table {
-        guard let directory = self.directory else { return [] }
-        
-        let decoder = JSONDecoder()
-        
-        do {
-            let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
-            let storables = try decoder.decode([I].self, from: data)
-            return storables
-        } catch {
-            return []
+    private func load<I, T>(table: T) -> Future<[I]> where I : Storable, T : Table {
+        return Future<[I]> { completion in
+            guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
+            
+            let decoder = JSONDecoder()
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
+                    let storables = try decoder.decode([I].self, from: data)
+                    completion(.success(storables))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
         }
     }
     
