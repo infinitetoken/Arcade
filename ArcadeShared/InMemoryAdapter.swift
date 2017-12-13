@@ -38,10 +38,13 @@ public extension InMemoryAdapter {
             self.storables.append(storable)
             return true
         }
-        
-        func find(_ uuid: UUID) -> Storable? {
-            return self.storables.filter { $0.uuid == uuid }.first
+        mutating func insert(_ storables: [Storable]) -> Bool {
+            self.storables.append(contentsOf: storables)
+            return true
         }
+        
+        func find(_ uuid: UUID) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [UUID]) -> [Storable] { return self.storables.filter { uuids.contains($0.uuid) } }
         
         func fetch(_ query: Query?) -> [Storable] {
             guard let query = query else { return self.storables }
@@ -52,9 +55,18 @@ public extension InMemoryAdapter {
             guard let existingStorable = self.find(storable.uuid) else { return false }
             return (self.delete(existingStorable.uuid) && self.insert(storable))
         }
+        mutating func update(_ storables: [Storable]) -> Bool {
+            let found = self.storables.filter{ storables.map{ $0.uuid }.contains($0.uuid) }
+            guard found.count >= storables.count else { return false }
+            return (delete(storables.map{ $0.uuid }) && insert(storables))
+        }
         
         mutating func delete(_ uuid: UUID) -> Bool {
             self.storables = self.storables.filter { $0.uuid != uuid }
+            return true
+        }
+        mutating func delete(_ uuids: [UUID]) -> Bool {
+            self.storables = self.storables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
         
@@ -78,16 +90,24 @@ extension InMemoryAdapter: Adapter {
     
     public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         var adapterTable = self.store[table.name] ?? AdapterTable()
-        guard adapterTable.insert(storable)
-            else { return Future(InMemoryAdapterError.insertFailed) }
+        guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
+        self.store[table.name] = adapterTable
+        return Future(true)
+    }
+    public func insert<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+        var adapterTable = self.store[table.name] ?? AdapterTable()
+        guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[table.name] = adapterTable
         return Future(true)
     }
     
-    
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
         guard let adapterTable = self.store[table.name] else { return Future(nil) }
         return Future(adapterTable.find(uuid) as? I)
+    }
+    public func find<I, T>(table: T, uuids: [UUID]) -> Future<[I]> where I : Storable, T : Table {
+        guard let adapterTable = self.store[table.name] else { return Future([]) }
+        return Future(adapterTable.find(uuids) as? [I] ?? [])
     }
     
     public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
@@ -101,9 +121,21 @@ extension InMemoryAdapter: Adapter {
         self.store[table.name] = adapterTable
         return Future(true)
     }
+    public func update<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+        guard var adapterTable = self.store[table.name], adapterTable.update(storables)
+            else { return Future(InMemoryAdapterError.updateFailed) }
+        self.store[table.name] = adapterTable
+        return Future(true)
+    }
     
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
         guard var adapterTable = self.store[table.name], adapterTable.delete(uuid)
+            else { return Future(InMemoryAdapterError.deleteFailed) }
+        self.store[table.name] = adapterTable
+        return Future(true)
+    }
+    public func delete<I, T>(table: T, uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable, T : Table {
+        guard var adapterTable = self.store[table.name], adapterTable.delete(uuids)
             else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[table.name] = adapterTable
         return Future(true)

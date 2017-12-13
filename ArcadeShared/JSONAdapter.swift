@@ -49,23 +49,35 @@ public extension JSONAdapter {
             self.storables.append(storable)
             return true
         }
-        
-        func find(_ uuid: UUID) -> Storable? {
-            return self.storables.filter { $0.uuid == uuid }.first
+        mutating func insert(_ storables: [Storable]) -> Bool {
+            self.storables.append(contentsOf: storables)
+            return true
         }
         
+        func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [UUID]) -> [Storable] { return storables.filter { uuids.contains($0.uuid) } }
+        
         func fetch(_ query: Query?) -> [Storable] {
-            guard let query = query else { return self.storables }
-            return self.storables.filter { $0.query(query: query) }
+            guard let query = query else { return storables }
+            return storables.filter { $0.query(query: query) }
         }
         
         mutating func update(_ storable: Storable) -> Bool {
-            guard let existingStorable = self.find(storable.uuid) else { return false }
-            return (self.delete(existingStorable.uuid) && self.insert(storable))
+            guard let existingStorable = find(storable.uuid) else { return false }
+            return (delete(existingStorable.uuid) && insert(storable))
+        }
+        mutating func update(_ storables: [Storable]) -> Bool {
+            let found = self.storables.filter{ storables.map{ $0.uuid }.contains($0.uuid) }
+            guard found.count >= storables.count else { return false }
+            return (delete(storables.map{ $0.uuid }) && insert(storables))
         }
         
         mutating func delete(_ uuid: UUID) -> Bool {
-            self.storables = self.storables.filter { $0.uuid != uuid }
+            storables = storables.filter { $0.uuid != uuid }
+            return true
+        }
+        mutating func delete(_ uuids: [UUID]) -> Bool {
+            storables = storables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
         
@@ -102,12 +114,39 @@ extension JSONAdapter: Adapter {
         }
     }
     
+    public func insert<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.insert(storables) else { completion(.failure(JSONAdapterError.insertFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(success))
+            }) { (error) in
+                completion(.failure(error))
+            }
+        }
+    }
+    
     public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
         return Future<I?> { completion in
             self.load(table: table).subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
                 self.store[table.name] = adapterTable
                 completion(.success(adapterTable.find(uuid) as? I))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
+    }
+    
+    public func find<I, T>(table: T, uuids: [UUID]) -> Future<[I]> where I : Storable, T : Table {
+        return Future<[I]> { completion in
+            self.load(table: table).subscribe({ (storables: [I]) in
+                let adapterTable = AdapterTable(storables: storables)
+                self.store[table.name] = adapterTable
+                completion(.success(adapterTable.find(uuids) as? [I] ?? []))
             }, { (error) in
                 completion(.failure(error))
             })
@@ -141,11 +180,41 @@ extension JSONAdapter: Adapter {
         }
     }
     
+    public func update<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.update(storables) else { completion(.failure(JSONAdapterError.updateFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(success))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
+    }
+    
     public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
         return Future<Bool> { completion in
             var adapterTable = self.store[table.name] ?? AdapterTable()
             
             guard adapterTable.delete(uuid) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
+            
+            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[table.name] = adapterTable
+                completion(.success(success))
+            }, { (error) in
+                completion(.failure(error))
+            })
+        }
+    }
+    
+    public func delete<I, T>(table: T, uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable, T : Table {
+        return Future<Bool> { completion in
+            var adapterTable = self.store[table.name] ?? AdapterTable()
+            
+            guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
             self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
