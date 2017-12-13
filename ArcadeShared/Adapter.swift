@@ -15,6 +15,7 @@ public protocol Adapter {
     func insert<I, T>(table: T, storable: I) -> Future<Bool> where I: Storable, T: Table
     func insert<I, T>(table: T, storables: [I]) -> Future<Bool> where I: Storable, T: Table
     func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I: Storable, T: Table
+    func find<I, T>(table: T, uuids: [UUID]) -> Future<[I]> where I: Storable, T: Table
     func fetch<I, T>(_ table: T) -> Future<[I]> where I: Storable, T: Table
     func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I: Storable, T: Table
     func update<I, T>(table: T, storable: I) -> Future<Bool> where I: Storable, T: Table
