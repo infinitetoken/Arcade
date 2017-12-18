@@ -245,8 +245,15 @@ extension JSONAdapter: Adapter {
             
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
+                    let fileURL = directory.appendingPathComponent("\(table.name).json")
+                    
+                    let fileManager = FileManager.default
+                    if !fileManager.fileExists(atPath: fileURL.path) {
+                        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                    }
+                    
                     let data = try encoder.encode(storables)
-                    try data.write(to: directory.appendingPathComponent("\(table.name).json"))
+                    try data.write(to: fileURL)
                     DispatchQueue.main.async {
                         completion(.success(true))
                     }
@@ -267,7 +274,14 @@ extension JSONAdapter: Adapter {
 
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    let data = try Data(contentsOf: directory.appendingPathComponent("\(table.name).json"))
+                    let fileURL = directory.appendingPathComponent("\(table.name).json")
+                    
+                    let fileManager = FileManager.default
+                    if !fileManager.fileExists(atPath: fileURL.path) {
+                        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                    }
+                    
+                    let data = try Data(contentsOf: fileURL)
                     let storables = try decoder.decode([I].self, from: data)
                     DispatchQueue.main.async {
                         completion(.success(storables))
