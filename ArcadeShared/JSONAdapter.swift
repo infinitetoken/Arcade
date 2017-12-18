@@ -336,7 +336,10 @@ extension JSONAdapter: Adapter {
                     
                     let fileManager = FileManager.default
                     if !fileManager.fileExists(atPath: fileURL.path) {
-                        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                        let array: [String] = []
+                        let data = try encoder.encode(array)
+                        
+                        fileManager.createFile(atPath: fileURL.path, contents: data, attributes: nil)
                     }
                     
                     let data = try encoder.encode(storables)
@@ -365,7 +368,11 @@ extension JSONAdapter: Adapter {
                     
                     let fileManager = FileManager.default
                     if !fileManager.fileExists(atPath: fileURL.path) {
-                        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                        let array: [String] = []
+                        let encoder = JSONEncoder()
+                        let data = try encoder.encode(array)
+                        
+                        fileManager.createFile(atPath: fileURL.path, contents: data, attributes: nil)
                     }
                     
                     let data = try Data(contentsOf: fileURL)
