@@ -75,6 +75,20 @@ extension CoreDataAdapter: Adapter {
         return Future(true)
     }
     
+    public func undo() -> Future<Bool> {
+        guard let managedObjectContext = self.persistentContainer?.viewContext
+            else { return Future(CoreDataAdapterError.notConnected) }
+        managedObjectContext.undo()
+        return Future(true)
+    }
+    
+    public func redo() -> Future<Bool> {
+        guard let managedObjectContext = self.persistentContainer?.viewContext
+            else { return Future(CoreDataAdapterError.notConnected) }
+        managedObjectContext.redo()
+        return Future(true)
+    }
+    
     public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext
             else { return Future(CoreDataAdapterError.notConnected) }

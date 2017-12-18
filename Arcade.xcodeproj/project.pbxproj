@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC8B632C1FE73CD600356BB1 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8B632B1FE73CD600356BB1 /* ActionStack.swift */; };
 		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC8B632B1FE73CD600356BB1 /* ActionStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStack.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 		F0F86D2C1FA9F37E0036124E /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
+				AC8B632B1FE73CD600356BB1 /* ActionStack.swift */,
 				F0F86D2B1FA9F3700036124E /* CoreData */,
 				F0F86D2F1FA9F3CC0036124E /* InMemory */,
 				F01AE6281FBF70F700C21931 /* JSON */,
@@ -608,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8B632C1FE73CD600356BB1 /* ActionStack.swift in Sources */,
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
