@@ -20,8 +20,8 @@ public final class InMemoryAdapter {
     
     private var store: [String : AdapterTable] = [:]
     
-    private var undoStack = ActionStack()
-    private var redoStack = ActionStack()
+    private var undoStack: ActionStack = ActionStack()
+    private var redoStack: ActionStack = ActionStack()
     
     public init() {}
     

@@ -26,8 +26,8 @@ public final class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
-    private var undoStack = ActionStack()
-    private var redoStack = ActionStack()
+    private var undoStack: ActionStack = ActionStack()
+    private var redoStack: ActionStack = ActionStack()
     
     public var prettyPrinted: Bool = false
     
