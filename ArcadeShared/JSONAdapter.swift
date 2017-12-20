@@ -21,7 +21,7 @@ public enum JSONAdapterError: Error {
     case error(error: Error)
 }
 
-public class JSONAdapter {
+open class JSONAdapter {
     
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?

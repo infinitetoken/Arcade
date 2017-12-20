@@ -16,7 +16,7 @@ public enum InMemoryAdapterError: Error {
     case error(error: Error)
 }
 
-public class InMemoryAdapter {
+open class InMemoryAdapter {
     
     private var store: [String : AdapterTable] = [:]
     
