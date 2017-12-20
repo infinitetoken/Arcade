@@ -20,11 +20,13 @@ public enum CoreDataAdapterError: Error {
 
 open class CoreDataAdapter {
     
-    private var persistentContainerName: String?
-    private var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
-    private var managedObjectModel: NSManagedObjectModel?
+    open var persistentContainerName: String?
+    open var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
+    open var managedObjectModel: NSManagedObjectModel?
     
-    private var persistentContainer: NSPersistentContainer?
+    open var persistentContainer: NSPersistentContainer?
+    
+    public init() {}
     
     public convenience init(persistentContainerName: String?, persistentStoreDescriptions: [NSPersistentStoreDescription], managedObjectModel: NSManagedObjectModel?) {
         self.init()
@@ -44,8 +46,7 @@ open class CoreDataAdapter {
 
 extension CoreDataAdapter: Adapter {
     
-    public func connect() -> Future<Bool> {
-        
+    open func connect() -> Future<Bool> {
         return Future { completion in
             if let _ = self.persistentContainer {
                 completion(.success(true))
@@ -77,7 +78,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func disconnect() -> Future<Bool> {
+    open func disconnect() -> Future<Bool> {
         return Future(true)
     }
     
