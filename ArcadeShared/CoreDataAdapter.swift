@@ -18,7 +18,7 @@ public enum CoreDataAdapterError: Error {
     case error(error: Error)
 }
 
-public final class CoreDataAdapter {
+public class CoreDataAdapter {
     
     private var persistentContainerName: String?
     private var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
