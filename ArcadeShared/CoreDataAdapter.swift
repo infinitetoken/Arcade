@@ -20,9 +20,9 @@ public enum CoreDataAdapterError: Error {
 
 public final class CoreDataAdapter {
     
-    public var persistentContainerName: String?
-    public var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
-    public var managedObjectModel: NSManagedObjectModel?
+    private var persistentContainerName: String?
+    private var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
+    private var managedObjectModel: NSManagedObjectModel?
     
     private var persistentContainer: NSPersistentContainer?
     
@@ -32,6 +32,12 @@ public final class CoreDataAdapter {
         self.persistentContainerName = persistentContainerName
         self.persistentStoreDescriptions = persistentStoreDescriptions
         self.managedObjectModel = managedObjectModel
+    }
+    
+    public convenience init(persistentContainer: NSPersistentContainer) {
+        self.init()
+        
+        self.persistentContainer = persistentContainer
     }
     
 }
