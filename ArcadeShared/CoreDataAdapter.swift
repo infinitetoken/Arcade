@@ -24,7 +24,7 @@ open class CoreDataAdapter {
     open var persistentStoreDescriptions: [NSPersistentStoreDescription] = []
     open var managedObjectModel: NSManagedObjectModel?
     
-    open var persistentContainer: NSPersistentContainer?
+    private var persistentContainer: NSPersistentContainer?
     
     public init() {}
     
@@ -34,12 +34,6 @@ open class CoreDataAdapter {
         self.persistentContainerName = persistentContainerName
         self.persistentStoreDescriptions = persistentStoreDescriptions
         self.managedObjectModel = managedObjectModel
-    }
-    
-    public convenience init(persistentContainer: NSPersistentContainer) {
-        self.init()
-        
-        self.persistentContainer = persistentContainer
     }
     
 }
@@ -103,7 +97,7 @@ extension CoreDataAdapter: Adapter {
             else { return Future(CoreDataAdapterError.entityNotFound) }
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
             else { return Future(CoreDataAdapterError.entityNotStorable) }
-        guard object.update(dictionary: storable.dictionary) else { return Future(CoreDataAdapterError.noResult) }
+        guard object.update(from: storable.dictionary) else { return Future(CoreDataAdapterError.noResult) }
         return Future(self.save())
     }
     
@@ -117,7 +111,7 @@ extension CoreDataAdapter: Adapter {
             guard $0 == nil else { return $0 }
             guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
                 else { return CoreDataAdapterError.entityNotStorable }
-            guard object.update(dictionary: $1.dictionary) else { return CoreDataAdapterError.noResult }
+            guard object.update(from: $1.dictionary) else { return CoreDataAdapterError.noResult }
             return nil
         }) else { return Future(self.save()) }
         
@@ -242,7 +236,7 @@ extension CoreDataAdapter: Adapter {
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(dictionary: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.noResult))
+                        object.update(from: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.noResult))
                     } else {
                         operation(.failure(CoreDataAdapterError.noResult))
                     }
@@ -281,7 +275,7 @@ extension CoreDataAdapter: Adapter {
                             guard $0 == nil else { return $0 }
                             guard coreDataStorable.storable.uuid == $1.uuid else { return nil }
                             return $1.dictionary
-                        }), coreDataStorable.update(dictionary: dictionary)
+                        }), coreDataStorable.update(from: dictionary)
                             else { return CoreDataAdapterError.noResult }
                         return nil
                     }) {
@@ -400,5 +394,6 @@ extension CoreDataAdapter: Adapter {
         
         return .success(true)
     }
+    
 }
 
