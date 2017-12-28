@@ -16,7 +16,7 @@ extension WidgetEntity: CoreDataStorable {
         return Widget(uuid: self.uuid ?? UUID(), name: self.name)
     }
     
-    public func update(dictionary: [String : Any]) -> Bool {
+    public func update(fromStorable dictionary: [String : Any]) -> Bool {
         guard let uuid = dictionary["uuid"] as? String else { return false }
         guard let name = dictionary["name"] as? String else { return false }
         
