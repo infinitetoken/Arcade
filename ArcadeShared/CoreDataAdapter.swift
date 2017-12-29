@@ -97,7 +97,7 @@ extension CoreDataAdapter: Adapter {
             else { return Future(CoreDataAdapterError.entityNotFound) }
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
             else { return Future(CoreDataAdapterError.entityNotStorable) }
-        guard object.update(fromStorable: storable.dictionary) else { return Future(CoreDataAdapterError.noResult) }
+        guard object.mutate(with: storable.dictionary) else { return Future(CoreDataAdapterError.noResult) }
         return Future(self.save())
     }
     
@@ -111,7 +111,7 @@ extension CoreDataAdapter: Adapter {
             guard $0 == nil else { return $0 }
             guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
                 else { return CoreDataAdapterError.entityNotStorable }
-            guard object.update(fromStorable: $1.dictionary) else { return CoreDataAdapterError.noResult }
+            guard object.mutate(with: $1.dictionary) else { return CoreDataAdapterError.noResult }
             return nil
         }) else { return Future(self.save()) }
         
@@ -236,7 +236,7 @@ extension CoreDataAdapter: Adapter {
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(fromStorable: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.noResult))
+                        object.mutate(with: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.noResult))
                     } else {
                         operation(.failure(CoreDataAdapterError.noResult))
                     }
@@ -275,7 +275,7 @@ extension CoreDataAdapter: Adapter {
                             guard $0 == nil else { return $0 }
                             guard coreDataStorable.storable.uuid == $1.uuid else { return nil }
                             return $1.dictionary
-                        }), coreDataStorable.update(fromStorable: dictionary)
+                        }), coreDataStorable.mutate(with: dictionary)
                             else { return CoreDataAdapterError.noResult }
                         return nil
                     }) {
