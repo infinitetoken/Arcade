@@ -120,9 +120,10 @@ class CoreDataAdapterTests: XCTestCase {
     func testCanFetch() {
         let expectation = XCTestExpectation(description: "Fetch")
 
-        let widget = Widget(uuid: UUID(), name: "Test")
+        let uuid = UUID()
+        let widget = Widget(uuid: uuid, name: "Test")
 
-        let expression = Expression.equal("name", "Test")
+        let expression = Expression.equal("uuid", uuid)
         let query = Query.expression(expression)
 
         self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<[Widget]> in
