@@ -34,8 +34,8 @@
 		F0A07B2E1FC4E5A9008421AB /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
 		F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
 		F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
-		F0B33B7A1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */; };
-		F0B33B7B1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */; };
+		F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */; };
+		F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */; };
 		F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5000E1FA9D9F700F42111 /* Arcade.framework */; };
 		F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F500101FA9D9F700F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500271FA9DAF500F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -95,7 +95,7 @@
 		F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAdapterTests.swift; sourceTree = "<group>"; };
 		F0A07B271FC4DF52008421AB /* Arcade.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Arcade.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F0B33B741FAA023B009BCB0A /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
-		F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WidgetEntity+CoreDataStorable.swift"; sourceTree = "<group>"; };
+		F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetEntity.swift; sourceTree = "<group>"; };
 		F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F0F5000E1FA9D9F700F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F500101FA9D9F700F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 			children = (
 				F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */,
 				F0B33B741FAA023B009BCB0A /* Widget.swift */,
-				F0B33B751FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift */,
+				F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */,
 				F004FF101FAA1154008EAD16 /* WidgetTable.swift */,
 			);
 			name = Fixtures;
@@ -593,7 +593,7 @@
 				F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
 				F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */,
 				F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */,
-				F0B33B7B1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */,
+				F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */,
 				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
@@ -632,7 +632,7 @@
 				F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
 				F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */,
 				F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */,
-				F0B33B7A1FAA023C009BCB0A /* WidgetEntity+CoreDataStorable.swift in Sources */,
+				F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */,
 				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F08E0A481FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
