@@ -16,6 +16,7 @@ public enum Expression {
     case notEqual(KeyPath, Constant)
     case contains(KeyPath, Constant)
     case like(KeyPath, Constant)
+    case inside(KeyPath, Constant)
     case comparison(KeyPath, Comparison, Constant, NSComparisonPredicate.Options)
     case isNil(KeyPath)
     case isNotNil(KeyPath)
@@ -30,6 +31,7 @@ extension Expression {
         case let .notEqual(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.notEqualTo)
         case let .contains(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.contains)
         case let .like(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.like)
+        case let .inside(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.inside)
         case let .comparison(keyPath, comparison, constant, options):
             let leftExpression = NSExpression(forKeyPath: keyPath)
             let rightExpression = NSExpression(forConstantValue: constant)
@@ -60,6 +62,7 @@ extension Expression: CustomStringConvertible {
         case let .notEqual(keyPath, constant): return "\(keyPath) \(Comparison.notEqualTo) \(constant != nil ? constant! : "nil")"
         case let .contains(keyPath, constant): return "\(keyPath) \(Comparison.contains) \(constant != nil ? constant! : "nil")"
         case let .like(keyPath, constant): return "\(keyPath) \(Comparison.like) \(constant != nil ? constant! : "nil")"
+        case let .inside(keyPath, constant): return "\(keyPath) \(Comparison.inside) \(constant != nil ? constant! : "nil")"
         case let .comparison(keyPath, comparison, constant, options): return options.rawValue == 0 ? "\(keyPath) \(comparison) \(constant != nil ? constant! : "nil")" : "\(keyPath) \(comparison)[\(options)] \(constant != nil ? constant! : "nil")"
         case let .isNil(keyPath): return "\(keyPath) \(Comparison.equalTo) nil"
         case let .isNotNil(keyPath): return "\(keyPath) \(Comparison.notEqualTo) nil"

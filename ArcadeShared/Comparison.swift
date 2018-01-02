@@ -17,6 +17,7 @@ public enum Comparison: String {
     case lessThanOrEqualTo = "<="
     case contains = "contains"
     case like = "like"
+    case inside = "in"
 }
 
 extension Comparison {
@@ -31,6 +32,7 @@ extension Comparison {
         case .lessThanOrEqualTo: return NSComparisonPredicate.Operator.lessThanOrEqualTo
         case .contains: return NSComparisonPredicate.Operator.contains
         case .like: return NSComparisonPredicate.Operator.like
+        case .inside: return NSComparisonPredicate.Operator.in
         }
     }
     

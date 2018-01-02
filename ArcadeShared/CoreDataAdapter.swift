@@ -126,10 +126,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid = %@", uuid as NSUUID)
+        let expression = Expression.equal("uuid", uuid)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -161,10 +161,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid IN %@", uuids as [NSUUID])
+        let expression = Expression.comparison("uuid", Comparison.inside, uuids, [])
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = uuids.count
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -223,10 +223,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid = %@", storable.uuid as NSUUID)
+        let expression = Expression.equal("uuid", storable.uuid)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -258,10 +258,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid IN %@", storables.map{ $0.uuid as NSUUID })
+        let expression = Expression.comparison("uuid", Comparison.inside, storables.map{ $0.uuid }, [])
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = storables.count
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -302,10 +302,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid = %@", uuid as NSUUID)
+        let expression = Expression.equal("uuid", uuid)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -338,10 +338,10 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let predicate = NSPredicate(format: "uuid IN %@", uuids as [NSUUID])
+        let expression = Expression.comparison("uuid", Comparison.inside, uuids, [])
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = uuids.count
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = expression.predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
