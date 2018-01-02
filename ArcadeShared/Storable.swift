@@ -11,14 +11,11 @@ import Foundation
 public protocol Storable: Codable {
     
     var uuid: UUID { get set }
+    var dictionary: [String: Any] { get }
     
 }
 
 extension Storable {
-    
-    public var dictionary: [String: Any] {
-        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
-    }
     
     public func query(query: Query) -> Bool {
         return query.predicate().evaluate(with: self.dictionary)

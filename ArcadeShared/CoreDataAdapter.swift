@@ -13,6 +13,7 @@ public enum CoreDataAdapterError: Error {
     case parameterNotGiven
     case entityNotFound
     case entityNotStorable
+    case updateFailed
     case notConnected
     case noResult
     case error(error: Error)
@@ -97,7 +98,7 @@ extension CoreDataAdapter: Adapter {
             else { return Future(CoreDataAdapterError.entityNotFound) }
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
             else { return Future(CoreDataAdapterError.entityNotStorable) }
-        guard object.update(withStorable: storable.dictionary) else { return Future(CoreDataAdapterError.noResult) }
+        guard object.update(withStorable: storable.dictionary) else { return Future(CoreDataAdapterError.updateFailed) }
         return Future(self.save())
     }
     
@@ -111,7 +112,7 @@ extension CoreDataAdapter: Adapter {
             guard $0 == nil else { return $0 }
             guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
                 else { return CoreDataAdapterError.entityNotStorable }
-            guard object.update(withStorable: $1.dictionary) else { return CoreDataAdapterError.noResult }
+            guard object.update(withStorable: $1.dictionary) else { return CoreDataAdapterError.updateFailed }
             return nil
         }) else { return Future(self.save()) }
         
@@ -236,7 +237,7 @@ extension CoreDataAdapter: Adapter {
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(withStorable: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.noResult))
+                        object.update(withStorable: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.updateFailed))
                     } else {
                         operation(.failure(CoreDataAdapterError.noResult))
                     }
@@ -276,7 +277,7 @@ extension CoreDataAdapter: Adapter {
                             guard coreDataStorable.storable.uuid == $1.uuid else { return nil }
                             return $1.dictionary
                         }), coreDataStorable.update(withStorable: dictionary)
-                            else { return CoreDataAdapterError.noResult }
+                            else { return CoreDataAdapterError.updateFailed }
                         return nil
                     }) {
                         managedObjectContext.undo()

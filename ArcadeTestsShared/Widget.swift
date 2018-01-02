@@ -14,4 +14,11 @@ struct Widget: Storable {
     var uuid: UUID
     var name: String?
     
+    var dictionary: [String : Any]  {
+        return [
+            "uuid": self.uuid,
+            "name": self.name ?? NSNull()
+        ]
+    }
+    
 }

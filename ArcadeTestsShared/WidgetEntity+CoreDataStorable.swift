@@ -17,10 +17,10 @@ extension WidgetEntity: CoreDataStorable {
     }
     
     public func update(withStorable dictionary: [String : Any]) -> Bool {
-        guard let uuid = dictionary["uuid"] as? String else { return false }
+        guard let uuid = dictionary["uuid"] as? UUID else { return false }
         guard let name = dictionary["name"] as? String else { return false }
         
-        self.uuid = UUID(uuidString: uuid)
+        self.uuid = uuid
         self.name = name
         
         return true
