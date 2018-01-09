@@ -17,15 +17,7 @@ public protocol Storable: Codable {
 
 extension Storable {
     
-    public func query(query: Query) -> Bool {
-        return query.predicate().evaluate(with: self.dictionary)
-    }
+    public func query(query: Query) -> Bool { return query.predicate().evaluate(with: self.dictionary) }
     
-}
-
-extension Storable where Self: Equatable {
-    
-    public static func ==(lhs: Self, rhs: Self) -> Bool { return lhs.uuid == rhs.uuid }
-
 }
 
