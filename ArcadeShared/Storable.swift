@@ -25,7 +25,7 @@ extension Storable {
 
 extension Storable where Self: Equatable {
     
-    public static func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid == rhs.uuid }
+    public static func ==(lhs: Self, rhs: Self) -> Bool { return lhs.uuid == rhs.uuid }
 
 }
 
