@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
+		AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
 		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
@@ -572,6 +573,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */,
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
