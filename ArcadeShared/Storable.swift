@@ -10,12 +10,16 @@ import Foundation
 
 public protocol Storable: Codable {
     
+    static var table: Table { get }
+    
     var uuid: UUID { get set }
     var dictionary: [String: Any] { get }
     
 }
 
 extension Storable {
+    
+    var table: Table { return Self.table }
     
     public func query(query: Query) -> Bool { return query.predicate().evaluate(with: self.dictionary) }
     

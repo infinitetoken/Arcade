@@ -180,31 +180,32 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func insert<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
+    public func insert<I>(storable: I) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
+            let table = I.table
             
             guard adapterTable.insert(storable) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .insert, table: table)
+                self.undoStack.push(storables: [storable], operation: .insert, table: I.table)
                 completion(.success(success))
-            }) { (error) in
+            }, { (error) in
                 completion(.failure(error))
-            }
+            })
         }
     }
     
-    public func insert<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+    public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.insert(storables) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
-                self.undoStack.push(storables: storables, operation: .insert, table: table)
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[I.table.name] = adapterTable
+                self.undoStack.push(storables: storables, operation: .insert, table: I.table)
                 completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
@@ -212,11 +213,11 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I, T>(table: T, uuid: UUID) -> Future<I?> where I : Storable, T : Table {
+    public func find<I>(uuid: UUID) -> Future<I?> where I : Storable {
         return Future<I?> { completion in
-            self.load(table: table).subscribe({ (storables: [I]) in
+            self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
-                self.store[table.name] = adapterTable
+                self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.find(uuid) as? I))
             }, { (error) in
                 completion(.failure(error))
@@ -224,11 +225,11 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I, T>(table: T, uuids: [UUID]) -> Future<[I]> where I : Storable, T : Table {
+    public func find<I>(uuids: [UUID]) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
-            self.load(table: table).subscribe({ (storables: [I]) in
+            self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
-                self.store[table.name] = adapterTable
+                self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.find(uuids) as? [I] ?? []))
             }, { (error) in
                 completion(.failure(error))
@@ -236,11 +237,11 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func fetch<I, T>(table: T, query: Query?) -> Future<[I]> where I : Storable, T : Table {
+    public func fetch<I>(query: Query?) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
-            self.load(table: table).subscribe({ (storables: [I]) in
+            self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
-                self.store[table.name] = adapterTable
+                self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.fetch(query) as! [I]))
             }, { (error) in
                 completion(.failure(error))
@@ -248,15 +249,15 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I, T>(table: T, storable: I) -> Future<Bool> where I : Storable, T : Table {
+    public func update<I>(storable: I) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.update(storable) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .update, table: table)
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[I.table.name] = adapterTable
+                self.undoStack.push(storables: [storable], operation: .update, table: I.table)
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -264,15 +265,15 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+    public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.update(storables) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
-                self.undoStack.push(storables: storables, operation: .update, table: table)
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[I.table.name] = adapterTable
+                self.undoStack.push(storables: storables, operation: .update, table: I.table)
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -280,15 +281,15 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable, T : Table {
+    public func delete<I>(uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard let storable = adapterTable.find(uuid),
                 adapterTable.delete(uuid)
                 else { completion(.failure(JSONAdapterError.deleteFailed)); return }
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .delete, table: table)
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.store[I.table.name] = adapterTable
+                self.undoStack.push(storables: [storable], operation: .delete, table: I.table)
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -296,15 +297,15 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I, T>(table: T, uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable, T : Table {
+    public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            var adapterTable = self.store[table.name] ?? AdapterTable()
+            var adapterTable = self.store[I.table.name] ?? AdapterTable()
             let storables = adapterTable.find(uuids)
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
-            self.save(table: table, storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.undoStack.push(storables: storables, operation: .delete, table: table)
-                self.store[table.name] = adapterTable
+            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+                self.undoStack.push(storables: storables, operation: .delete, table: I.table)
+                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -320,7 +321,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    private func save<I, T>(table: T, storables: [I]) -> Future<Bool> where I : Storable, T : Table {
+    private func save<I>(storables: [I]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             
@@ -332,7 +333,7 @@ extension JSONAdapter: Adapter {
             
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    let fileURL = directory.appendingPathComponent("\(table.name).json")
+                    let fileURL = directory.appendingPathComponent("\(I.table.name).json")
                     
                     let fileManager = FileManager.default
                     if !fileManager.fileExists(atPath: fileURL.path) {
@@ -356,7 +357,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    private func load<I, T>(table: T) -> Future<[I]> where I : Storable, T : Table {
+    private func load<I>() -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             
@@ -364,7 +365,7 @@ extension JSONAdapter: Adapter {
 
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    let fileURL = directory.appendingPathComponent("\(table.name).json")
+                    let fileURL = directory.appendingPathComponent("\(I.table.name).json")
                     
                     let fileManager = FileManager.default
                     if !fileManager.fileExists(atPath: fileURL.path) {

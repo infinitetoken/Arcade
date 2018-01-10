@@ -88,7 +88,7 @@ class CoreDataAdapterTests: XCTestCase {
         let widget = Widget(uuid: UUID(), name: "Test")
         
         self.adapter.connect().then({ (result) -> Future<Bool> in
-            return self.adapter.insert(table: WidgetTable.widget, storable: widget)
+            return self.adapter.insert(storable: widget)
         }).subscribe({ (result) in
             expectation.fulfill()
         }) { (error) in
@@ -104,8 +104,8 @@ class CoreDataAdapterTests: XCTestCase {
 
         let widget = Widget(uuid: UUID(), name: "Test")
 
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Widget?> in
-            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+        self.adapter.insert(storable: widget).then({ (result) -> Future<Widget?> in
+            return self.adapter.find(uuid: widget.uuid)
         }).subscribe({ (widget) in
             XCTAssertNotNil(widget)
             expectation.fulfill()
@@ -126,8 +126,8 @@ class CoreDataAdapterTests: XCTestCase {
         let expression = Expression.equal("uuid", uuid)
         let query = Query.expression(expression)
 
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<[Widget]> in
-            return self.adapter.fetch(table: WidgetTable.widget, query: query)
+        self.adapter.insert(storable: widget).then({ (result) -> Future<[Widget]> in
+            return self.adapter.fetch(query: query)
         }).subscribe({ (widgets) in
             XCTAssertEqual(widgets.count, 1)
             expectation.fulfill()
@@ -144,16 +144,16 @@ class CoreDataAdapterTests: XCTestCase {
 
         var widget = Widget(uuid: UUID(), name: "Test")
 
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Widget?> in
-            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+        self.adapter.insert(storable: widget).then({ (result) -> Future<Widget?> in
+            return self.adapter.find(uuid: widget.uuid)
         }).then({ (fetchedWidget) -> Future<Bool> in
             XCTAssertNotNil(fetchedWidget)
 
             widget.name = "Foo"
 
-            return self.adapter.update(table: WidgetTable.widget, storable: widget)
+            return self.adapter.update(storable: widget)
         }).then({ (adapter) -> Future<Widget?> in
-            return self.adapter.find(table: WidgetTable.widget, uuid: widget.uuid)
+            return self.adapter.find(uuid: widget.uuid)
         }).subscribe({ (fetchedWidget) in
             XCTAssertNotNil(fetchedWidget)
             XCTAssertEqual(fetchedWidget?.name, "Foo")
@@ -171,8 +171,8 @@ class CoreDataAdapterTests: XCTestCase {
 
         let widget = Widget(uuid: UUID(), name: "Test")
 
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Bool> in
-            return self.adapter.delete(table: WidgetTable.widget, uuid: widget.uuid, type: Widget.self)
+        self.adapter.insert(storable: widget).then({ (result) -> Future<Bool> in
+            return self.adapter.delete(uuid: widget.uuid, type: Widget.self)
         }).then({ (adapter) -> Future<Int> in
             return self.adapter.count(table: WidgetTable.widget, query: nil)
         }).subscribe({ (count) in
@@ -194,7 +194,7 @@ class CoreDataAdapterTests: XCTestCase {
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
 
-        self.adapter.insert(table: WidgetTable.widget, storable: widget).then({ (result) -> Future<Int> in
+        self.adapter.insert(storable: widget).then({ (result) -> Future<Int> in
             return self.adapter.count(table: WidgetTable.widget, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)

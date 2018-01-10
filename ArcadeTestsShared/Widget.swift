@@ -11,6 +11,10 @@ import Arcade
 
 struct Widget: Storable {
     
+    
+    static var table: Table = WidgetTable.widget
+    
+    
     var uuid: UUID
     var name: String?
     

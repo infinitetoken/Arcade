@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
 		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC97D47020069B6200B466E6 /* ActionStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStack.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				F0F86D301FA9F3FB0036124E /* Protocols */,
 				F03FE85D1FCE0B6600E49C77 /* Extensions */,
 				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
+				AC97D47020069B6200B466E6 /* ActionStack.swift */,
 			);
 			path = ArcadeShared;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */,
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
