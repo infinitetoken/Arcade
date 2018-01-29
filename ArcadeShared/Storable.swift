@@ -14,6 +14,7 @@ public protocol Storable: Codable {
     
     var uuid: UUID { get set }
     var dictionary: [String: Any] { get }
+    var parents: [UUID] { get set }
     
 }
 
