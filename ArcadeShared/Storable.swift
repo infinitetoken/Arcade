@@ -14,13 +14,13 @@ public protocol Storable: Codable {
     
     var uuid: UUID { get set }
     var dictionary: [String: Any] { get }
-    var parents: [UUID] { get set }
+    var parents: [UUID] { get }
     
 }
 
 extension Storable {
     
-    var table: Table { return Self.table }
+    public var table: Table { return Self.table }
     
     public func query(query: Query) -> Bool { return query.predicate().evaluate(with: self.dictionary) }
     
