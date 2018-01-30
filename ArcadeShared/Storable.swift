@@ -8,13 +8,19 @@
 
 import Foundation
 
+enum StorableError: Error {
+    case noParentUUID
+}
+
 public protocol Storable: Codable {
     
     static var table: Table { get }
+    static var adapter: Adapter { get }
     
     var uuid: UUID { get set }
     var dictionary: [String: Any] { get }
-    var parents: [UUID] { get }
+//    var parents: [UUID] { get }
+    var parents: Dictionary<String, UUID> { get }
     
 }
 
@@ -25,4 +31,3 @@ extension Storable {
     public func query(query: Query) -> Bool { return query.predicate().evaluate(with: self.dictionary) }
     
 }
-

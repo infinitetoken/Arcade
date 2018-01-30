@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
 		AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
+		ACDCB90A2021218E00BBA9D7 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
+		ACDCB90B2021218E00BBA9D7 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
+		ACDCB90D2021219C00BBA9D7 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90C2021219C00BBA9D7 /* Parent.swift */; };
+		ACDCB90E2021219C00BBA9D7 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90C2021219C00BBA9D7 /* Parent.swift */; };
+		ACDCB910202121A500BBA9D7 /* Siblings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90F202121A500BBA9D7 /* Siblings.swift */; };
+		ACDCB911202121A500BBA9D7 /* Siblings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90F202121A500BBA9D7 /* Siblings.swift */; };
 		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
@@ -86,6 +92,9 @@
 
 /* Begin PBXFileReference section */
 		AC97D47020069B6200B466E6 /* ActionStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStack.swift; sourceTree = "<group>"; };
+		ACDCB9092021218E00BBA9D7 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
+		ACDCB90C2021219C00BBA9D7 /* Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parent.swift; sourceTree = "<group>"; };
+		ACDCB90F202121A500BBA9D7 /* Siblings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Siblings.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
@@ -272,6 +281,9 @@
 				F03FE85D1FCE0B6600E49C77 /* Extensions */,
 				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
 				AC97D47020069B6200B466E6 /* ActionStack.swift */,
+				ACDCB9092021218E00BBA9D7 /* Children.swift */,
+				ACDCB90C2021219C00BBA9D7 /* Parent.swift */,
+				ACDCB90F202121A500BBA9D7 /* Siblings.swift */,
 			);
 			path = ArcadeShared;
 			sourceTree = "<group>";
@@ -574,6 +586,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */,
+				ACDCB911202121A500BBA9D7 /* Siblings.swift in Sources */,
+				ACDCB90E2021219C00BBA9D7 /* Parent.swift in Sources */,
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
@@ -585,6 +599,7 @@
 				F0F86D281FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
 				F0F86D261FA9F2F10036124E /* Comparison.swift in Sources */,
+				ACDCB90B2021218E00BBA9D7 /* Children.swift in Sources */,
 				F0F86D201FA9F2F10036124E /* Arcade.swift in Sources */,
 				F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */,
 			);
@@ -614,6 +629,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */,
+				ACDCB910202121A500BBA9D7 /* Siblings.swift in Sources */,
+				ACDCB90D2021219C00BBA9D7 /* Parent.swift in Sources */,
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
@@ -625,6 +642,7 @@
 				F0F86D271FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
 				F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */,
+				ACDCB90A2021218E00BBA9D7 /* Children.swift in Sources */,
 				F0F86D1F1FA9F2F10036124E /* Arcade.swift in Sources */,
 				F03FE85B1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */,
 			);
