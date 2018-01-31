@@ -12,23 +12,28 @@ import Foundation
 public struct Children<Parent, Child> where Parent: Storable, Child: Storable {
     
     internal let parent: Parent
+    internal let key: String
     
-    public init(_ parent: Parent) { self.parent = parent }
+    
+    public init(_ parent: Parent, key: String = Parent.table.name) {
+        self.parent = parent
+        self.key = key
+    }
     
     func all() -> Future<[Child]> {
-        let query = Query.expression(.contains(Parent.table.name, parent.uuid))
+        let query = Query.expression(.equal(key, parent.uuid))
         return Child.adapter.fetch(query: query)
     }
     
     public func find(_ uuid: UUID) -> Future<Child?> { return Child.adapter.find(uuid: uuid) }
     
     public func query(_ expression: Expression) -> Future<[Child]> {
-        let query = Query.and([.contains(Parent.table.name, parent.uuid), expression])
+        let query = Query.and([.equal(key, parent.uuid), expression])
         return Child.adapter.fetch(query: query)
     }
     
     public func query(and expressions: [Expression]) -> Future<[Child]> {
-        let query = Query.and([.contains(Parent.table.name, parent.uuid)]+expressions)
+        let query = Query.and([.equal(key, parent.uuid)]+expressions)
         return Child.adapter.fetch(query: query)
     }
     

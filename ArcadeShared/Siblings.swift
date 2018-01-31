@@ -52,5 +52,4 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
     
-    
 }
