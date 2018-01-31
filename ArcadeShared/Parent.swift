@@ -12,15 +12,17 @@ import Foundation
 public struct Parent<Child, Parent> where Parent: Storable, Child: Storable  {
     
     internal let child: Child
+    internal let key: String
     
     
-    public init(_ child: Child) {
+    public init(_ child: Child, key: String = Parent.table.name) {
         self.child = child
+        self.key = key
     }
     
     
     public func storable() -> Future<Parent?> {
-        guard let uuid = child.parents[Parent.table.name] else { return Future(StorableError.noParentUUID) }
+        guard let uuid = child.parents[key] else { return Future(StorableError.noParentUUID) }
         return Parent.adapter.find(uuid: uuid)
     }
     
