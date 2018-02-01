@@ -20,7 +20,7 @@ public struct Children<Parent, Child> where Parent: Storable, Child: Storable {
         self.key = key
     }
     
-    func all() -> Future<[Child]> {
+    public func all() -> Future<[Child]> {
         let query = Query.expression(.equal(key, parent.uuid))
         return Child.adapter.fetch(query: query)
     }
