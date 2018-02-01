@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
-		AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* ActionStack.swift */; };
+		AC97D47120069B6200B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
+		AC97D4722006A59A00B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
 		ACDCB90A2021218E00BBA9D7 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
 		ACDCB90B2021218E00BBA9D7 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
 		ACDCB90D2021219C00BBA9D7 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90C2021219C00BBA9D7 /* Parent.swift */; };
@@ -23,6 +23,16 @@
 		F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
 		F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
+		F037F2E720234B1900ADC2FC /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2E620234B1900ADC2FC /* StackTests.swift */; };
+		F037F2E820234B1900ADC2FC /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2E620234B1900ADC2FC /* StackTests.swift */; };
+		F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */; };
+		F037F2EC20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */; };
+		F037F2EE2023506B00ADC2FC /* ChildrenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */; };
+		F037F2EF2023506B00ADC2FC /* ChildrenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */; };
+		F037F2F12023507400ADC2FC /* ParentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F02023507400ADC2FC /* ParentTests.swift */; };
+		F037F2F22023507400ADC2FC /* ParentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F02023507400ADC2FC /* ParentTests.swift */; };
+		F037F2F42023507C00ADC2FC /* SiblingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F32023507C00ADC2FC /* SiblingsTests.swift */; };
+		F037F2F52023507C00ADC2FC /* SiblingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F32023507C00ADC2FC /* SiblingsTests.swift */; };
 		F03FE85B1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
@@ -91,13 +101,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC97D47020069B6200B466E6 /* ActionStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStack.swift; sourceTree = "<group>"; };
+		AC97D47020069B6200B466E6 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		ACDCB9092021218E00BBA9D7 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
 		ACDCB90C2021219C00BBA9D7 /* Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parent.swift; sourceTree = "<group>"; };
 		ACDCB90F202121A500BBA9D7 /* Siblings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Siblings.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
+		F037F2E620234B1900ADC2FC /* StackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
+		F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSComparisionDescriptionTests.swift; sourceTree = "<group>"; };
+		F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTests.swift; sourceTree = "<group>"; };
+		F037F2F02023507400ADC2FC /* ParentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTests.swift; sourceTree = "<group>"; };
+		F037F2F32023507C00ADC2FC /* SiblingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiblingsTests.swift; sourceTree = "<group>"; };
 		F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSComparisonPredicate+Description.swift"; sourceTree = "<group>"; };
 		F08E0A381FA9FA6D00763001 /* FutureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureTests.swift; sourceTree = "<group>"; };
 		F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonTests.swift; sourceTree = "<group>"; };
@@ -180,6 +195,14 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		F037F2E920234BEA00ADC2FC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		F03FE85D1FCE0B6600E49C77 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,12 +231,16 @@
 			name = Adapters;
 			sourceTree = "<group>";
 		};
-		F08E0A401FA9FAA900763001 /* Future */ = {
+		F08E0A401FA9FAA900763001 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
 				F08E0A381FA9FA6D00763001 /* FutureTests.swift */,
+				F037F2E620234B1900ADC2FC /* StackTests.swift */,
+				F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */,
+				F037F2F02023507400ADC2FC /* ParentTests.swift */,
+				F037F2F32023507C00ADC2FC /* SiblingsTests.swift */,
 			);
-			name = Future;
+			name = Structures;
 			sourceTree = "<group>";
 		};
 		F0B33B731FAA020A009BCB0A /* Fixtures */ = {
@@ -225,6 +252,18 @@
 				F004FF101FAA1154008EAD16 /* WidgetTable.swift */,
 			);
 			name = Fixtures;
+			sourceTree = "<group>";
+		};
+		F0E3DDFF202314EC008ADA39 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				F0F86D101FA9F2F00036124E /* Future.swift */,
+				AC97D47020069B6200B466E6 /* Stack.swift */,
+				ACDCB9092021218E00BBA9D7 /* Children.swift */,
+				ACDCB90C2021219C00BBA9D7 /* Parent.swift */,
+				ACDCB90F202121A500BBA9D7 /* Siblings.swift */,
+			);
+			name = Structures;
 			sourceTree = "<group>";
 		};
 		F0F500081FA9D9D000F42111 /* Supporting Files */ = {
@@ -275,15 +314,11 @@
 			children = (
 				F0F86D0F1FA9F2F00036124E /* Arcade.swift */,
 				F0F86D2C1FA9F37E0036124E /* Adapters */,
-				F0F86D2D1FA9F3A60036124E /* Query */,
-				F0F86D2E1FA9F3BA0036124E /* Future */,
-				F0F86D301FA9F3FB0036124E /* Protocols */,
 				F03FE85D1FCE0B6600E49C77 /* Extensions */,
+				F0F86D301FA9F3FB0036124E /* Protocols */,
+				F0F86D2D1FA9F3A60036124E /* Query */,
+				F0E3DDFF202314EC008ADA39 /* Structures */,
 				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
-				AC97D47020069B6200B466E6 /* ActionStack.swift */,
-				ACDCB9092021218E00BBA9D7 /* Children.swift */,
-				ACDCB90C2021219C00BBA9D7 /* Parent.swift */,
-				ACDCB90F202121A500BBA9D7 /* Siblings.swift */,
 			);
 			path = ArcadeShared;
 			sourceTree = "<group>";
@@ -293,8 +328,9 @@
 			children = (
 				F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */,
 				F08E0A3F1FA9FAA000763001 /* Adapters */,
+				F037F2E920234BEA00ADC2FC /* Extensions */,
 				F08E0A3E1FA9FA9600763001 /* Query */,
-				F08E0A401FA9FAA900763001 /* Future */,
+				F08E0A401FA9FAA900763001 /* Structures */,
 				F0B33B731FAA020A009BCB0A /* Fixtures */,
 			);
 			path = ArcadeTestsShared;
@@ -377,14 +413,6 @@
 				F0F86D111FA9F2F00036124E /* Query.swift */,
 			);
 			name = Query;
-			sourceTree = "<group>";
-		};
-		F0F86D2E1FA9F3BA0036124E /* Future */ = {
-			isa = PBXGroup;
-			children = (
-				F0F86D101FA9F2F00036124E /* Future.swift */,
-			);
-			name = Future;
 			sourceTree = "<group>";
 		};
 		F0F86D2F1FA9F3CC0036124E /* InMemory */ = {
@@ -585,7 +613,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC97D4722006A59A00B466E6 /* ActionStack.swift in Sources */,
+				AC97D4722006A59A00B466E6 /* Stack.swift in Sources */,
 				ACDCB911202121A500BBA9D7 /* Siblings.swift in Sources */,
 				ACDCB90E2021219C00BBA9D7 /* Parent.swift in Sources */,
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
@@ -616,11 +644,16 @@
 				F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */,
 				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
+				F037F2E820234B1900ADC2FC /* StackTests.swift in Sources */,
 				F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
+				F037F2F22023507400ADC2FC /* ParentTests.swift in Sources */,
+				F037F2EC20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
+				F037F2F52023507C00ADC2FC /* SiblingsTests.swift in Sources */,
 				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
 				F004FF141FAA1E48008EAD16 /* Model.xcdatamodeld in Sources */,
 				F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */,
+				F037F2EF2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,7 +661,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC97D47120069B6200B466E6 /* ActionStack.swift in Sources */,
+				AC97D47120069B6200B466E6 /* Stack.swift in Sources */,
 				ACDCB910202121A500BBA9D7 /* Siblings.swift in Sources */,
 				ACDCB90D2021219C00BBA9D7 /* Parent.swift in Sources */,
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
@@ -659,11 +692,16 @@
 				F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */,
 				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
+				F037F2E720234B1900ADC2FC /* StackTests.swift in Sources */,
 				F08E0A481FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
+				F037F2F12023507400ADC2FC /* ParentTests.swift in Sources */,
+				F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
+				F037F2F42023507C00ADC2FC /* SiblingsTests.swift in Sources */,
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
 				F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */,
 				F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */,
+				F037F2EE2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

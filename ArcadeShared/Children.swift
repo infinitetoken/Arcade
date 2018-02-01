@@ -8,33 +8,42 @@
 
 import Foundation
 
+enum ChildrenError: Error {
+    case noUUID
+    case noAdapter
+    case noForeignKey
+}
 
 public struct Children<Parent, Child> where Parent: Storable, Child: Storable {
     
-    internal let parent: Parent
-    internal let key: String
+    public let uuid: UUID?
     
-    
-    public init(_ parent: Parent, key: String = Parent.table.name) {
-        self.parent = parent
-        self.key = key
+    public init(uuid: UUID?) {
+        self.uuid = uuid
+    }
+
+    public func all() -> Future<[Child]> {
+        guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
+        guard let adapter = Parent.adapter else { return Future(ChildrenError.noAdapter) }
+
+        let query = Query.expression(.equal(Parent.foreignKey, uuid))
+        
+        return adapter.fetch(query: query)
     }
     
-    func all() -> Future<[Child]> {
-        let query = Query.expression(.equal(key, parent.uuid))
-        return Child.adapter.fetch(query: query)
+    public func query(query: Query) -> Future<[Child]> {
+        guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
+        guard let adapter = Parent.adapter else { return Future(ChildrenError.noAdapter) }
+        
+        let compoundQuery = Query.compoundAnd([Query.expression(.equal(Parent.foreignKey, uuid)), query])
+        
+        return adapter.fetch(query: compoundQuery)
     }
-    
-    public func find(_ uuid: UUID) -> Future<Child?> { return Child.adapter.find(uuid: uuid) }
-    
-    public func query(_ expression: Expression) -> Future<[Child]> {
-        let query = Query.and([.equal(key, parent.uuid), expression])
-        return Child.adapter.fetch(query: query)
-    }
-    
-    public func query(and expressions: [Expression]) -> Future<[Child]> {
-        let query = Query.and([.equal(key, parent.uuid)]+expressions)
-        return Child.adapter.fetch(query: query)
+
+    public func find(uuid: UUID) -> Future<Child?> {
+        guard let adapter = Parent.adapter else { return Future(ChildrenError.noAdapter) }
+        
+        return adapter.find(uuid: uuid)
     }
     
 }

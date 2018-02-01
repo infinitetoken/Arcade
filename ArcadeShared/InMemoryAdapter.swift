@@ -20,8 +20,8 @@ open class InMemoryAdapter {
     
     private var store: [String : AdapterTable] = [:]
     
-    private var undoStack: ActionStack = ActionStack()
-    private var redoStack: ActionStack = ActionStack()
+    private var undoStack: Stack = Stack()
+    private var redoStack: Stack = Stack()
     
     public init() {}
     
@@ -51,7 +51,7 @@ public extension InMemoryAdapter {
         
         func fetch(_ query: Query?) -> [Storable] {
             guard let query = query else { return self.storables }
-            return self.storables.filter { $0.query(query: query) }
+            return self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }
         }
         
         mutating func update(_ storable: Storable) -> Bool {
@@ -87,50 +87,48 @@ extension InMemoryAdapter: Adapter {
     public func disconnect() -> Future<Bool> { return Future(true) }
     
     public func undo() -> Future<Bool> {
-        guard let table = undoStack.popTable(),
-            let operation = undoStack.popOperation(),
-            var adapterTable = self.store[table.name]
-            else { return Future(false) }
-        let storables = undoStack.popStorables()
+        let operation = undoStack.pop()
         
-        switch operation {
+        guard var adapterTable = self.store[operation.table.name] else { return Future(false) }
+        
+        switch operation.method {
         case .insert:
-            let uuids = storables.map{$0.uuid}
+            let uuids = operation.storables.map{$0.uuid}
             guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
-            redoStack.push(storables: storables, operation: .delete, table: table)
+            redoStack.push(Stack.Operation(method: .delete, storables: operation.storables, table: operation.table))
         case .update:
-            guard adapterTable.update(storables) else { return Future(InMemoryAdapterError.updateFailed) }
-            redoStack.push(storables: storables, operation: .update, table: table)
+            guard adapterTable.update(operation.storables) else { return Future(InMemoryAdapterError.updateFailed) }
+            redoStack.push(Stack.Operation(method: .update, storables: operation.storables, table: operation.table))
         case .delete:
-            guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
-            redoStack.push(storables: storables, operation: .insert, table: table)
+            guard adapterTable.insert(operation.storables) else { return Future(InMemoryAdapterError.insertFailed) }
+            redoStack.push(Stack.Operation(method: .insert, storables: operation.storables, table: operation.table))
         }
         
-        self.store[table.name] = adapterTable
+        self.store[operation.table.name] = adapterTable
+        
         return Future(true)
     }
     
     public func redo() -> Future<Bool> {
-        guard let table = redoStack.popTable(),
-            let operation = redoStack.popOperation(),
-            var adapterTable = self.store[table.name]
-            else { return Future(false) }
-        let storables = redoStack.popStorables()
+        let operation = redoStack.pop()
         
-        switch operation {
+        guard var adapterTable = self.store[operation.table.name] else { return Future(false) }
+        
+        switch operation.method {
         case .insert:
-            let uuids = storables.map{$0.uuid}
+            let uuids = operation.storables.map{$0.uuid}
             guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
-            undoStack.push(storables: storables, operation: .delete, table: table)
+            undoStack.push(Stack.Operation(method: .delete, storables: operation.storables, table: operation.table))
         case .update:
-            guard adapterTable.update(storables) else { return Future(InMemoryAdapterError.updateFailed) }
-            undoStack.push(storables: storables, operation: .update, table: table)
+            guard adapterTable.update(operation.storables) else { return Future(InMemoryAdapterError.updateFailed) }
+            undoStack.push(Stack.Operation(method: .update, storables: operation.storables, table: operation.table))
         case .delete:
-            guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
-            undoStack.push(storables: storables, operation: .insert, table: table)
+            guard adapterTable.insert(operation.storables) else { return Future(InMemoryAdapterError.insertFailed) }
+            undoStack.push(Stack.Operation(method: .insert, storables: operation.storables, table: operation.table))
         }
         
-        self.store[table.name] = adapterTable
+        self.store[operation.table.name] = adapterTable
+        
         return Future(true)
     }
     
@@ -138,14 +136,14 @@ extension InMemoryAdapter: Adapter {
         var adapterTable = self.store[storable.table.name] ?? AdapterTable()
         guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[storable.table.name] = adapterTable
-        self.undoStack.push(storables: [storable], operation: .insert, table: storable.table)
+        self.undoStack.push(Stack.Operation(method: .insert, storables: [storable], table: I.table))
         return Future(true)
     }
     public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
         guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(storables: storables, operation: .insert, table: I.table)
+        self.undoStack.push(Stack.Operation(method: .insert, storables: storables, table: I.table))
         return Future(true)
     }
     
@@ -168,7 +166,7 @@ extension InMemoryAdapter: Adapter {
             adapterTable.update(storable)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(storables: [storable], operation: .update, table: I.table)
+        self.undoStack.push(Stack.Operation(method: .update, storables: [storable], table: I.table))
         return Future(true)
     }
     public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
@@ -176,7 +174,7 @@ extension InMemoryAdapter: Adapter {
             adapterTable.update(storables)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(storables: storables, operation: .update, table: I.table)
+        self.undoStack.push(Stack.Operation(method: .update, storables: storables, table: I.table))
         return Future(true)
     }
     
@@ -186,7 +184,7 @@ extension InMemoryAdapter: Adapter {
             adapterTable.delete(uuid)
             else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(storables: [storable], operation: .delete, table: I.table)
+        self.undoStack.push(Stack.Operation(method: .delete, storables: [storable], table: I.table))
         return Future(true)
     }
     public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
@@ -194,7 +192,7 @@ extension InMemoryAdapter: Adapter {
         let storables = adapterTable.find(uuids)
         guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(storables: storables, operation: .delete, table: I.table)
+        self.undoStack.push(Stack.Operation(method: .delete, storables: storables, table: I.table))
         return Future(true)
     }
     

@@ -8,47 +8,40 @@
 
 import Foundation
 
+enum SiblingsError: Error {
+    case noUUID
+    case noAdapter
+    case noOriginForeignKey
+    case noDestinationForeignKey
+}
 
 public struct Siblings<Origin, Destination, Through> where Origin: Storable, Destination: Storable, Through: Storable {
     
-    internal let origin: Origin
+    public let uuid: UUID?
     
-    
-    public init(_ origin: Origin) {
-        self.origin = origin
+    public init(uuid: UUID?) {
+        self.uuid = uuid
     }
-    
     
     public func all() -> Future<[Destination]> {
-        let query = Query.expression(.equal(origin.table.name, origin.uuid))
-        let future: Future<[Through]> = Through.adapter.fetch(query: query)
+        guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
+        guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
         
-        return future.then { (storables) -> Future<[Destination]> in
-            return Destination.adapter.find(uuids: storables.flatMap { $0.parents[Destination.table.name] })
+        return adapter.fetch(query: Query.expression(.equal(Origin.foreignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
+            return throughs.map { $0.dictionary[Destination.foreignKey] as? UUID }.flatMap { $0 }
+        }).then { (throughs: [UUID]) -> Future<[Destination]> in
+            return adapter.fetch(query: Query.expression(.inside(Destination.idKey, throughs)))
         }
     }
     
-    public func query(_ expression: Expression) -> Future<[Destination]> {
-        let query = Query.expression(.equal(origin.table.name, origin.uuid))
-        let future: Future<[Through]> = Through.adapter.fetch(query: query)
+    public func query(query: Query) -> Future<[Destination]> {
+        guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
+        guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
         
-        return future.then { (storables) -> Future<[Destination]> in
-            let findExpression = Expression.inside("uuid", storables.flatMap { $0.parents[Destination.table.name] })
-            let query = Query.and([expression, findExpression])
-            
-            return Destination.adapter.fetch(query: query)
-        }
-    }
-    
-    public func query(and expressions: [Expression]) -> Future<[Destination]> {
-        let query = Query.expression(.equal(origin.table.name, origin.uuid))
-        let future: Future<[Through]> = Through.adapter.fetch(query: query)
-        
-        return future.then { (storables) -> Future<[Destination]> in
-            let findExpression = Expression.inside("uuid", storables.flatMap { $0.parents[Destination.table.name] })
-            let query = Query.and([findExpression]+expressions)
-            
-            return Destination.adapter.fetch(query: query)
+        return adapter.fetch(query: Query.expression(.equal(Origin.foreignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
+            return throughs.map { $0.dictionary[Destination.foreignKey] as? UUID }.flatMap { $0 }
+        }).then { (throughs: [UUID]) -> Future<[Destination]> in
+            return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(Destination.idKey, throughs)), query]))
         }
     }
     

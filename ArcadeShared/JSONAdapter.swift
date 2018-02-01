@@ -26,8 +26,8 @@ open class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
-    private var undoStack: ActionStack = ActionStack()
-    private var redoStack: ActionStack = ActionStack()
+    private var undoStack: Stack = Stack()
+    private var redoStack: Stack = Stack()
     
     public var prettyPrinted: Bool = false
     
@@ -62,7 +62,7 @@ public extension JSONAdapter {
         
         func fetch(_ query: Query?) -> [Storable] {
             guard let query = query else { return storables }
-            return storables.filter { $0.query(query: query) }
+            return storables.filter { query.predicate().evaluate(with: $0.dictionary) }
         }
         
         mutating func update(_ storable: Storable) -> Bool {
@@ -103,23 +103,21 @@ extension JSONAdapter: Adapter {
     }
     
     public func undo() -> Future<Bool> {
-        guard let table = undoStack.popTable(),
-            let operation = undoStack.popOperation(),
-            var adapterTable = self.store[table.name]
-            else { return Future(false) }
-        let storables = undoStack.popStorables()
+        let operation = undoStack.pop()
         
-        switch operation {
+        guard var adapterTable = self.store[operation.table.name] else { return Future(false) }
+        
+        switch operation.method {
         case .insert:
-            let uuids = storables.map{$0.uuid}
-            guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
-            redoStack.push(storables: storables, operation: .delete, table: table)
+            let uuids = operation.storables.map{$0.uuid}
+            guard adapterTable.delete(uuids) else { return Future(JSONAdapterError.deleteFailed) }
+            redoStack.push(Stack.Operation(method: .delete, storables: operation.storables, table: operation.table))
         case .update:
-            guard adapterTable.update(storables) else { return Future(InMemoryAdapterError.updateFailed) }
-            redoStack.push(storables: storables, operation: .update, table: table)
+            guard adapterTable.update(operation.storables) else { return Future(JSONAdapterError.updateFailed) }
+            redoStack.push(Stack.Operation(method: .update, storables: operation.storables, table: operation.table))
         case .delete:
-            guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
-            redoStack.push(storables: storables, operation: .insert, table: table)
+            guard adapterTable.insert(operation.storables) else { return Future(JSONAdapterError.insertFailed) }
+            redoStack.push(Stack.Operation(method: .insert, storables: operation.storables, table: operation.table))
         }
         
         return Future<Bool> { completion in
@@ -129,9 +127,9 @@ extension JSONAdapter: Adapter {
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     let data = try encoder.encode(adapterTable.storables)
-                    try data.write(to: directory.appendingPathComponent("\(table.name).json"))
+                    try data.write(to: directory.appendingPathComponent("\(operation.table.name).json"))
                     DispatchQueue.main.async {
-                        self.store[table.name] = adapterTable
+                        self.store[operation.table.name] = adapterTable
                         completion(.success(true))
                     }
                 } catch {
@@ -142,23 +140,21 @@ extension JSONAdapter: Adapter {
     }
     
     public func redo() -> Future<Bool> {
-        guard let table = redoStack.popTable(),
-            let operation = redoStack.popOperation(),
-            var adapterTable = self.store[table.name]
-            else { return Future(false) }
-        let storables = redoStack.popStorables()
+        let operation = redoStack.pop()
         
-        switch operation {
+        guard var adapterTable = self.store[operation.table.name] else { return Future(false) }
+        
+        switch operation.method {
         case .insert:
-            let uuids = storables.map{$0.uuid}
-            guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
-            undoStack.push(storables: storables, operation: .delete, table: table)
+            let uuids = operation.storables.map{$0.uuid}
+            guard adapterTable.delete(uuids) else { return Future(JSONAdapterError.deleteFailed) }
+            undoStack.push(Stack.Operation(method: .delete, storables: operation.storables, table: operation.table))
         case .update:
-            guard adapterTable.update(storables) else { return Future(InMemoryAdapterError.updateFailed) }
-            undoStack.push(storables: storables, operation: .update, table: table)
+            guard adapterTable.update(operation.storables) else { return Future(JSONAdapterError.updateFailed) }
+            undoStack.push(Stack.Operation(method: .update, storables: operation.storables, table: operation.table))
         case .delete:
-            guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
-            undoStack.push(storables: storables, operation: .insert, table: table)
+            guard adapterTable.insert(operation.storables) else { return Future(JSONAdapterError.insertFailed) }
+            undoStack.push(Stack.Operation(method: .insert, storables: operation.storables, table: operation.table))
         }
         
         return Future<Bool> { completion in
@@ -168,9 +164,9 @@ extension JSONAdapter: Adapter {
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     let data = try encoder.encode(adapterTable.storables)
-                    try data.write(to: directory.appendingPathComponent("\(table.name).json"))
+                    try data.write(to: directory.appendingPathComponent("\(operation.table.name).json"))
                     DispatchQueue.main.async {
-                        self.store[table.name] = adapterTable
+                        self.store[operation.table.name] = adapterTable
                         completion(.success(true))
                     }
                 } catch {
@@ -189,7 +185,7 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .insert, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .insert, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -205,7 +201,7 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(storables: storables, operation: .insert, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .insert, storables: storables, table: I.table))
                 completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
@@ -257,7 +253,7 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .update, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .update, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -273,7 +269,7 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(storables: storables, operation: .update, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .update, storables: storables, table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -289,7 +285,7 @@ extension JSONAdapter: Adapter {
                 else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(storables: [storable], operation: .delete, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .delete, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -304,7 +300,7 @@ extension JSONAdapter: Adapter {
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.undoStack.push(storables: storables, operation: .delete, table: I.table)
+                self.undoStack.push(Stack.Operation(method: .delete, storables: storables, table: I.table))
                 self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in

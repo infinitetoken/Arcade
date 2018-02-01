@@ -1,33 +1,38 @@
 import Cocoa
 import Arcade
 
-enum PlaygroundTable: String, Table {
-    case widget = "Widget"
-    
-    var name: String {
-        return self.rawValue
-    }
-}
-
-struct Widget: Storable {
-    
-    var uuid: UUID
-    var name: String
-    
-}
-
-let widget = Widget(uuid: UUID(), name: "Hello")
 let adapter = InMemoryAdapter()
-let arcade = Arcade.shared
-arcade.addAdapter(adapter, forKey: "InMemory")
 
-adapter.insert(table: PlaygroundTable.widget, storable: widget).then({ (arcade) -> Future<[Widget]> in
-    return adapter.fetch(table: PlaygroundTable.widget, query: nil)
-}).subscribe({ (widgets) in
-    print(widgets)
+Owner.adapter = adapter
+Pet.adapter = adapter
+PetToy.adapter = adapter
+Toy.adapter = adapter
+
+var owner = Owner()
+owner.name = "Aaron"
+owner.uuid
+
+var pet = Pet()
+pet.name = "Sheldon"
+pet.ownerID = owner.uuid
+
+var toy = Toy()
+toy.name = "Ball"
+
+var petToy = PetToy()
+petToy.petID = pet.uuid
+petToy.toyID = toy.uuid
+
+adapter.insert(storable: owner).then({ (success) -> Future<Bool> in
+    return adapter.insert(storable: pet)
+}).then({ (success) -> Future<Bool> in
+    return adapter.insert(storable: toy)
+}).then({ (success) -> Future<Bool> in
+    return adapter.insert(storable: petToy)
+}).then({ (success) -> Future<[Toy]> in
+    return pet.toys.query(query: Query.expression(.equal("name", "Ball")))
+}).subscribe({ (toys) in
+    Swift.print(toys)
 }) { (error) in
-    print(error)
+    Swift.print(error)
 }
-
-let expression = Expression.comparison("name", Comparison.contains, "Bob", [.caseInsensitive, .diacriticInsensitive])
-print(expression.description)
