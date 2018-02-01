@@ -25,7 +25,7 @@ public struct Owner: Storable {
     public var name: String?
     
     public var pets: Children<Owner, Pet> {
-        return Children<Owner, Pet>(uuid: self.uuid)
+        return Children<Owner, Pet>(self.uuid)
     }
     
     public var dictionary: [String: Any] {
@@ -49,15 +49,15 @@ public struct Pet: Storable {
     public var ownerID: UUID?
     
     public var owner: Parent<Pet, Owner> {
-        return Parent<Pet, Owner>(uuid: self.ownerID)
+        return Parent<Pet, Owner>(self.ownerID)
     }
     
     public var petToys: Children<Pet, PetToy> {
-        return Children<Pet, PetToy>(uuid: self.uuid)
+        return Children<Pet, PetToy>(self.uuid)
     }
     
     public var toys: Siblings<Pet, Toy, PetToy> {
-        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid)
+        return Siblings<Pet, Toy, PetToy>(self.uuid)
     }
     
     public var dictionary: [String: Any] {
@@ -82,11 +82,11 @@ public struct PetToy: Storable {
     public var toyID: UUID?
     
     public var pet: Parent<PetToy, Pet> {
-        return Parent<PetToy, Pet>(uuid: self.petID)
+        return Parent<PetToy, Pet>(self.petID)
     }
     
     public var toy: Parent<PetToy, Toy> {
-        return Parent<PetToy, Toy>(uuid: self.toyID)
+        return Parent<PetToy, Toy>(self.toyID)
     }
     
     public var dictionary: [String: Any] {
@@ -109,11 +109,11 @@ public struct Toy: Storable {
     public var name: String?
     
     public var petToys: Children<Toy, PetToy> {
-        return Children<Toy, PetToy>(uuid: self.uuid)
+        return Children<Toy, PetToy>(self.uuid)
     }
     
     public var pets: Siblings<Toy, Pet, PetToy> {
-        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid)
+        return Siblings<Toy, Pet, PetToy>(self.uuid)
     }
     
     public var dictionary: [String: Any] {
