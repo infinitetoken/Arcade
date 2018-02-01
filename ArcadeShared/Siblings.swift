@@ -19,7 +19,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
     
     public let uuid: UUID?
     
-    public init(uuid: UUID?) {
+    public init(_ uuid: UUID?) {
         self.uuid = uuid
     }
     
@@ -34,7 +34,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
     
-    public func query(query: Query) -> Future<[Destination]> {
+    public func query(_ query: Query) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
         
