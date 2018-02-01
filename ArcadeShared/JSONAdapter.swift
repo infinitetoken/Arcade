@@ -60,9 +60,11 @@ public extension JSONAdapter {
         func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
         func find(_ uuids: [UUID]) -> [Storable] { return storables.filter { uuids.contains($0.uuid) } }
         
-        func fetch(_ query: Query?) -> [Storable] {
-            guard let query = query else { return storables }
-            return storables.filter { query.predicate().evaluate(with: $0.dictionary) }
+        func fetch(_ query: Query?, sorts: [Sort], limit: Int, offset: Int) -> [Storable] {
+            guard let query = query else { return self.storables.offset(by: offset).limit(by: limit) }
+            return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
+                return sort.sortDescriptor()
+            })).offset(by: offset).limit(by: limit))
         }
         
         mutating func update(_ storable: Storable) -> Bool {
@@ -85,7 +87,7 @@ public extension JSONAdapter {
         }
         
         func count(query: Query?) -> Int {
-            return self.fetch(query).count
+            return self.fetch(query, sorts: [], limit: 0, offset: 0).count
         }
         
     }
@@ -233,12 +235,12 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
                 self.store[I.table.name] = adapterTable
-                completion(.success(adapterTable.fetch(query) as! [I]))
+                completion(.success(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as! [I]))
             }, { (error) in
                 completion(.failure(error))
             })

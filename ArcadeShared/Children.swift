@@ -31,13 +31,15 @@ public struct Children<Parent, Child> where Parent: Storable, Child: Storable {
         return adapter.fetch(query: query)
     }
     
-    public func query(query: Query) -> Future<[Child]> {
+    public func fetch(query: Query?) -> Future<[Child]> {
         guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
         guard let adapter = Parent.adapter else { return Future(ChildrenError.noAdapter) }
         
-        let compoundQuery = Query.compoundAnd([Query.expression(.equal(Parent.foreignKey, uuid)), query])
-        
-        return adapter.fetch(query: compoundQuery)
+        if let query = query {
+            return adapter.fetch(query: Query.compoundAnd([Query.expression(.equal(Parent.foreignKey, uuid)), query]))
+        } else {
+            return adapter.fetch(query: Query.expression(.equal(Parent.foreignKey, uuid)))
+        }
     }
 
     public func find(uuid: UUID) -> Future<Child?> {

@@ -1,12 +1,9 @@
 import Cocoa
 import Arcade
 
-let adapter = InMemoryAdapter()
+Arcade.shared.addAdapter(InMemoryAdapter(), forKey: "Example")
 
-Owner.adapter = adapter
-Pet.adapter = adapter
-PetToy.adapter = adapter
-Toy.adapter = adapter
+let adapter = ExampleTable.adapter!
 
 var owner = Owner()
 owner.name = "Aaron"
@@ -22,17 +19,21 @@ toy.name = "Ball"
 var petToy = PetToy()
 petToy.petID = pet.uuid
 petToy.toyID = toy.uuid
-
-adapter.insert(storable: owner).then({ (success) -> Future<Bool> in
-    return adapter.insert(storable: pet)
+    
+owner.save().then({ (success) -> Future<Bool> in
+    return pet.save()
 }).then({ (success) -> Future<Bool> in
-    return adapter.insert(storable: toy)
+    return toy.save()
 }).then({ (success) -> Future<Bool> in
-    return adapter.insert(storable: petToy)
+    return petToy.save()
 }).then({ (success) -> Future<[Toy]> in
-    return pet.toys.query(query: Query.expression(.equal("name", "Ball")))
-}).subscribe({ (toys) in
+    return pet.toys.fetch(query: Query.expression(.equal("name", "Ball")))
+}).then({ (toys) -> Future<[Owner]> in
     Swift.print(toys)
+    let sort = Sort(key: "name", order: .ascending)
+    return Owner.fetch(query: nil, sorts: [sort], limit: 1, offset: 0)
+}).subscribe({ (owners) in
+    Swift.print(owners)
 }) { (error) in
     Swift.print(error)
 }

@@ -18,8 +18,6 @@ class JSONAdapterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        print("Directory: \(self.directory)")
-        
         self.adapter = JSONAdapter(directory: self.directory)
         
         let expectation = XCTestExpectation(description: "Setup")

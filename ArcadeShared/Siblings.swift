@@ -34,14 +34,18 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
     
-    public func query(query: Query) -> Future<[Destination]> {
+    public func fetch(query: Query?) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
         
         return adapter.fetch(query: Query.expression(.equal(Origin.foreignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.map { $0.dictionary[Destination.foreignKey] as? UUID }.flatMap { $0 }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
-            return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(Destination.idKey, throughs)), query]))
+            if let query = query {
+                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(Destination.idKey, throughs)), query]))
+            } else {
+                return adapter.fetch(query: Query.expression(.inside(Destination.idKey, throughs)))
+            }
         }
     }
     
