@@ -22,6 +22,10 @@ public struct Children<P, C> where P: Storable, C: Storable {
     public init(_ uuid: UUID?) {
         self.uuid = uuid
     }
+    
+    public init(_ parent: P?) {
+        self.uuid = parent?.uuid
+    }
 
     public func all() -> Future<[C]> {
         guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
