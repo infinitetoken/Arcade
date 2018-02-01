@@ -13,7 +13,7 @@ enum ParentError: Error {
     case noAdapter
 }
 
-public struct Parent<Child, Parent> where Child: Storable, Parent: Storable {
+public struct Parent<C, P> where C: Storable, P: Storable {
     
     public let uuid: UUID?
     
@@ -21,9 +21,9 @@ public struct Parent<Child, Parent> where Child: Storable, Parent: Storable {
         self.uuid = uuid
     }
     
-    public func get() -> Future<Parent?> {
+    public func get() -> Future<P?> {
         guard let uuid = self.uuid else { return Future(ParentError.noUUID) }
-        guard let adapter = Child.adapter else { return Future(ParentError.noAdapter) }
+        guard let adapter = C.adapter else { return Future(ParentError.noAdapter) }
         
         return adapter.find(uuid: uuid)
     }
