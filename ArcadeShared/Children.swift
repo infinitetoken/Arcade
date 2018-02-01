@@ -17,7 +17,8 @@ enum ChildrenError: Error {
 public struct Children<P, C> where P: Storable, C: Storable {
 
     public let uuid: UUID?
-
+    public let foreignKey: String
+    
     public init(_ uuid: UUID?) {
         self.uuid = uuid
     }
