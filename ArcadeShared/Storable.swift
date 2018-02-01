@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum StorableError: Error {
+    case noAdapter
+}
+
 public protocol Storable: Codable {
     
     static var table: Table { get set }
@@ -21,7 +25,7 @@ public protocol Storable: Codable {
 
 }
 
-extension Storable {
+public extension Storable {
     
     public static var idKey: String { return "uuid" }
     public static var foreignKey: String { return self.table.name.lowercased() }
@@ -30,5 +34,51 @@ extension Storable {
     public var adapter: Adapter? { return Self.adapter }
     public var idKey: String { return Self.idKey }
     public var foreignKey: String { return Self.foreignKey }
+    
+}
+
+public extension Storable {
+    
+    public static func all() -> Future<[Self]> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.fetch()
+    }
+    
+    public static func fetch(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[Self]> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.fetch(query: query, sorts: sorts, limit: limit, offset: offset)
+    }
+    
+    public static func find(uuid: UUID) -> Future<Self?> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.find(uuid: uuid)
+    }
+    
+    public static func find(uuids: [UUID]) -> Future<[Self]> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.find(uuids: uuids)
+    }
+    
+    public func save() -> Future<Bool> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.find(uuid: self.uuid).then { (result: Self?) -> Future<Bool> in
+            if let result = result {
+                return adapter.update(storable: result)
+            } else {
+                return adapter.insert(storable: self)
+            }
+        }
+    }
+    
+    public func delete() -> Future<Bool> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.delete(uuid: self.uuid, type: Self.self)
+    }
     
 }

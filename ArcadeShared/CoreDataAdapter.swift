@@ -184,7 +184,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -192,6 +192,11 @@ extension CoreDataAdapter: Adapter {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = query?.predicate()
+        fetchRequest.sortDescriptors = sorts.map({ (sort) -> NSSortDescriptor in
+            return sort.sortDescriptor()
+        })
+        fetchRequest.fetchLimit = limit
+        fetchRequest.fetchOffset = offset
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in

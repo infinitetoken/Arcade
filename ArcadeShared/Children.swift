@@ -15,9 +15,9 @@ enum ChildrenError: Error {
 }
 
 public struct Children<P, C> where P: Storable, C: Storable {
-    
+
     public let uuid: UUID?
-    
+
     public init(_ uuid: UUID?) {
         self.uuid = uuid
     }
@@ -31,23 +31,25 @@ public struct Children<P, C> where P: Storable, C: Storable {
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
 
         let query = Query.expression(.equal(P.foreignKey, uuid))
-        
+
         return adapter.fetch(query: query)
     }
-    
-    public func query(_ query: Query) -> Future<[C]> {
+
+    public func fetch(query: Query?) -> Future<[C]> {
         guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
         
-        let compoundQuery = Query.compoundAnd([Query.expression(.equal(P.foreignKey, uuid)), query])
-        
-        return adapter.fetch(query: compoundQuery)
+        if let query = query {
+            return adapter.fetch(query: Query.compoundAnd([Query.expression(.equal(P.foreignKey, uuid)), query]))
+        } else {
+            return adapter.fetch(query: Query.expression(.equal(P.foreignKey, uuid)))
+        }
     }
 
     public func find(_ uuid: UUID) -> Future<C?> {
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
-        
+
         return adapter.find(uuid: uuid)
     }
-    
+
 }
