@@ -40,7 +40,6 @@ public struct Owner: Storable {
 public struct Pet: Storable {
     public static var table: Table = ExampleTable.pet
     public static var adapter: Adapter? = ExampleTable.adapter
-    public static var foreignKey: String = "petID"
     
     public var uuid: UUID = UUID()
     public var name: String?
@@ -73,7 +72,6 @@ public struct Pet: Storable {
 public struct PetToy: Storable {
     public static var table: Table = ExampleTable.petToy
     public static var adapter: Adapter? = ExampleTable.adapter
-    public static var foreignKey: String = "petToyID"
     
     public var uuid: UUID = UUID()
     
@@ -102,7 +100,6 @@ public struct PetToy: Storable {
 public struct Toy: Storable {
     public static var table: Table = ExampleTable.toy
     public static var adapter: Adapter? = ExampleTable.adapter
-    public static var foreignKey: String = "toyID"
     
     public var uuid: UUID = UUID()
     public var name: String?
