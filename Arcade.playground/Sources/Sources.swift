@@ -19,13 +19,12 @@ public enum ExampleTable: String, Table {
 public struct Owner: Storable {
     public static var table: Table = ExampleTable.owner
     public static var adapter: Adapter? = ExampleTable.adapter
-    public static var foreignKey: String = "ownerID"
     
     public var uuid: UUID = UUID()
     public var name: String?
     
     public var pets: Children<Owner, Pet> {
-        return Children<Owner, Pet>(self.uuid)
+        return Children<Owner, Pet>(self.uuid, foreignKey: "ownerID")
     }
     
     public var dictionary: [String: Any] {
@@ -53,11 +52,11 @@ public struct Pet: Storable {
     }
     
     public var petToys: Children<Pet, PetToy> {
-        return Children<Pet, PetToy>(self.uuid)
+        return Children<Pet, PetToy>(self.uuid, foreignKey: "petID")
     }
     
     public var toys: Siblings<Pet, Toy, PetToy> {
-        return Siblings<Pet, Toy, PetToy>(self.uuid)
+        return Siblings<Pet, Toy, PetToy>(self.uuid, originForeignKey: "petID", destinationForeignKey: "toyID", destinationIDKey: "uuid")
     }
     
     public var dictionary: [String: Any] {
@@ -109,11 +108,11 @@ public struct Toy: Storable {
     public var name: String?
     
     public var petToys: Children<Toy, PetToy> {
-        return Children<Toy, PetToy>(self.uuid)
+        return Children<Toy, PetToy>(self.uuid, foreignKey: "toyID")
     }
     
     public var pets: Siblings<Toy, Pet, PetToy> {
-        return Siblings<Toy, Pet, PetToy>(self.uuid)
+        return Siblings<Toy, Pet, PetToy>(self.uuid, originForeignKey: "toyID", destinationForeignKey: "petID", destinationIDKey: "uuid")
     }
     
     public var dictionary: [String: Any] {
