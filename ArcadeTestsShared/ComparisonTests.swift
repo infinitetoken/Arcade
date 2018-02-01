@@ -18,6 +18,9 @@ class ComparisonTests: XCTestCase {
         XCTAssertEqual(Comparison.greaterThanOrEqualTo.description, ">=")
         XCTAssertEqual(Comparison.lessThan.description, "<")
         XCTAssertEqual(Comparison.lessThanOrEqualTo.description, "<=")
+        XCTAssertEqual(Comparison.contains.description, "contains")
+        XCTAssertEqual(Comparison.like.description, "like")
+        XCTAssertEqual(Comparison.inside.description, "in")
     }
     
     func testType() {
@@ -27,6 +30,9 @@ class ComparisonTests: XCTestCase {
         XCTAssertEqual(Comparison.greaterThanOrEqualTo.type(), NSComparisonPredicate.Operator.greaterThanOrEqualTo)
         XCTAssertEqual(Comparison.lessThan.type(), NSComparisonPredicate.Operator.lessThan)
         XCTAssertEqual(Comparison.lessThanOrEqualTo.type(), NSComparisonPredicate.Operator.lessThanOrEqualTo)
+        XCTAssertEqual(Comparison.contains.type(), NSComparisonPredicate.Operator.contains)
+        XCTAssertEqual(Comparison.like.type(), NSComparisonPredicate.Operator.like)
+        XCTAssertEqual(Comparison.inside.type(), NSComparisonPredicate.Operator.in)
     }
 
 }

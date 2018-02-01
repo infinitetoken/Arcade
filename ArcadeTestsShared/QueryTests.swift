@@ -28,8 +28,11 @@ class QueryTests: XCTestCase {
     }
 
     func testDescription() {
+        XCTAssertEqual(Query.expression(self.one).description, "foo = bar")
         XCTAssertEqual(Query.and([self.one, self.two]).description, "foo = bar && foo = bar")
         XCTAssertEqual(Query.or([self.one, self.two]).description, "foo = bar || foo = bar")
+        XCTAssertEqual(Query.compoundAnd([Query.expression(self.one), Query.expression(self.two)]).description, "(foo = bar) && (foo = bar)")
+        XCTAssertEqual(Query.compoundOr([Query.expression(self.one), Query.expression(self.two)]).description, "(foo = bar) || (foo = bar)")
     }
     
     func testPredicate() {
@@ -39,6 +42,8 @@ class QueryTests: XCTestCase {
         XCTAssertEqual(Query.expression(self.one).predicate().description, predicateOne.description)
         XCTAssertEqual(Query.and([self.one, self.two]).predicate().description, NSCompoundPredicate(andPredicateWithSubpredicates: [predicateOne, predicateTwo]).description)
         XCTAssertEqual(Query.or([self.one, self.two]).predicate().description, NSCompoundPredicate(orPredicateWithSubpredicates: [predicateOne, predicateTwo]).description)
+        XCTAssertEqual(Query.compoundAnd([Query.expression(self.one), Query.expression(self.two)]).predicate().description, NSCompoundPredicate(andPredicateWithSubpredicates: [predicateOne, predicateTwo]).description)
+        XCTAssertEqual(Query.compoundOr([Query.expression(self.one), Query.expression(self.two)]).predicate().description, NSCompoundPredicate(orPredicateWithSubpredicates: [predicateOne, predicateTwo]).description)
     }
 
 }

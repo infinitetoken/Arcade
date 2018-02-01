@@ -11,5 +11,5 @@ import Foundation
 public protocol Table {
     
     var name: String { get }
-        
+    
 }

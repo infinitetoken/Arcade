@@ -11,9 +11,8 @@ import Arcade
 
 struct Widget: Storable {
     
-    
     static var table: Table = WidgetTable.widget
-    
+    static var adapter: Adapter?
     
     var uuid: UUID
     var name: String?

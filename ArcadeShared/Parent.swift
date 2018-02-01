@@ -8,22 +8,24 @@
 
 import Foundation
 
+enum ParentError: Error {
+    case noUUID
+    case noAdapter
+}
 
-public struct Parent<Child, Parent> where Parent: Storable, Child: Storable  {
+public struct Parent<Child, Parent> where Child: Storable, Parent: Storable {
     
-    internal let child: Child
-    internal let key: String
+    public let uuid: UUID?
     
-    
-    public init(_ child: Child, key: String = Parent.table.name) {
-        self.child = child
-        self.key = key
+    public init(uuid: UUID?) {
+        self.uuid = uuid
     }
     
-    
-    public func storable() -> Future<Parent?> {
-        guard let uuid = child.parents[key] else { return Future(StorableError.noParentUUID) }
-        return Parent.adapter.find(uuid: uuid)
+    public func get() -> Future<Parent?> {
+        guard let uuid = self.uuid else { return Future(ParentError.noUUID) }
+        guard let adapter = Child.adapter else { return Future(ParentError.noAdapter) }
+        
+        return adapter.find(uuid: uuid)
     }
     
 }
