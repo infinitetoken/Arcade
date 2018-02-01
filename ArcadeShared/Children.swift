@@ -11,7 +11,6 @@ import Foundation
 enum ChildrenError: Error {
     case noUUID
     case noAdapter
-    case noForeignKey
 }
 
 public struct Children<P, C> where P: Storable, C: Storable {
@@ -23,10 +22,6 @@ public struct Children<P, C> where P: Storable, C: Storable {
         self.uuid = uuid
         self.foreignKey = foreignKey
     }
-    
-//    public init(_ parent: P?) {
-//        self.uuid = parent?.uuid
-//    }
 
     public func all() -> Future<[C]> {
         guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }

@@ -11,8 +11,6 @@ import Foundation
 enum SiblingsError: Error {
     case noUUID
     case noAdapter
-    case noOriginForeignKey
-    case noDestinationForeignKey
 }
 
 public struct Siblings<Origin, Destination, Through> where Origin: Storable, Destination: Storable, Through: Storable {
@@ -28,10 +26,6 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         self.destinationForeignKey = destinationForeignKey
         self.destinationIDKey = destinationIDKey
     }
-//
-//    public init(_ origin: Origin?) {
-//        self.uuid = origin?.uuid
-//    }
     
     public func all() -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
