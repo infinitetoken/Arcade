@@ -26,7 +26,7 @@ class StackTests: XCTestCase {
     }
     
     func testCanPush() {
-        let operation = Stack.Operation(method: .insert, storables: [], table: WidgetTable.widget)
+        let operation = Stack.Operation(method: .insert, storables: [], table: TestTable.widget)
         
         self.stack?.push(operation)
         
@@ -34,7 +34,7 @@ class StackTests: XCTestCase {
     }
     
     func testCanPop() {
-        let operation = Stack.Operation(method: .insert, storables: [], table: WidgetTable.widget)
+        let operation = Stack.Operation(method: .insert, storables: [], table: TestTable.widget)
         
         self.stack?.push(operation)
         
@@ -46,7 +46,7 @@ class StackTests: XCTestCase {
     }
     
     func testCanPeek() {
-        let operation = Stack.Operation(method: .insert, storables: [], table: WidgetTable.widget)
+        let operation = Stack.Operation(method: .insert, storables: [], table: TestTable.widget)
         
         self.stack?.push(operation)
         

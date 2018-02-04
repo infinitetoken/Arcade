@@ -17,12 +17,12 @@ class CoreDataAdapterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let url = Bundle(for: CoreDataAdapterTests.self).url(forResource: "Model", withExtension: "momd")
+        let url = Bundle(for: CoreDataAdapterTests.self).url(forResource: "TestModel", withExtension: "momd")
         let model = NSManagedObjectModel(contentsOf: url!)
         let persistentStoreDescription = NSPersistentStoreDescription()
         persistentStoreDescription.type = NSInMemoryStoreType
         
-        self.adapter = CoreDataAdapter(persistentContainerName: "Model", persistentStoreDescriptions: [persistentStoreDescription], managedObjectModel: model)
+        self.adapter = CoreDataAdapter(persistentContainerName: "TestModel", persistentStoreDescriptions: [persistentStoreDescription], managedObjectModel: model)
         
         let expectation = XCTestExpectation(description: "Setup")
 
@@ -175,7 +175,7 @@ class CoreDataAdapterTests: XCTestCase {
         self.adapter.insert(storable: widget).then({ (result) -> Future<Bool> in
             return self.adapter.delete(uuid: widget.uuid, type: Widget.self)
         }).then({ (adapter) -> Future<Int> in
-            return self.adapter.count(table: WidgetTable.widget, query: nil)
+            return self.adapter.count(table: TestTable.widget, query: nil)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
@@ -196,7 +196,7 @@ class CoreDataAdapterTests: XCTestCase {
         let query = Query.expression(expression)
 
         self.adapter.insert(storable: widget).then({ (result) -> Future<Int> in
-            return self.adapter.count(table: WidgetTable.widget, query: query)
+            return self.adapter.count(table: TestTable.widget, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()

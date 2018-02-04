@@ -1,17 +1,17 @@
 //
-//  Widget.swift
+//  Pet.swift
 //  Arcade
 //
-//  Created by A.C. Wright Design on 10/30/17.
-//  Copyright © 2017 A.C. Wright Design. All rights reserved.
+//  Created by A.C. Wright Design on 2/4/18.
+//  Copyright © 2018 A.C. Wright Design. All rights reserved.
 //
 
 import Foundation
 import Arcade
 
-struct Widget: Storable {
+struct Pet: Storable {
     
-    static var table: Table = TestTable.widget
+    static var table: Table = TestTable.pet
     static var adapter: Adapter?
     
     var uuid: UUID

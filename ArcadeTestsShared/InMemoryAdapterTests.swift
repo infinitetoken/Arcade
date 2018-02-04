@@ -144,7 +144,7 @@ class InMemoryAdapterTests: XCTestCase {
         self.adapter.insert(storable: widget).then({ (result) -> Future<Bool> in
             return self.adapter.delete(uuid: widget.uuid, type: Widget.self)
         }).then({ (adapter) -> Future<Int> in
-            return self.adapter.count(table: WidgetTable.widget, query: nil)
+            return self.adapter.count(table: TestTable.widget, query: nil)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
@@ -165,7 +165,7 @@ class InMemoryAdapterTests: XCTestCase {
         let query = Query.expression(expression)
         
         self.adapter.insert(storable: widget).then({ (result) -> Future<Int> in
-            return self.adapter.count(table: WidgetTable.widget, query: query)
+            return self.adapter.count(table: TestTable.widget, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()

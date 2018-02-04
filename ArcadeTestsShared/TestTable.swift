@@ -1,5 +1,5 @@
 //
-//  WidgetTable.swift
+//  TestTable.swift
 //  Arcade
 //
 //  Created by A.C. Wright Design on 11/1/17.
@@ -9,7 +9,11 @@
 import Foundation
 import Arcade
 
-enum WidgetTable: String, Table {
+enum TestTable: String, Table {
+    case owner = "OwnerEntity"
+    case pet = "PetEntity"
+    case petToy = "PetToyEntity"
+    case toy = "ToyEntity"
     case widget = "WidgetEntity"
     
     var name: String {

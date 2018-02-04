@@ -15,10 +15,10 @@
 		ACDCB90E2021219C00BBA9D7 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90C2021219C00BBA9D7 /* Parent.swift */; };
 		ACDCB910202121A500BBA9D7 /* Siblings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90F202121A500BBA9D7 /* Siblings.swift */; };
 		ACDCB911202121A500BBA9D7 /* Siblings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90F202121A500BBA9D7 /* Siblings.swift */; };
-		F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
-		F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* WidgetTable.swift */; };
-		F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
-		F004FF141FAA1E48008EAD16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */; };
+		F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
+		F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
+		F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
+		F004FF141FAA1E48008EAD16 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
 		F01AE62A1FBF711900C21931 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
@@ -66,6 +66,22 @@
 		F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F500101FA9D9F700F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500271FA9DAF500F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F0F5002A1FA9DB2000F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500291FA9DB1700F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F0F519752027458900AB1FFE /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519742027458900AB1FFE /* OwnerEntity.swift */; };
+		F0F519762027458900AB1FFE /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519742027458900AB1FFE /* OwnerEntity.swift */; };
+		F0F519782027459600AB1FFE /* PetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519772027459600AB1FFE /* PetEntity.swift */; };
+		F0F519792027459600AB1FFE /* PetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519772027459600AB1FFE /* PetEntity.swift */; };
+		F0F5197B2027459F00AB1FFE /* ToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197A2027459F00AB1FFE /* ToyEntity.swift */; };
+		F0F5197C2027459F00AB1FFE /* ToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197A2027459F00AB1FFE /* ToyEntity.swift */; };
+		F0F5197E202745A900AB1FFE /* PetToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197D202745A900AB1FFE /* PetToyEntity.swift */; };
+		F0F5197F202745A900AB1FFE /* PetToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197D202745A900AB1FFE /* PetToyEntity.swift */; };
+		F0F51981202745B500AB1FFE /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51980202745B500AB1FFE /* Owner.swift */; };
+		F0F51982202745B500AB1FFE /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51980202745B500AB1FFE /* Owner.swift */; };
+		F0F51984202745BB00AB1FFE /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51983202745BB00AB1FFE /* Pet.swift */; };
+		F0F51985202745BB00AB1FFE /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51983202745BB00AB1FFE /* Pet.swift */; };
+		F0F51987202745C300AB1FFE /* Toy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51986202745C300AB1FFE /* Toy.swift */; };
+		F0F51988202745C300AB1FFE /* Toy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51986202745C300AB1FFE /* Toy.swift */; };
+		F0F5198A202745C900AB1FFE /* PetToy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51989202745C900AB1FFE /* PetToy.swift */; };
+		F0F5198B202745C900AB1FFE /* PetToy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51989202745C900AB1FFE /* PetToy.swift */; };
 		F0F5FFF81FA9D9C300F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5FFEE1FA9D9C300F42111 /* Arcade.framework */; };
 		F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
 		F0F5FFFF1FA9D9C300F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F5FFF11FA9D9C300F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,7 +129,7 @@
 		ACDCB9092021218E00BBA9D7 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
 		ACDCB90C2021219C00BBA9D7 /* Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parent.swift; sourceTree = "<group>"; };
 		ACDCB90F202121A500BBA9D7 /* Siblings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Siblings.swift; sourceTree = "<group>"; };
-		F004FF101FAA1154008EAD16 /* WidgetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTable.swift; sourceTree = "<group>"; };
+		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
 		F037F2E620234B1900ADC2FC /* StackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
@@ -143,6 +159,14 @@
 		F0F5001D1FA9D9F700F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0F500271FA9DAF500F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F0F500291FA9DB1700F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		F0F519742027458900AB1FFE /* OwnerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerEntity.swift; sourceTree = "<group>"; };
+		F0F519772027459600AB1FFE /* PetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetEntity.swift; sourceTree = "<group>"; };
+		F0F5197A2027459F00AB1FFE /* ToyEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyEntity.swift; sourceTree = "<group>"; };
+		F0F5197D202745A900AB1FFE /* PetToyEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetToyEntity.swift; sourceTree = "<group>"; };
+		F0F51980202745B500AB1FFE /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		F0F51983202745BB00AB1FFE /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		F0F51986202745C300AB1FFE /* Toy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toy.swift; sourceTree = "<group>"; };
+		F0F51989202745C900AB1FFE /* PetToy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetToy.swift; sourceTree = "<group>"; };
 		F0F5FFEE1FA9D9C300F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F5FFF11FA9D9C300F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
 		F0F5FFF21FA9D9C300F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -269,10 +293,10 @@
 		F0B33B731FAA020A009BCB0A /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */,
-				F0B33B741FAA023B009BCB0A /* Widget.swift */,
-				F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */,
-				F004FF101FAA1154008EAD16 /* WidgetTable.swift */,
+				F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */,
+				F004FF101FAA1154008EAD16 /* TestTable.swift */,
+				F0F519732027456500AB1FFE /* Entities */,
+				F0F519722027455400AB1FFE /* Structures */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -358,6 +382,30 @@
 				F0B33B731FAA020A009BCB0A /* Fixtures */,
 			);
 			path = ArcadeTestsShared;
+			sourceTree = "<group>";
+		};
+		F0F519722027455400AB1FFE /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				F0F51980202745B500AB1FFE /* Owner.swift */,
+				F0F51983202745BB00AB1FFE /* Pet.swift */,
+				F0F51989202745C900AB1FFE /* PetToy.swift */,
+				F0F51986202745C300AB1FFE /* Toy.swift */,
+				F0B33B741FAA023B009BCB0A /* Widget.swift */,
+			);
+			name = Structures;
+			sourceTree = "<group>";
+		};
+		F0F519732027456500AB1FFE /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				F0F519742027458900AB1FFE /* OwnerEntity.swift */,
+				F0F519772027459600AB1FFE /* PetEntity.swift */,
+				F0F5197D202745A900AB1FFE /* PetToyEntity.swift */,
+				F0F5197A2027459F00AB1FFE /* ToyEntity.swift */,
+				F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 		F0F5FFE41FA9D9C300F42111 = {
@@ -665,21 +713,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F51988202745C300AB1FFE /* Toy.swift in Sources */,
 				F08E0A3D1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
 				F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
 				F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */,
-				F004FF121FAA1154008EAD16 /* WidgetTable.swift in Sources */,
+				F0F51985202745BB00AB1FFE /* Pet.swift in Sources */,
+				F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */,
 				F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */,
+				F0F519792027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F037F2E820234B1900ADC2FC /* StackTests.swift in Sources */,
 				F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
 				F037F2F22023507400ADC2FC /* ParentTests.swift in Sources */,
+				F0F519762027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EC20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F037F2F52023507C00ADC2FC /* SiblingsTests.swift in Sources */,
+				F0F5198B202745C900AB1FFE /* PetToy.swift in Sources */,
 				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
-				F004FF141FAA1E48008EAD16 /* Model.xcdatamodeld in Sources */,
+				F0F5197C2027459F00AB1FFE /* ToyEntity.swift in Sources */,
+				F004FF141FAA1E48008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */,
+				F0F5197F202745A900AB1FFE /* PetToyEntity.swift in Sources */,
+				F0F51982202745B500AB1FFE /* Owner.swift in Sources */,
 				F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */,
 				F037F2EF2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);
@@ -717,21 +773,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F51987202745C300AB1FFE /* Toy.swift in Sources */,
 				F08E0A3C1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
 				F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
 				F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */,
-				F004FF111FAA1154008EAD16 /* WidgetTable.swift in Sources */,
+				F0F51984202745BB00AB1FFE /* Pet.swift in Sources */,
+				F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */,
 				F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
 				F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */,
+				F0F519782027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F037F2E720234B1900ADC2FC /* StackTests.swift in Sources */,
 				F08E0A481FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */,
 				F037F2F12023507400ADC2FC /* ParentTests.swift in Sources */,
+				F0F519752027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F037F2F42023507C00ADC2FC /* SiblingsTests.swift in Sources */,
+				F0F5198A202745C900AB1FFE /* PetToy.swift in Sources */,
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
-				F004FF131FAA1E46008EAD16 /* Model.xcdatamodeld in Sources */,
+				F0F5197B2027459F00AB1FFE /* ToyEntity.swift in Sources */,
+				F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */,
+				F0F5197E202745A900AB1FFE /* PetToyEntity.swift in Sources */,
+				F0F51981202745B500AB1FFE /* Owner.swift in Sources */,
 				F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */,
 				F037F2EE2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);
@@ -1086,13 +1150,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F0B33B761FAA023C009BCB0A /* Model.xcdatamodeld */ = {
+		F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */,
 			);
 			currentVersion = F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			path = TestModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
