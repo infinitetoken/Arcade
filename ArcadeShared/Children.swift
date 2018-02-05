@@ -18,7 +18,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
     public let uuid: UUID?
     public let foreignKey: String
     
-    public init(_ uuid: UUID?, foreignKey: String) {
+    public init(uuid: UUID?, foreignKey: String) {
         self.uuid = uuid
         self.foreignKey = foreignKey
     }
@@ -43,7 +43,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
         }
     }
 
-    public func find(_ uuid: UUID) -> Future<C?> {
+    public func find(uuid: UUID) -> Future<C?> {
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
 
         return adapter.find(uuid: uuid)

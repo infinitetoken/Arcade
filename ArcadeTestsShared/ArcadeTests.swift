@@ -31,16 +31,16 @@ class ArcadeTests: XCTestCase {
     
     func testCanAddAdapter() {
         let adapter = InMemoryAdapter()
-        self.arcade?.addAdapter(adapter, forKey: "adapter")
-        XCTAssertNotNil(self.arcade?.adapter(forKey: "adapter"))
+        self.arcade?.addAdapter(adapter, forKey: "Test")
+        XCTAssertNotNil(self.arcade?.adapter(forKey: "Test"))
     }
     
     func testCanRemoveAdapter() {
         let adapter = InMemoryAdapter()
-        self.arcade?.addAdapter(adapter, forKey: "adapter")
-        XCTAssertNotNil(self.arcade?.adapter(forKey: "adapter"))
-        self.arcade?.removeAdapter(forKey: "adapter")
-        XCTAssertNil(self.arcade?.adapter(forKey: "adapter"))
+        self.arcade?.addAdapter(adapter, forKey: "Test")
+        XCTAssertNotNil(self.arcade?.adapter(forKey: "Test"))
+        self.arcade?.removeAdapter(forKey: "Test")
+        XCTAssertNil(self.arcade?.adapter(forKey: "Test"))
     }
     
 }

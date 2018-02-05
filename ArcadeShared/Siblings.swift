@@ -20,7 +20,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
     public let destinationForeignKey: String
     public let destinationIDKey: String
     
-    public init(_ uuid: UUID?, originForeignKey: String, destinationForeignKey: String, destinationIDKey: String) {
+    public init(uuid: UUID?, originForeignKey: String, destinationForeignKey: String, destinationIDKey: String) {
         self.uuid = uuid
         self.originForeignKey = originForeignKey
         self.destinationForeignKey = destinationForeignKey
@@ -51,6 +51,12 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
                 return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)))
             }
         }
+    }
+    
+    public func find(uuid: UUID) -> Future<Destination?> {
+        guard let adapter = Destination.adapter else { return Future(SiblingsError.noAdapter) }
+        
+        return adapter.find(uuid: uuid)
     }
 
 }

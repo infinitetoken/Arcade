@@ -16,6 +16,9 @@ class PetEntity: NSManagedObject {
     @NSManaged var uuid: UUID
     @NSManaged var name: String?
     
+    @NSManaged var owner: OwnerEntity?
+    @NSManaged var petToys: Set<PetToyEntity>
+    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
@@ -27,7 +30,7 @@ class PetEntity: NSManagedObject {
 extension PetEntity: CoreDataStorable {
     
     public var storable: Storable {
-        return Pet(uuid: self.uuid, name: self.name)
+        return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
     }
     
     public func update(withStorable dictionary: [String : Any]) -> Bool {
@@ -38,6 +41,11 @@ extension PetEntity: CoreDataStorable {
             self.name = name
         } else if dictionary["name"] is NSNull {
             self.name = nil
+        }
+        if let owner = dictionary["ownerID"] as? UUID, let managedObjectContext = self.managedObjectContext {
+            self.owner = OwnerEntity.object(with: owner, entityName: "OwnerEntity", in: managedObjectContext) as? OwnerEntity
+        } else if dictionary["ownerID"] is NSNull {
+            self.owner = nil
         }
         
         return true

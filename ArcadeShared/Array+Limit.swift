@@ -10,7 +10,7 @@ import Foundation
 
 public extension Array {
     
-    public func limit(by limit: Int) -> [Array.Iterator.Element] {
+    public func limit(to limit: Int) -> [Array.Iterator.Element] {
         if limit > 0 {
             return Array(self.prefix(upTo: Swift.min(limit, self.count)))
         }

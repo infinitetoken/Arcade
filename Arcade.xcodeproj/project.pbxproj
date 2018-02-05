@@ -23,6 +23,14 @@
 		F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
 		F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
+		F03556322028CBF500779008 /* ArrayLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556312028CBF500779008 /* ArrayLimitTests.swift */; };
+		F03556332028CBF500779008 /* ArrayLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556312028CBF500779008 /* ArrayLimitTests.swift */; };
+		F03556362028CE4000779008 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556352028CE4000779008 /* SortTests.swift */; };
+		F03556372028CE4000779008 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556352028CE4000779008 /* SortTests.swift */; };
+		F035563A2028D4A800779008 /* StorableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556392028D4A800779008 /* StorableTests.swift */; };
+		F035563B2028D4A800779008 /* StorableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556392028D4A800779008 /* StorableTests.swift */; };
+		F03556412028D62E00779008 /* NSManagedObject+Find.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556402028D62E00779008 /* NSManagedObject+Find.swift */; };
+		F03556422028D62E00779008 /* NSManagedObject+Find.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556402028D62E00779008 /* NSManagedObject+Find.swift */; };
 		F037F2E720234B1900ADC2FC /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2E620234B1900ADC2FC /* StackTests.swift */; };
 		F037F2E820234B1900ADC2FC /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2E620234B1900ADC2FC /* StackTests.swift */; };
 		F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */; };
@@ -43,6 +51,8 @@
 		F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F30320239B7D00ADC2FC /* Array+Limit.swift */; };
 		F03FE85B1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
+		F061C22D2028CAAA003597E9 /* SequenceSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */; };
+		F061C22E2028CAAA003597E9 /* SequenceSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */; };
 		F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
 		F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
 		F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
@@ -58,10 +68,8 @@
 		F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
 		F0A07B2D1FC4E5A7008421AB /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
 		F0A07B2E1FC4E5A9008421AB /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
-		F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
-		F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B741FAA023B009BCB0A /* Widget.swift */; };
-		F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */; };
-		F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */; };
+		F0EF7EF42028CBC800E744AF /* ArrayOffsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */; };
+		F0EF7EF52028CBC800E744AF /* ArrayOffsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */; };
 		F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5000E1FA9D9F700F42111 /* Arcade.framework */; };
 		F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F500101FA9D9F700F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500271FA9DAF500F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -132,6 +140,10 @@
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
+		F03556312028CBF500779008 /* ArrayLimitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayLimitTests.swift; sourceTree = "<group>"; };
+		F03556352028CE4000779008 /* SortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTests.swift; sourceTree = "<group>"; };
+		F03556392028D4A800779008 /* StorableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableTests.swift; sourceTree = "<group>"; };
+		F03556402028D62E00779008 /* NSManagedObject+Find.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Find.swift"; sourceTree = "<group>"; };
 		F037F2E620234B1900ADC2FC /* StackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
 		F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSComparisionDescriptionTests.swift; sourceTree = "<group>"; };
 		F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTests.swift; sourceTree = "<group>"; };
@@ -142,6 +154,7 @@
 		F037F3002023998900ADC2FC /* Array+Offset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Offset.swift"; sourceTree = "<group>"; };
 		F037F30320239B7D00ADC2FC /* Array+Limit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Limit.swift"; sourceTree = "<group>"; };
 		F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSComparisonPredicate+Description.swift"; sourceTree = "<group>"; };
+		F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceSortTests.swift; sourceTree = "<group>"; };
 		F08E0A381FA9FA6D00763001 /* FutureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureTests.swift; sourceTree = "<group>"; };
 		F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonTests.swift; sourceTree = "<group>"; };
 		F08E0A411FA9FAC700763001 /* ExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTests.swift; sourceTree = "<group>"; };
@@ -149,9 +162,8 @@
 		F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryAdapterTests.swift; sourceTree = "<group>"; };
 		F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAdapterTests.swift; sourceTree = "<group>"; };
 		F0A07B271FC4DF52008421AB /* Arcade.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Arcade.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F0B33B741FAA023B009BCB0A /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
-		F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetEntity.swift; sourceTree = "<group>"; };
 		F0B33B771FAA023C009BCB0A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOffsetTests.swift; sourceTree = "<group>"; };
 		F0F5000E1FA9D9F700F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F500101FA9D9F700F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
 		F0F500111FA9D9F700F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -231,10 +243,37 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		F03556342028CE2800779008 /* Sort */ = {
+			isa = PBXGroup;
+			children = (
+				F03556352028CE4000779008 /* SortTests.swift */,
+			);
+			name = Sort;
+			sourceTree = "<group>";
+		};
+		F03556382028D49800779008 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F03556392028D4A800779008 /* StorableTests.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		F03556432028D69200779008 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F03556402028D62E00779008 /* NSManagedObject+Find.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		F037F2E920234BEA00ADC2FC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */,
+				F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */,
+				F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */,
+				F03556312028CBF500779008 /* ArrayLimitTests.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -297,6 +336,7 @@
 				F004FF101FAA1154008EAD16 /* TestTable.swift */,
 				F0F519732027456500AB1FFE /* Entities */,
 				F0F519722027455400AB1FFE /* Structures */,
+				F03556432028D69200779008 /* Extensions */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -377,7 +417,9 @@
 				F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */,
 				F08E0A3F1FA9FAA000763001 /* Adapters */,
 				F037F2E920234BEA00ADC2FC /* Extensions */,
+				F03556382028D49800779008 /* Protocols */,
 				F08E0A3E1FA9FA9600763001 /* Query */,
+				F03556342028CE2800779008 /* Sort */,
 				F08E0A401FA9FAA900763001 /* Structures */,
 				F0B33B731FAA020A009BCB0A /* Fixtures */,
 			);
@@ -391,7 +433,6 @@
 				F0F51983202745BB00AB1FFE /* Pet.swift */,
 				F0F51989202745C900AB1FFE /* PetToy.swift */,
 				F0F51986202745C300AB1FFE /* Toy.swift */,
-				F0B33B741FAA023B009BCB0A /* Widget.swift */,
 			);
 			name = Structures;
 			sourceTree = "<group>";
@@ -403,7 +444,6 @@
 				F0F519772027459600AB1FFE /* PetEntity.swift */,
 				F0F5197D202745A900AB1FFE /* PetToyEntity.swift */,
 				F0F5197A2027459F00AB1FFE /* ToyEntity.swift */,
-				F0B33B751FAA023C009BCB0A /* WidgetEntity.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -714,13 +754,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F51988202745C300AB1FFE /* Toy.swift in Sources */,
+				F03556332028CBF500779008 /* ArrayLimitTests.swift in Sources */,
 				F08E0A3D1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
 				F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
+				F03556372028CE4000779008 /* SortTests.swift in Sources */,
 				F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */,
 				F0F51985202745BB00AB1FFE /* Pet.swift in Sources */,
 				F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */,
-				F0B33B7B1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
-				F0B33B791FAA023C009BCB0A /* Widget.swift in Sources */,
 				F0F519792027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F037F2E820234B1900ADC2FC /* StackTests.swift in Sources */,
@@ -729,13 +769,17 @@
 				F0F519762027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EC20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F037F2F52023507C00ADC2FC /* SiblingsTests.swift in Sources */,
+				F061C22E2028CAAA003597E9 /* SequenceSortTests.swift in Sources */,
 				F0F5198B202745C900AB1FFE /* PetToy.swift in Sources */,
 				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
 				F0F5197C2027459F00AB1FFE /* ToyEntity.swift in Sources */,
+				F03556422028D62E00779008 /* NSManagedObject+Find.swift in Sources */,
 				F004FF141FAA1E48008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F0F5197F202745A900AB1FFE /* PetToyEntity.swift in Sources */,
+				F0EF7EF52028CBC800E744AF /* ArrayOffsetTests.swift in Sources */,
 				F0F51982202745B500AB1FFE /* Owner.swift in Sources */,
+				F035563B2028D4A800779008 /* StorableTests.swift in Sources */,
 				F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */,
 				F037F2EF2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);
@@ -774,13 +818,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F51987202745C300AB1FFE /* Toy.swift in Sources */,
+				F03556322028CBF500779008 /* ArrayLimitTests.swift in Sources */,
 				F08E0A3C1FA9FA8F00763001 /* ComparisonTests.swift in Sources */,
 				F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */,
+				F03556362028CE4000779008 /* SortTests.swift in Sources */,
 				F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */,
 				F0F51984202745BB00AB1FFE /* Pet.swift in Sources */,
 				F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */,
-				F0B33B7A1FAA023C009BCB0A /* WidgetEntity.swift in Sources */,
-				F0B33B781FAA023C009BCB0A /* Widget.swift in Sources */,
 				F0F519782027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
 				F037F2E720234B1900ADC2FC /* StackTests.swift in Sources */,
@@ -789,13 +833,17 @@
 				F0F519752027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F037F2F42023507C00ADC2FC /* SiblingsTests.swift in Sources */,
+				F061C22D2028CAAA003597E9 /* SequenceSortTests.swift in Sources */,
 				F0F5198A202745C900AB1FFE /* PetToy.swift in Sources */,
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
 				F0F5197B2027459F00AB1FFE /* ToyEntity.swift in Sources */,
+				F03556412028D62E00779008 /* NSManagedObject+Find.swift in Sources */,
 				F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F0F5197E202745A900AB1FFE /* PetToyEntity.swift in Sources */,
+				F0EF7EF42028CBC800E744AF /* ArrayOffsetTests.swift in Sources */,
 				F0F51981202745B500AB1FFE /* Owner.swift in Sources */,
+				F035563A2028D4A800779008 /* StorableTests.swift in Sources */,
 				F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */,
 				F037F2EE2023506B00ADC2FC /* ChildrenTests.swift in Sources */,
 			);

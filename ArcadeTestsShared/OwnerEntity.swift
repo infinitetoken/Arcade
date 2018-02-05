@@ -16,6 +16,8 @@ class OwnerEntity: NSManagedObject {
     @NSManaged var uuid: UUID
     @NSManaged var name: String?
     
+    @NSManaged var pets: Set<PetEntity>
+    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         

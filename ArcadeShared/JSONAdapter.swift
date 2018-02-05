@@ -61,10 +61,10 @@ public extension JSONAdapter {
         func find(_ uuids: [UUID]) -> [Storable] { return storables.filter { uuids.contains($0.uuid) } }
         
         func fetch(_ query: Query?, sorts: [Sort], limit: Int, offset: Int) -> [Storable] {
-            guard let query = query else { return self.storables.offset(by: offset).limit(by: limit) }
+            guard let query = query else { return self.storables.offset(by: offset).limit(to: limit) }
             return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
                 return sort.sortDescriptor()
-            })).offset(by: offset).limit(by: limit))
+            })).offset(by: offset).limit(to: limit))
         }
         
         mutating func update(_ storable: Storable) -> Bool {

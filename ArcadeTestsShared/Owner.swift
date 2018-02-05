@@ -12,9 +12,11 @@ import Arcade
 struct Owner: Storable {
     
     static var table: Table = TestTable.owner
-    static var adapter: Adapter?
+    static var adapter: Adapter? {
+        return TestTable.adapter
+    }
     
-    var uuid: UUID
+    var uuid: UUID = UUID()
     var name: String?
     
     var dictionary: [String : Any]  {
@@ -22,6 +24,14 @@ struct Owner: Storable {
             "uuid": self.uuid,
             "name": self.name ?? NSNull()
         ]
+    }
+    
+}
+
+extension Owner {
+    
+    var pets: Children<Owner, Pet> {
+        return Children<Owner, Pet>(uuid: self.uuid, foreignKey: "ownerID")
     }
     
 }

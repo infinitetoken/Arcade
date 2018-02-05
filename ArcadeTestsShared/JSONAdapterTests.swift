@@ -11,64 +11,33 @@ import XCTest
 
 class JSONAdapterTests: XCTestCase {
     
-    var adapter: JSONAdapter!
-    var uuid: UUID = UUID()
-    var directory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
-    
-    override func setUp() {
-        super.setUp()
+    var adapter: JSONAdapter {
+        let directory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
         
-        self.adapter = JSONAdapter(directory: self.directory)
-        
-        let expectation = XCTestExpectation(description: "Setup")
-        
-        self.adapter.connect().subscribe({ (adapter) in
-            expectation.fulfill()
-        }) { (error) in
-            XCTFail(error.localizedDescription)
-        }
-        
-        wait(for: [expectation], timeout: 5.0)
+        return JSONAdapter(directory: directory)
     }
     
-    override func tearDown() {
-        let expectation = XCTestExpectation(description: "Teardown")
-        
-        self.adapter.disconnect().subscribe({ (adapter) in
-            expectation.fulfill()
-        }) { (error) in
-            XCTFail(error.localizedDescription)
-        }
-        
-        wait(for: [expectation], timeout: 5.0)
-        
-        self.adapter = nil
-        
-        super.tearDown()
-    }
-    
-    func testCanInitialize() {
-        XCTAssertNotNil(self.adapter)
-    }
-
     func testCanConnect() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Connect")
-
-        self.adapter.connect().subscribe({ (adapter) in
+        
+        adapter.connect().subscribe({ (success) in
+            XCTAssertTrue(success)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-
+        
         wait(for: [expectation], timeout: 5.0)
     }
     
     func testCanDisconnect() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Disconnect")
         
-        self.adapter.disconnect().subscribe({ (adapter) in
-            XCTAssertNotNil(adapter)
+        adapter.disconnect().subscribe({ (success) in
+            XCTAssertTrue(success)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -79,11 +48,16 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanInsert() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Insert")
         
-        let widget = Widget(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(storable: widget).subscribe({ (adapter) in
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).subscribe({ (success) in
+            XCTAssertTrue(success)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -94,14 +68,19 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanFind() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Find")
         
-        let widget = Widget(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(storable: widget).then({ (result) -> Future<Widget?> in
-            return self.adapter.find(uuid: widget.uuid)
-        }).subscribe({ (widget) in
-            XCTAssertNotNil(widget)
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).then({ (success) -> Future<Owner?> in
+            XCTAssertTrue(success)
+            return adapter.find(uuid: owner.uuid)
+        }).subscribe({ (owner) in
+            XCTAssertNotNil(owner)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -112,18 +91,23 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanFetch() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Fetch")
         
         let uuid = UUID()
-        let widget = Widget(uuid: uuid, name: "Test")
+        let owner = Owner(uuid: uuid, name: "Test")
         
         let expression = Expression.equal("uuid", uuid)
         let query = Query.expression(expression)
         
-        self.adapter.insert(storable: widget).then({ (result) -> Future<[Widget]> in
-            return self.adapter.fetch(query: query)
-        }).subscribe({ (widgets) in
-            XCTAssertEqual(widgets.count, 1)
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).then({ (success) -> Future<[Owner]> in
+            XCTAssertTrue(success)
+            return adapter.fetch(query: query)
+        }).subscribe({ (owners) in
+            XCTAssertEqual(owners.count, 1)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -134,23 +118,29 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanUpdate() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Update")
         
-        var widget = Widget(uuid: UUID(), name: "Test")
+        var owner = Owner(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(storable: widget).then({ (result) -> Future<Widget?> in
-            return self.adapter.find(uuid: widget.uuid)
-        }).then({ (fetchedWidget) -> Future<Bool> in
-            XCTAssertNotNil(fetchedWidget)
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).then({ (success) -> Future<Owner?> in
+            XCTAssertTrue(success)
+            return adapter.find(uuid: owner.uuid)
+        }).then({ (fetchedOwner) -> Future<Bool> in
+            XCTAssertNotNil(fetchedOwner)
             
-            widget.name = "Foo"
+            owner.name = "Foo"
             
-            return self.adapter.update(storable: widget)
-        }).then({ (result) -> Future<Widget?> in
-            return self.adapter.find(uuid: widget.uuid)
-        }).subscribe({ (fetchedWidget) in
-            XCTAssertNotNil(fetchedWidget)
-            XCTAssertEqual(fetchedWidget?.name, "Foo")
+            return adapter.update(storable: owner)
+        }).then({ (success) -> Future<Owner?> in
+            XCTAssertTrue(success)
+            return adapter.find(uuid: owner.uuid)
+        }).subscribe({ (fetchedOwner) in
+            XCTAssertNotNil(fetchedOwner)
+            XCTAssertEqual(fetchedOwner?.name, "Foo")
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -161,14 +151,20 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanDelete() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Delete")
         
-        let widget = Widget(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID(), name: "Test")
         
-        self.adapter.insert(storable: widget).then({ (adapter) -> Future<Bool> in
-            return self.adapter.delete(uuid: widget.uuid, type: Widget.self)
-        }).then({ (result) -> Future<Int> in
-            return self.adapter.count(table: TestTable.widget, query: nil)
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.delete(uuid: owner.uuid, type: Owner.self)
+        }).then({ (success) -> Future<Int> in
+            XCTAssertTrue(success)
+            return adapter.count(table: TestTable.owner, query: nil)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 0)
             expectation.fulfill()
@@ -181,15 +177,20 @@ class JSONAdapterTests: XCTestCase {
     }
     
     func testCanCount() {
+        let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Count")
         
-        let widget = Widget(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID(), name: "Test")
         
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
         
-        self.adapter.insert(storable: widget).then({ (result) -> Future<Int> in
-            return self.adapter.count(table: TestTable.widget, query: query)
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storable: owner)
+        }).then({ (success) -> Future<Int> in
+            XCTAssertTrue(success)
+            return adapter.count(table: TestTable.owner, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)
             expectation.fulfill()

@@ -17,7 +17,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
 
     public let uuid: UUID?
 
-    public init(_ uuid: UUID?) {
+    public init(uuid: UUID?) {
         self.uuid = uuid
     }
     

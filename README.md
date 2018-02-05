@@ -2,10 +2,12 @@
 
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-Arcade is a lightweight persistence layer for Swift structures!
+Arcade is a lightweight persistence layer for Swift structures or objects!
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Relationships](#relationships)
+- [CoreData](#coredata)
 - [License](#license)
 
 ## Installation with Carthage
@@ -36,10 +38,19 @@ Models (structures) in your project must conform to `Storable`.
 ```swift
 import Arcade
 
-struct Widget: Storable {
+struct Owner: Storable {
+
+    static var table: Table = AppTable.owner
 
     var uuid: UUID
     var name: String?
+    
+    var dictionary: [String : Any]  {
+        return [
+            "uuid": self.uuid,
+            "name": self.name ?? NSNull()
+        ]
+    }
 
 }
 ```
@@ -52,7 +63,7 @@ The `Table` protocol defines the names of the tables in which to store your mode
 import Arcade
 
 enum AppTable: String, Table {
-    case widget = "Widget"
+    case owner = "Owner"
 
     var name: String {
         return self.rawValue
@@ -73,7 +84,7 @@ let arcade = Arcade(adapter: InMemoryAdapter())
 ```swift
 import Arcade
 
-arcade.connect().subscribe({ (arcade) in
+arcade.connect().subscribe({ (success) in
     // Connected!
 }) { (error) in
     // Error
@@ -85,9 +96,9 @@ arcade.connect().subscribe({ (arcade) in
 ```swift
 import Arcade
 
-let widget = Widget(uuid: UUID(), name: "Foo")
+let owner = Owner(uuid: UUID(), name: "Foo")
 
-arcade.insert(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
+arcade.insert(storable: owner).subscribe({ (success) in
     // Inserted!
 }) { (error) in
     // Error
@@ -99,9 +110,9 @@ arcade.insert(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
 ```swift
 import Arcade
 
-widget.name = "Bar"
+owner.name = "Fred"
 
-arcade.update(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
+arcade.update(storable: owner).subscribe({ (success) in
     // Updated!
 }) { (error) in
     // Error
@@ -113,9 +124,9 @@ arcade.update(table: AppTable.widget, storable: widget).subscribe({ (arcade) in
 ```swift
 import Arcade
 
-let uuid = widget.uuid
+let uuid = owner.uuid
 
-arcade.delete(table: AppTable.widget, uuid: uuid, type: Widget.self).subscribe({ (arcade) in
+arcade.delete(uuid: uuid, type: Owner.self).subscribe({ (success) in
     // Deleted!
 }) { (error) in
     // Error
@@ -129,10 +140,10 @@ To find a specific item by UUID:
 ```swift
 import Arcade
 
-let future: Future<Widget> = arcade.find(table: AppTable.widget, uuid: widget.uuid)
+let future: Future<Owner> = arcade.find(uuid: owner.uuid)
 
-future.subscribe({ (widget) in
-    guard let widget = widget else {
+future.subscribe({ (owner) in
+    guard let owner = owner else {
         // Not found
     }
 
@@ -149,14 +160,158 @@ import Arcade
 
 let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
-let future Future<Widget> = arcade.fetch(table: AppTable.widget, query: query)
+let future: Future<Owner> = arcade.fetch(query: query)
 
-future.subscribe({ (widgets) in
-    // Do something with widgets...
+future.subscribe({ (owners) in
+    // Do something with owners...
 }) { (error) in
     // Error
 }
 ```
+
+## Relationships
+
+Relationships can be of type `Parent` (To-One), `Children` (To-Many), or `Siblings` (To-Many-Through).
+
+### Parents
+
+Assuming the following foreign key on `Pet`:
+
+```swift
+
+struct Pet: Storable {
+
+var ownerID: UUID?
+
+}
+```
+
+You can add a getter for the `Parent` of `Pet` with the following:
+
+```swift
+extension Pet {
+
+    //...
+
+    var owner: Parent<Pet, Owner> {
+        return Parent<Pet, Owner>(uuid: self.ownerID)
+    }
+
+    //...
+
+}
+```
+
+And you can access the parent like so:
+
+```swift
+let owner = pet.owner.find() // -> Future<Owner?>
+```
+
+### Children
+
+You can add a getter for the `Children` of `Owner` with the following:
+
+```swift
+extension Owner {
+
+    var pets: Children<Owner, Pet> {
+        return Children<Owner, Pet>(uuid: self.uuid, foreignKey: "ownerID")
+    }
+
+}
+```
+
+And you can access the children like so:
+
+```swift
+let pets = owner.pets.all() // -> Future<[Pet]>
+let pets = owner.pets.fetch(query: query) // -> Future<[Pet]>
+let pet = owner.pets.find(uuid: petUUID) // -> Future<Pet?>
+```
+
+### Siblings
+
+To setup a through relationship you will need a through table:
+
+```swift
+struct PetToy: Storable {
+
+    //...
+
+    var petID: UUID?
+    var toyID: UUID?
+
+    //...
+
+}
+```
+
+You can then setup a `Siblings` relationship like so:
+
+```swift
+extension Pet {
+
+    var toys: Siblings<Pet, Toy, PetToy> {
+        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid, originForeignKey: "petID", destinationForeignKey: "toyID", destinationIDKey: "uuid")
+    }
+
+}
+```
+
+And you can access the siblings like so:
+
+```swift
+let toys = pet.toys.all() // -> Future<[Toy]>
+let toys = pet.toys.fetch(query: query) // -> Future<[Toy]>
+let toy = pet.toys.find(uuid: toyUUID) // -> Future<Toy?>
+```
+
+## CoreData
+
+To use Arcade with the CoreData adapter some additional protocol conformance must be setup. Your
+CoreData entites should conform to `CoreDataStorable`:
+
+```swift
+
+@objc(OwnerEntity)
+class OwnerEntity: NSManagedObject {
+
+    @NSManaged var uuid: UUID
+    @NSManaged var name: String?
+
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+
+        self.uuid = UUID()
+    }
+
+}
+
+extension OwnerEntity: CoreDataStorable {
+
+    public var storable: Storable {
+        return Owner(uuid: self.uuid, name: self.name)
+    }
+
+    public func update(withStorable dictionary: [String : Any]) -> Bool {
+        if let uuid = dictionary["uuid"] as? UUID {
+            self.uuid = uuid
+        }
+    
+        if let name = dictionary["name"] as? String {
+            self.name = name
+        } else if dictionary["name"] is NSNull {
+            self.name = nil
+        }
+
+        return true
+    }
+
+}
+```
+
+That's it! Now you can save your objects using the `CoreDataAdapter` just like any other object!
 
 ## License
 

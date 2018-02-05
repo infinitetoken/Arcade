@@ -14,9 +14,12 @@ enum TestTable: String, Table {
     case pet = "PetEntity"
     case petToy = "PetToyEntity"
     case toy = "ToyEntity"
-    case widget = "WidgetEntity"
     
     var name: String {
         return self.rawValue
+    }
+    
+    public static var adapter: Adapter? {
+        return Arcade.shared.adapter(forKey: "Test")
     }
 }

@@ -11,4 +11,44 @@ import XCTest
 
 class ParentTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        
+        Arcade.shared.addAdapter(InMemoryAdapter(), forKey: "Test")
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        Arcade.shared.removeAdapter(forKey: "Test")
+    }
+    
+    func testFind() {
+        let expectation = XCTestExpectation(description: "Find")
+        
+        let owner = Owner(uuid: UUID(), name: "Test")
+        let pet = Pet(uuid: UUID(), name: "Test", ownerID: owner.uuid)
+        
+        guard let adapter = owner.adapter else { XCTFail(); return }
+        
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return owner.save()
+        }).then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return pet.save()
+        }).then { (success) -> Future<Owner?> in
+            XCTAssertTrue(success)
+            return pet.owner.find()
+        }.subscribe({ (owner) in
+            XCTAssertNotNil(owner)
+            expectation.fulfill()
+        }) { (error) in
+            XCTFail(error.localizedDescription)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
 }

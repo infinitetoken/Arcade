@@ -12,14 +12,33 @@ import Arcade
 struct PetToy: Storable {
     
     static var table: Table = TestTable.petToy
-    static var adapter: Adapter?
+    static var adapter: Adapter? {
+        return TestTable.adapter
+    }
     
-    var uuid: UUID
+    var uuid: UUID = UUID()
+    
+    var petID: UUID?
+    var toyID: UUID?
     
     var dictionary: [String : Any]  {
         return [
-            "uuid": self.uuid
+            "uuid": self.uuid,
+            "petID": self.petID ?? NSNull(),
+            "toyID": self.toyID ?? NSNull()
         ]
+    }
+    
+}
+
+extension PetToy {
+    
+    var pet: Parent<PetToy, Pet> {
+        return Parent<PetToy, Pet>(uuid: self.petID)
+    }
+    
+    var toy: Parent<PetToy, Toy> {
+        return Parent<PetToy, Toy>(uuid: self.toyID)
     }
     
 }

@@ -14,8 +14,8 @@ enum StorableError: Error {
 
 public protocol Storable: Codable {
     
-    static var table: Table { get set }
-    static var adapter: Adapter? { get set }
+    static var table: Table { get }
+    static var adapter: Adapter? { get }
     
     var uuid: UUID { get set }
     
@@ -24,6 +24,10 @@ public protocol Storable: Codable {
 }
 
 public extension Storable {
+    
+    public static var adapter: Adapter? {
+        return nil
+    }
     
     public var table: Table { return Self.table }
     public var adapter: Adapter? { return Self.adapter }
@@ -36,6 +40,12 @@ public extension Storable {
         guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.fetch()
+    }
+    
+    public static func fetch(query: Query?) -> Future<[Self]> {
+        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+        
+        return adapter.fetch(query: query)
     }
     
     public static func fetch(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[Self]> {
