@@ -27,7 +27,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
         guard let uuid = self.uuid else { return Future(ChildrenError.noUUID) }
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
 
-        let query = Query.expression(.equal(self.foreignKey, uuid))
+        let query = Query.expression(.equal(foreignKey, uuid))
 
         return adapter.fetch(query: query)
     }
@@ -37,9 +37,9 @@ public struct Children<P, C> where P: Storable, C: Storable {
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
         
         if let query = query {
-            return adapter.fetch(query: Query.compoundAnd([Query.expression(.equal(self.foreignKey, uuid)), query]))
+            return adapter.fetch(query: Query.compoundAnd([Query.expression(.equal(foreignKey, uuid)), query]))
         } else {
-            return adapter.fetch(query: Query.expression(.equal(self.foreignKey, uuid)))
+            return adapter.fetch(query: Query.expression(.equal(foreignKey, uuid)))
         }
     }
 

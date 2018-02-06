@@ -8,6 +8,11 @@
 
 import Foundation
 
+
+public func !=(lhs: Table, rhs: Table) -> Bool { return lhs.name != rhs.name }
+public func ==(lhs: Table, rhs: Table) -> Bool { return lhs.name == rhs.name }
+
+
 public protocol Table {
     
     var name: String { get }

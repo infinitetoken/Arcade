@@ -27,5 +27,5 @@ public struct Parent<C, P> where C: Storable, P: Storable {
 
         return adapter.find(uuid: uuid)
     }
-
+    
 }
