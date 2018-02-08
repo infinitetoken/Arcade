@@ -9,7 +9,6 @@
 import Foundation
 
 enum ParentError: Error {
-    case noUUID
     case noAdapter
 }
 
@@ -22,7 +21,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
     }
     
     public func find() -> Future<P?> {
-        guard let uuid = self.uuid else { return Future(ParentError.noUUID) }
+        guard let uuid = self.uuid else { return Future(nil) }
         guard let adapter = C.adapter else { return Future(ParentError.noAdapter) }
 
         return adapter.find(uuid: uuid)
