@@ -38,6 +38,9 @@ owner.save().then({ (success) -> Future<Bool> in
     Swift.print(error)
 }
 
+
+
+
 print("\n")
 
 owner.save().merge(with: pet.save()).subscribe({ (results) in
@@ -85,26 +88,17 @@ owners.removeFirst().merge(with: owners).subscribe({ (values) in
 }
 
 
-extension Array {
-    
-    public func invert<T>() -> Future<[T]> {
-        let futures = flatMap { $0 as? Future<T> }
-        return merge(futures)
-    }
-    
-}
-
-let array: [Future<Bool>] = [owner.save(), owner.save(), owner.save()]
-
-[owner.save(), owner.save(), owner.save()].invert().subscribe({ (values) in
-    values.forEach { print($0) }
-}) { (error) in
-    print(error)
-}
 
 
-array.invert().subscribe({ (values) in
-    values.forEach { print($0) }
-}) { (error) in
-    print(error)
-}
+
+
+
+
+//let toys: Future<[Toy]> = Children<Owner, Pet>(uuid: nil, foreignKey: "").children("").fetch(query: nil)
+//
+//Children<Owner, Pet>(uuid: nil, foreignKey: "petToy").children("").fetch(query: nil).subscribe({ (toys: [PetToy]) in
+//    print("hi")
+//}) { (error) in
+//    print(error)
+//}
+

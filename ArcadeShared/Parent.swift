@@ -52,7 +52,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
     
 }
 
-extension Parent {
+public extension Parent {
     
     public func parent<T>(toParent: @escaping (P) -> UUID) -> Parent<P, T> {
         return Parent<P, T>(child: find(), toParent: toParent)

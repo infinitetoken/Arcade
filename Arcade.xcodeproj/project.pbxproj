@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC6A7DC5203502440075CD40 /* Parents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC898F38202F8A1B00DEA675 /* Parents.swift */; };
 		AC898F39202F8A1B00DEA675 /* Parents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC898F38202F8A1B00DEA675 /* Parents.swift */; };
 		AC97D47120069B6200B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
 		AC97D4722006A59A00B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
@@ -735,6 +736,7 @@
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F037F2FF2023930A00ADC2FC /* Sequence+Sort.swift in Sources */,
+				AC6A7DC5203502440075CD40 /* Parents.swift in Sources */,
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
 				F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,

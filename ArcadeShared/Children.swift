@@ -120,7 +120,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
 }
 
 
-extension Children {
+public extension Children {
     
     public func parents<T>(toParent: @escaping (C) -> UUID) -> Parents<C, T> {
         return Parents<C, T>(all(), toParent: toParent)
