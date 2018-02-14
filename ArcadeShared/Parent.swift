@@ -18,7 +18,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
     public let uuid: UUID?
     
     let child: Future<C?>?
-    let toParent: ((C) -> UUID)?
+    let toParent: ((C) -> UUID?)?
 
     
     public init(uuid: UUID?) {
@@ -27,7 +27,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
         self.toParent = nil
     }
     
-    init(child: Future<C?>, toParent: @escaping (C) -> UUID) {
+    init(child: Future<C?>, toParent: @escaping (C) -> UUID?) {
         self.uuid = nil
         self.child = child
         self.toParent = toParent
@@ -40,8 +40,10 @@ public struct Parent<C, P> where C: Storable, P: Storable {
         if let toParent = toParent {
             if let child = child {
                 return child.then({ (child) -> Future<P?> in
-                    guard let child = child else { return Future(nil) }
-                    return adapter.find(uuid: toParent(child))
+                    guard let child = child,
+                    let uuid = toParent(child)
+                        else { return Future(nil) }
+                    return adapter.find(uuid: uuid)
                 })
             }
         }
@@ -54,7 +56,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
 
 public extension Parent {
     
-    public func parent<T>(toParent: @escaping (P) -> UUID) -> Parent<P, T> {
+    public func parent<T>(toParent: @escaping (P) -> UUID?) -> Parent<P, T> {
         return Parent<P, T>(child: find(), toParent: toParent)
     }
     

@@ -122,11 +122,11 @@ public struct Children<P, C> where P: Storable, C: Storable {
 
 public extension Children {
     
-    public func parents<T>(toParent: @escaping (C) -> UUID) -> Parents<C, T> {
+    public func parents<T>(toParent: @escaping (C) -> UUID?) -> Parents<C, T> {
         return Parents<C, T>(all(), toParent: toParent)
     }
     
-    public func parents<T>(afterFetch query: Query?, toParent: @escaping (C) -> UUID) -> Parents<C, T> {
+    public func parents<T>(afterFetch query: Query?, toParent: @escaping (C) -> UUID?) -> Parents<C, T> {
         return Parents<C, T>(fetch(query: query), toParent: toParent)
     }
     

@@ -13,7 +13,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
     let uuids: [UUID]
     
     let children: Future<[C]>?
-    let toParent: ((C) -> UUID)?
+    let toParent: ((C) -> UUID?)?
     
     
     public init(_ uuids: [UUID]) {
@@ -22,7 +22,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         self.toParent = nil
     }
     
-    init(_ children: Future<[C]>, toParent: @escaping (C) -> UUID) {
+    init(_ children: Future<[C]>, toParent: @escaping (C) -> UUID?) {
         self.uuids = []
         self.children = children
         self.toParent = toParent
@@ -36,7 +36,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
             else { return adapter.find(uuids: uuids) }
 
         return children.then({ (children) -> Future<[P]> in
-            return adapter.find(uuids: children.map(toParent))
+            return adapter.find(uuids: children.flatMap(toParent))
         })
     }
     
@@ -57,7 +57,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
             if let query = query {
                 return adapter.fetch(query: Query.compoundAnd([query, Query.or(children.map { .equal("uuid", toParent($0)) })]))
             } else {
-                return adapter.fetch(query: Query.or(children.map { .equal("uuid", toParent($0)) }))
+                return adapter.fetch(query: Query.or(children.flatMap{ toParent($0) }.map { .equal("uuid", $0) }))
             }
         }
     }
@@ -67,11 +67,11 @@ public struct Parents<C,P> where C: Storable, P: Storable {
 
 public extension Parents {
     
-    public func parents<T>(toParent: @escaping (P) -> UUID) -> Parents<P, T> {
+    public func parents<T>(toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
         return Parents<P, T>(all(), toParent: toParent)
     }
     
-    public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> UUID) -> Parents<P, T> {
+    public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
         return Parents<P, T>(fetch(query: query), toParent: toParent)
     }
     
