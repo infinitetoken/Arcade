@@ -49,9 +49,62 @@ owner.save().merge(with: pet.save()).subscribe({ (results) in
 
 print("\n")
 
+
+
+[owner.save(), owner.save(), owner.save()]**.subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
+
+print("\n")
+
+merge([owner.save(), owner.save(), owner.save()]).subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
+
+print("\n")
+
 owner.save().merge(with: [owner.save(), owner.save()]).subscribe({ (values) in
     values.forEach { print($0) }
 }) { (error) in
     print(error)
 }
 
+
+
+
+var owners = [owner.save(), owner.save(), owner.save()]
+
+owners.removeFirst().merge(with: owners).subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
+
+
+extension Array {
+    
+    public func invert<T>() -> Future<[T]> {
+        let futures = flatMap { $0 as? Future<T> }
+        return merge(futures)
+    }
+    
+}
+
+let array: [Future<Bool>] = [owner.save(), owner.save(), owner.save()]
+
+[owner.save(), owner.save(), owner.save()].invert().subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
+
+
+array.invert().subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
