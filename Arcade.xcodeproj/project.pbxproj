@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC898F39202F8A1B00DEA675 /* Parents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC898F38202F8A1B00DEA675 /* Parents.swift */; };
 		AC97D47120069B6200B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
 		AC97D4722006A59A00B466E6 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97D47020069B6200B466E6 /* Stack.swift */; };
 		ACDCB90A2021218E00BBA9D7 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
@@ -133,6 +134,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC898F38202F8A1B00DEA675 /* Parents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parents.swift; sourceTree = "<group>"; };
 		AC97D47020069B6200B466E6 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		ACDCB9092021218E00BBA9D7 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
 		ACDCB90C2021219C00BBA9D7 /* Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parent.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				AC97D47020069B6200B466E6 /* Stack.swift */,
 				ACDCB9092021218E00BBA9D7 /* Children.swift */,
 				ACDCB90C2021219C00BBA9D7 /* Parent.swift */,
+				AC898F38202F8A1B00DEA675 /* Parents.swift */,
 				ACDCB90F202121A500BBA9D7 /* Siblings.swift */,
 			);
 			name = Structures;
@@ -796,6 +799,7 @@
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
 				F037F2FE2023930A00ADC2FC /* Sequence+Sort.swift in Sources */,
+				AC898F39202F8A1B00DEA675 /* Parents.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
 				F037F30420239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,

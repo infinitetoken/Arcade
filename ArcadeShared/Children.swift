@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ChildrenError: Error {
+public enum ChildrenError: Error {
     case noUUID
     case noAdapter
 }
@@ -45,7 +45,6 @@ public struct Children<P, C> where P: Storable, C: Storable {
 
     public func find(uuid: UUID) -> Future<C?> {
         guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
-
         return adapter.find(uuid: uuid)
     }
 

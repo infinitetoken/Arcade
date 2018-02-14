@@ -13,6 +13,7 @@ public enum Result<T> {
     case failure(Error)
 }
 
+
 public struct Future<T> {
     
     public typealias ResultType = Result<T>
@@ -81,5 +82,35 @@ extension Future {
         }
     }
     
+    public func merge<U>(with future: Future<U>) -> Future<(T, U)> {
+        return then { (value) -> Future<(T, U)> in
+            future.then({ (valueTwo) -> Future<(T, U)> in
+                return Future<(T, U)>((value, valueTwo))
+            })
+        }
+    }
+    
+    public func merge(with futures: [Future<T>]) -> Future<[T]> {
+        var futures = futures
+        var values: [T] = []
+        
+        func result() -> Future<[T]> {
+            guard let future = futures.popLast() else { return Future<[T]>(values) }
+            
+            return future.then { (value) -> Future<[T]> in
+                values.append(value)
+                return result()
+            }
+        }
+        
+        return self.then { (value) -> Future<[T]> in
+            values.append(value)
+            return result()
+        }
+    }
+    
 }
+
+
+
 

@@ -37,3 +37,21 @@ owner.save().then({ (success) -> Future<Bool> in
 }) { (error) in
     Swift.print(error)
 }
+
+print("\n")
+
+owner.save().merge(with: pet.save()).subscribe({ (results) in
+    print(results.0)
+    print(results.1)
+}) { (error) in
+    print(error)
+}
+
+print("\n")
+
+owner.save().merge(with: [owner.save(), owner.save()]).subscribe({ (values) in
+    values.forEach { print($0) }
+}) { (error) in
+    print(error)
+}
+
