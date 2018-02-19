@@ -20,7 +20,6 @@ public struct Parent<C, P> where C: Storable, P: Storable {
     let child: Future<C?>?
     let toParent: ((C) -> UUID?)?
 
-    
     public init(uuid: UUID?) {
         self.uuid = uuid
         self.child = nil
@@ -33,9 +32,8 @@ public struct Parent<C, P> where C: Storable, P: Storable {
         self.toParent = toParent
     }
     
-    
-    public func find() -> Future<P?> {
-        guard let adapter = C.adapter else { return Future(ParentError.noAdapter) }
+    public func find(adapter: Adapter? = C.adapter) -> Future<P?> {
+        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         
         if let toParent = toParent {
             if let child = child {

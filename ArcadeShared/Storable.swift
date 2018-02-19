@@ -8,10 +8,8 @@
 
 import Foundation
 
-
 public func !=(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid != rhs.uuid }
 public func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid == rhs.uuid }
-
 
 enum StorableError: Error {
     case noAdapter
@@ -41,38 +39,38 @@ public extension Storable {
 
 public extension Storable {
     
-    public static func all() -> Future<[Self]> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public static func all(adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.fetch()
     }
     
-    public static func fetch(query: Query?) -> Future<[Self]> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public static func fetch(query: Query?, adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.fetch(query: query)
     }
     
-    public static func fetch(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[Self]> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public static func fetch(query: Query?, sorts: [Sort], limit: Int, offset: Int, adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.fetch(query: query, sorts: sorts, limit: limit, offset: offset)
     }
     
-    public static func find(uuid: UUID) -> Future<Self?> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public static func find(uuid: UUID, adapter: Adapter? = Self.adapter) -> Future<Self?> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.find(uuid: uuid)
     }
     
-    public static func find(uuids: [UUID]) -> Future<[Self]> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public static func find(uuids: [UUID], adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.find(uuids: uuids)
     }
     
-    public func save() -> Future<Bool> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public func save(adapter: Adapter? = Self.adapter) -> Future<Bool> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.find(uuid: self.uuid).then { (result: Self?) -> Future<Bool> in
             if let result = result {
@@ -83,8 +81,8 @@ public extension Storable {
         }
     }
     
-    public func delete() -> Future<Bool> {
-        guard let adapter = self.adapter else { return Future(StorableError.noAdapter) }
+    public func delete(adapter: Adapter? = Self.adapter) -> Future<Bool> {
+        guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.delete(uuid: self.uuid, type: Self.self)
     }

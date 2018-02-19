@@ -15,7 +15,6 @@ public struct Parents<C,P> where C: Storable, P: Storable {
     let children: Future<[C]>?
     let toParent: ((C) -> UUID?)?
     
-    
     public init(_ uuids: [UUID]) {
         self.uuids = uuids
         self.children = nil
@@ -28,9 +27,8 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         self.toParent = toParent
     }
     
-    
-    public func all() -> Future<[P]> {
-        guard let adapter = C.adapter else { return Future(ParentError.noAdapter) }
+    public func all(adapter: Adapter? = C.adapter) -> Future<[P]> {
+        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         guard let toParent = self.toParent,
             let children = self.children
             else { return adapter.find(uuids: uuids) }
@@ -40,9 +38,8 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         })
     }
     
-    
-    public func fetch(query: Query?) -> Future<[P]> {
-        guard let adapter = C.adapter else { return Future(ParentError.noAdapter) }
+    public func fetch(query: Query?, adapter: Adapter? = C.adapter) -> Future<[P]> {
+        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         guard let toParent = self.toParent,
             let children = self.children
             else {
@@ -64,7 +61,6 @@ public struct Parents<C,P> where C: Storable, P: Storable {
     
 }
 
-
 public extension Parents {
     
     public func parents<T>(toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
@@ -74,7 +70,6 @@ public extension Parents {
     public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
         return Parents<P, T>(fetch(query: query), toParent: toParent)
     }
-    
     
     public func children<T>(_ foreignKey: String) -> Children<P, T> {
         return Children<P, T>(parents: all(), foreignKey: foreignKey)

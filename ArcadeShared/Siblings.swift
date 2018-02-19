@@ -27,9 +27,9 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         self.destinationIDKey = destinationIDKey
     }
     
-    public func all() -> Future<[Destination]> {
+    public func all(adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
-        guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
+        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(self.originForeignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
@@ -38,9 +38,9 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
 
-    public func fetch(query: Query?) -> Future<[Destination]> {
+    public func fetch(query: Query?, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
-        guard let adapter = Origin.adapter else { return Future(SiblingsError.noAdapter) }
+        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(self.originForeignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
@@ -53,8 +53,8 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
     
-    public func find(uuid: UUID) -> Future<Destination?> {
-        guard let adapter = Destination.adapter else { return Future(SiblingsError.noAdapter) }
+    public func find(uuid: UUID, adapter: Adapter? = Destination.adapter) -> Future<Destination?> {
+        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
         
         return adapter.find(uuid: uuid)
     }

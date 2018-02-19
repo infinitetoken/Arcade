@@ -8,9 +8,7 @@
 
 import Foundation
 
-
 postfix operator **
-
 
 public postfix func **<T>(_ futures: [Future<T>]) -> Future<[T]> {
     var futures = futures
@@ -28,12 +26,26 @@ public postfix func **<T>(_ futures: [Future<T>]) -> Future<[T]> {
     return result()
 }
 
+public func merge<T>(_ futures: [Future<T>]) -> Future<[T]> {
+    var futures = futures
+    var values: [T] = []
+    
+    func result() -> Future<[T]> {
+        guard let future = futures.popLast() else { return Future<[T]>(values) }
+        
+        return future.then { (value) -> Future<[T]> in
+            values.append(value)
+            return result()
+        }
+    }
+    
+    return result()
+}
 
 public enum Result<T> {
     case success(T)
     case failure(Error)
 }
-
 
 public struct Future<T> {
     
@@ -131,30 +143,3 @@ extension Future {
     }
     
 }
-
-
-public func merge<T>(_ futures: [Future<T>]) -> Future<[T]> {
-    var futures = futures
-    var values: [T] = []
-    
-    func result() -> Future<[T]> {
-        guard let future = futures.popLast() else { return Future<[T]>(values) }
-        
-        return future.then { (value) -> Future<[T]> in
-            values.append(value)
-            return result()
-        }
-    }
-    
-    return result()
-}
-
-
-
-
-
-
-
-
-
-

@@ -21,7 +21,6 @@ public struct Children<P, C> where P: Storable, C: Storable {
     public let uuids: [UUID]
     public let foreignKey: String
     
-    
     public init(uuid: UUID?, foreignKey: String) {
         if let uuid = uuid { self.uuids = [uuid] } else { self.uuids = [] }
         self.foreignKey = foreignKey
@@ -50,9 +49,8 @@ public struct Children<P, C> where P: Storable, C: Storable {
         self.parent = parent
     }
     
-
-    public func all() -> Future<[C]> {
-        guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
+    public func all(adapter: Adapter? = P.adapter) -> Future<[C]> {
+        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
         
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
@@ -69,8 +67,8 @@ public struct Children<P, C> where P: Storable, C: Storable {
         }
     }
 
-    public func fetch(query: Query?) -> Future<[C]> {
-        guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
+    public func fetch(query: Query?, adapter: Adapter? = P.adapter) -> Future<[C]> {
+        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
         
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
@@ -106,8 +104,8 @@ public struct Children<P, C> where P: Storable, C: Storable {
         }
     }
 
-    public func find(uuid: UUID) -> Future<C?> {
-        guard let adapter = P.adapter else { return Future(ChildrenError.noAdapter) }
+    public func find(uuid: UUID, adapter: Adapter? = P.adapter) -> Future<C?> {
+        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
         
         let expressions = uuids.map { Expression.equal(foreignKey, $0) }
         let query = Query.compoundAnd([Query.or(expressions), Query.expression(.equal("uuid", uuid))])
@@ -119,7 +117,6 @@ public struct Children<P, C> where P: Storable, C: Storable {
     
 }
 
-
 public extension Children {
     
     public func parents<T>(toParent: @escaping (C) -> UUID?) -> Parents<C, T> {
@@ -129,7 +126,6 @@ public extension Children {
     public func parents<T>(afterFetch query: Query?, toParent: @escaping (C) -> UUID?) -> Parents<C, T> {
         return Parents<C, T>(fetch(query: query), toParent: toParent)
     }
-    
     
     public func children<T>(_ foreignKey: String) -> Children<C, T> {
         return Children<C, T>(parents: all(), foreignKey: foreignKey)
