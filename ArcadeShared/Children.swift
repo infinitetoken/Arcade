@@ -49,25 +49,25 @@ public struct Children<P, C> where P: Storable, C: Storable {
         self.parent = parent
     }
     
-    public func all(adapter: Adapter? = P.adapter) -> Future<[C]> {
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = P.adapter) -> Future<[C]> {
         guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
         
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
-                return adapter.fetch(query: Query.or(parents.map { Expression.equal(self.foreignKey, $0.uuid) }))
+                return adapter.fetch(query: Query.or(parents.map { Expression.equal(self.foreignKey, $0.uuid) }), sorts: sorts, limit: limit, offset: offset)
             })
         } else if let parent = parent {
             return parent.then({ (parent) -> Future<[C]> in
                 guard let parent = parent else { return Future([]) }
-                return adapter.fetch(query: Query.expression(.equal(self.foreignKey, parent.uuid)))
+                return adapter.fetch(query: Query.expression(.equal(self.foreignKey, parent.uuid)), sorts: sorts, limit: limit, offset: offset)
             })
         } else {
             guard uuids.count > 0 else { return Future(ChildrenError.noUUID) }
-            return adapter.fetch(query: Query.or(uuids.map { Expression.equal(foreignKey, $0) }))
+            return adapter.fetch(query: Query.or(uuids.map { Expression.equal(foreignKey, $0) }), sorts: sorts, limit: limit, offset: offset)
         }
     }
 
-    public func fetch(query: Query?, adapter: Adapter? = P.adapter) -> Future<[C]> {
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = P.adapter) -> Future<[C]> {
         guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
         
         if let parents = parents {
@@ -75,9 +75,9 @@ public struct Children<P, C> where P: Storable, C: Storable {
                 let uuids = Query.or(parents.map { Expression.equal(self.foreignKey, $0.uuid) })
                 
                 if let query = query {
-                    return adapter.fetch(query: Query.compoundAnd([query, uuids]))
+                    return adapter.fetch(query: Query.compoundAnd([query, uuids]), sorts: sorts, limit: limit, offset: offset)
                 } else {
-                    return adapter.fetch(query: uuids)
+                    return adapter.fetch(query: uuids, sorts: sorts, limit: limit, offset: offset)
                 }
             })
         } else if let parent = parent {
@@ -86,9 +86,9 @@ public struct Children<P, C> where P: Storable, C: Storable {
                 let uuid = Query.expression(.equal(self.foreignKey, parent.uuid))
                 
                 if let query = query {
-                    return adapter.fetch(query: Query.compoundAnd([query, uuid]))
+                    return adapter.fetch(query: Query.compoundAnd([query, uuid]), sorts: sorts, limit: limit, offset: offset)
                 } else {
-                    return adapter.fetch(query: uuid)
+                    return adapter.fetch(query: uuid, sorts: sorts, limit: limit, offset: offset)
                 }
             })
         } else {
@@ -97,9 +97,9 @@ public struct Children<P, C> where P: Storable, C: Storable {
             let expressions = uuids.map { Expression.equal(foreignKey, $0) }
             
             if let query = query {
-                return adapter.fetch(query: Query.compoundAnd([query, Query.or(expressions)]))
+                return adapter.fetch(query: Query.compoundAnd([query, Query.or(expressions)]), sorts: sorts, limit: limit, offset: offset)
             } else {
-                return adapter.fetch(query: Query.or(expressions))
+                return adapter.fetch(query: Query.or(expressions), sorts: sorts, limit: limit, offset: offset)
             }
         }
     }

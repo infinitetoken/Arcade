@@ -27,18 +27,18 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         self.destinationIDKey = destinationIDKey
     }
     
-    public func all(adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(self.originForeignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
-            return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)))
+            return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)), sorts: sorts, limit: limit, offset: offset)
         }
     }
 
-    public func fetch(query: Query?, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
@@ -46,9 +46,9 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
             return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
             if let query = query {
-                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(self.destinationIDKey, throughs)), query]))
+                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(self.destinationIDKey, throughs)), query]), sorts: sorts, limit: limit, offset: offset)
             } else {
-                return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)))
+                return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)), sorts: sorts, limit: limit, offset: offset)
             }
         }
     }

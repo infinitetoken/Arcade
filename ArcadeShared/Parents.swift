@@ -27,7 +27,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         self.toParent = toParent
     }
     
-    public func all(adapter: Adapter? = C.adapter) -> Future<[P]> {
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = C.adapter) -> Future<[P]> {
         guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         guard let toParent = self.toParent,
             let children = self.children
@@ -38,23 +38,23 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         })
     }
     
-    public func fetch(query: Query?, adapter: Adapter? = C.adapter) -> Future<[P]> {
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = C.adapter) -> Future<[P]> {
         guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         guard let toParent = self.toParent,
             let children = self.children
             else {
                 if let query = query {
-                    return adapter.fetch(query: Query.compoundAnd([query, Query.or(uuids.map { .equal("uuid", $0) })]))
+                    return adapter.fetch(query: Query.compoundAnd([query, Query.or(uuids.map { .equal("uuid", $0) })]), sorts: sorts, limit: limit, offset: offset)
                 } else {
-                    return adapter.fetch(query: Query.or(uuids.map { .equal("uuid", $0) }))
+                    return adapter.fetch(query: Query.or(uuids.map { .equal("uuid", $0) }), sorts: sorts, limit: limit, offset: offset)
                 }
         }
         
         return children.then { (children) -> Future<[P]> in
             if let query = query {
-                return adapter.fetch(query: Query.compoundAnd([query, Query.or(children.map { .equal("uuid", toParent($0)) })]))
+                return adapter.fetch(query: Query.compoundAnd([query, Query.or(children.map { .equal("uuid", toParent($0)) })]), sorts: sorts, limit: limit, offset: offset)
             } else {
-                return adapter.fetch(query: Query.or(children.flatMap{ toParent($0) }.map { .equal("uuid", $0) }))
+                return adapter.fetch(query: Query.or(children.flatMap{ toParent($0) }.map { .equal("uuid", $0) }), sorts: sorts, limit: limit, offset: offset)
             }
         }
     }
