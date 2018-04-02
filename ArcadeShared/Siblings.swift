@@ -32,7 +32,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(self.originForeignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
-            return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
+            return throughs.compactMap { $0.dictionary[self.destinationForeignKey] as? UUID }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
             return adapter.fetch(query: Query.expression(.inside(self.destinationIDKey, throughs)), sorts: sorts, limit: limit, offset: offset)
         }
@@ -43,7 +43,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(self.originForeignKey, uuid))).transform({ (throughs: [Through]) -> [UUID] in
-            return throughs.flatMap { $0.dictionary[self.destinationForeignKey] as? UUID }
+            return throughs.compactMap { $0.dictionary[self.destinationForeignKey] as? UUID }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
             if let query = query {
                 return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside(self.destinationIDKey, throughs)), query]), sorts: sorts, limit: limit, offset: offset)

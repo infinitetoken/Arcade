@@ -34,7 +34,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
             else { return adapter.find(uuids: uuids) }
 
         return children.then({ (children) -> Future<[P]> in
-            return adapter.find(uuids: children.flatMap(toParent))
+            return adapter.find(uuids: children.compactMap(toParent))
         })
     }
     
@@ -54,7 +54,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
             if let query = query {
                 return adapter.fetch(query: Query.compoundAnd([query, Query.or(children.map { .equal("uuid", toParent($0)) })]), sorts: sorts, limit: limit, offset: offset)
             } else {
-                return adapter.fetch(query: Query.or(children.flatMap{ toParent($0) }.map { .equal("uuid", $0) }), sorts: sorts, limit: limit, offset: offset)
+                return adapter.fetch(query: Query.or(children.compactMap{ toParent($0) }.map { .equal("uuid", $0) }), sorts: sorts, limit: limit, offset: offset)
             }
         }
     }
