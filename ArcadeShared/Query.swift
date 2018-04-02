@@ -16,6 +16,22 @@ public enum Query {
     case compoundOr([Query])
 }
 
+
+extension Query: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        case query
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.description, forKey: .query)
+    }
+    
+}
+
+
 public extension Query {
     
     public func predicate() -> NSPredicate {

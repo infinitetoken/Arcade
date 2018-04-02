@@ -23,6 +23,20 @@ public enum Expression {
     case all
 }
 
+extension Expression: Encodable {
+    
+    enum CodingKeys: CodingKey {
+        case expression
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.description, forKey: .expression)
+    }
+    
+}
+
 extension Expression {
     
     public func predicate() -> NSPredicate {
