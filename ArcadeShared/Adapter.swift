@@ -25,8 +25,6 @@ public protocol Adapter {
     func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I: Storable
     func count<T>(table: T) -> Future<Int> where T: Table
     func count<T>(table: T, query: Query?) -> Future<Int> where T: Table
-//    func undo() -> Future<Bool>
-//    func redo() -> Future<Bool>
     
 }
 
