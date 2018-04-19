@@ -38,11 +38,11 @@ extension Pet {
     }
     
     var petToys: Children<Pet, PetToy> {
-        return Children<Pet, PetToy>(uuid: self.uuid, foreignKey: "petID")
+        return Children<Pet, PetToy>(uuid: self.uuid)
     }
     
     var toys: Siblings<Pet, Toy, PetToy> {
-        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid, originForeignKey: "petID", destinationForeignKey: "toyID", destinationIDKey: "uuid")
+        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid)
     }
     
 }

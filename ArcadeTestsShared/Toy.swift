@@ -31,11 +31,11 @@ struct Toy: Storable {
 extension Toy {
     
     var petToys: Children<Toy, PetToy> {
-        return Children<Toy, PetToy>(uuid: self.uuid, foreignKey: "toyID")
+        return Children<Toy, PetToy>(uuid: self.uuid)
     }
     
     var pets: Siblings<Toy, Pet, PetToy> {
-        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid, originForeignKey: "toyID", destinationForeignKey: "petID", destinationIDKey: "uuid")
+        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid)
     }
     
 }

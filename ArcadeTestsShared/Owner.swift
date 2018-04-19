@@ -31,7 +31,7 @@ struct Owner: Storable {
 extension Owner {
     
     var pets: Children<Owner, Pet> {
-        return Children<Owner, Pet>(uuid: self.uuid, foreignKey: "ownerID")
+        return Children<Owner, Pet>(uuid: self.uuid)
     }
     
 }

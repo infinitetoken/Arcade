@@ -11,6 +11,19 @@ public enum ExampleTable: String, Table {
         return self.rawValue
     }
     
+    public var foreignKey: String {
+        switch self {
+        case .owner:
+            return "ownerID"
+        case .pet:
+            return "petID"
+        case .petToy:
+            return "petToyID"
+        case .toy:
+            return "toyID"
+        }
+    }
+    
     public static var adapter: Adapter? {
         return Arcade.shared.adapter(forKey: "Example")
     }
@@ -24,7 +37,7 @@ public struct Owner: Storable {
     public var name: String?
     
     public var pets: Children<Owner, Pet> {
-        return Children<Owner, Pet>(uuid: self.uuid, foreignKey: "ownerID")
+        return Children<Owner, Pet>(uuid: self.uuid)
     }
     
     public var dictionary: [String: Any] {
@@ -51,11 +64,11 @@ public struct Pet: Storable {
     }
     
     public var petToys: Children<Pet, PetToy> {
-        return Children<Pet, PetToy>(uuid: self.uuid, foreignKey: "petID")
+        return Children<Pet, PetToy>(uuid: self.uuid)
     }
     
     public var toys: Siblings<Pet, Toy, PetToy> {
-        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid, originForeignKey: "petID", destinationForeignKey: "toyID", destinationIDKey: "uuid")
+        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid)
     }
     
     public var dictionary: [String: Any] {
@@ -105,11 +118,11 @@ public struct Toy: Storable {
     public var name: String?
     
     public var petToys: Children<Toy, PetToy> {
-        return Children<Toy, PetToy>(uuid: self.uuid, foreignKey: "toyID")
+        return Children<Toy, PetToy>(uuid: self.uuid)
     }
     
     public var pets: Siblings<Toy, Pet, PetToy> {
-        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid, originForeignKey: "toyID", destinationForeignKey: "petID", destinationIDKey: "uuid")
+        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid)
     }
     
     public var dictionary: [String: Any] {

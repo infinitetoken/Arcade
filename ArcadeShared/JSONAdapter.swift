@@ -59,9 +59,13 @@ public extension JSONAdapter {
         }
         
         func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [UUID]) -> [Storable] { return storables.filter { uuids.contains($0.uuid) } }
+        func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+            return Array(self.storables.filter { uuids.contains($0.uuid) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
+                return sort.sortDescriptor()
+            })).offset(by: offset).limit(to: limit))
+        }
         
-        func fetch(_ query: Query?, sorts: [Sort], limit: Int, offset: Int) -> [Storable] {
+        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             guard let query = query else { return self.storables.offset(by: offset).limit(to: limit) }
             return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
                 return sort.sortDescriptor()
@@ -150,19 +154,19 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [UUID]) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
                 self.store[I.table.name] = adapterTable
-                completion(.success(adapterTable.find(uuids) as? [I] ?? []))
+                completion(.success(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? []))
             }, { (error) in
                 completion(.failure(error))
             })
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)

@@ -19,6 +19,19 @@ enum TestTable: String, Table {
         return self.rawValue
     }
     
+    var foreignKey: String {
+        switch self {
+        case .owner:
+            return "ownerID"
+        case .pet:
+            return "petID"
+        case .petToy:
+            return "petToyID"
+        case .toy:
+            return "toyID"
+        }
+    }
+    
     public static var adapter: Adapter? {
         return Arcade.shared.adapter(forKey: "Test")
     }

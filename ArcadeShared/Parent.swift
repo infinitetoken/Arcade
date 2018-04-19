@@ -59,7 +59,7 @@ public extension Parent {
     }
     
     public func children<T>(_ foreignKey: String) -> Children<P, T> {
-        return Children<P, T>(parent: find(), foreignKey: foreignKey)
+        return Children<P, T>(parent: find())
     }
     
 }

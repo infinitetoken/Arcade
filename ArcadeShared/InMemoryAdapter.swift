@@ -47,9 +47,13 @@ public extension InMemoryAdapter {
         }
         
         func find(_ uuid: UUID) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [UUID]) -> [Storable] { return self.storables.filter { uuids.contains($0.uuid) } }
+        func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+            return Array(self.storables.filter { uuids.contains($0.uuid) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
+                return sort.sortDescriptor()
+            })).offset(by: offset).limit(to: limit))
+        }
         
-        func fetch(_ query: Query?, sorts: [Sort], limit: Int, offset: Int) -> [Storable] {
+        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             guard let query = query else { return self.storables.offset(by: offset).limit(to: limit) }
             return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
                 return sort.sortDescriptor()
@@ -107,9 +111,9 @@ extension InMemoryAdapter: Adapter {
         guard let adapterTable = self.store[I.table.name] else { return Future(nil) }
         return Future(adapterTable.find(uuid) as? I)
     }
-    public func find<I>(uuids: [UUID]) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
-        return Future(adapterTable.find(uuids) as? [I] ?? [])
+        return Future(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
     
     public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I : Storable {

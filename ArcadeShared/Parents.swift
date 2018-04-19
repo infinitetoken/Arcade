@@ -31,10 +31,10 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         guard let adapter = adapter else { return Future(ParentError.noAdapter) }
         guard let toParent = self.toParent,
             let children = self.children
-            else { return adapter.find(uuids: uuids) }
+            else { return adapter.find(uuids: uuids, sorts: sorts, limit: limit, offset: offset) }
 
         return children.then({ (children) -> Future<[P]> in
-            return adapter.find(uuids: children.compactMap(toParent))
+            return adapter.find(uuids: children.compactMap(toParent), sorts: sorts, limit: limit, offset: offset)
         })
     }
     
@@ -71,12 +71,8 @@ public extension Parents {
         return Parents<P, T>(fetch(query: query), toParent: toParent)
     }
     
-    public func children<T>(_ foreignKey: String) -> Children<P, T> {
-        return Children<P, T>(parents: all(), foreignKey: foreignKey)
-    }
-    
-    public func children<T>(afterFetch query: Query?, foreignKey: String) -> Children<P, T> {
-        return Children<P, T>(parents: fetch(query: query), foreignKey: foreignKey)
+    public func children<T>(afterFetch query: Query?) -> Children<P, T> {
+        return Children<P, T>(parents: fetch(query: query))
     }
     
 }

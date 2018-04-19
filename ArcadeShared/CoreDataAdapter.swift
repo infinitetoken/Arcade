@@ -141,16 +141,19 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [UUID]) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
             else { return Future(CoreDataAdapterError.entityNotFound) }
         
-        let expression = Expression.comparison("uuid", Comparison.inside, uuids, [])
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.fetchLimit = uuids.count
-        fetchRequest.predicate = expression.predicate()
+        fetchRequest.fetchLimit = limit
+        fetchRequest.fetchOffset = offset
+        fetchRequest.sortDescriptors = sorts.map({ (sort) -> NSSortDescriptor in
+            return sort.sortDescriptor()
+        })
+        fetchRequest.predicate = Expression.comparison("uuid", Comparison.inside, uuids, []).predicate()
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
@@ -170,7 +173,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name

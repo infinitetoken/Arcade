@@ -63,10 +63,10 @@ public extension Storable {
         return adapter.find(uuid: uuid)
     }
     
-    public static func find(uuids: [UUID], adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+    public static func find(uuids: [UUID], sorts: [Sort], limit: Int, offset: Int, adapter: Adapter? = Self.adapter) -> Future<[Self]> {
         guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
-        return adapter.find(uuids: uuids)
+        return adapter.find(uuids: uuids, sorts: sorts, limit: limit, offset: offset)
     }
     
     public func save(adapter: Adapter? = Self.adapter) -> Future<Bool> {
