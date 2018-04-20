@@ -29,7 +29,7 @@ open class JSONAdapter {
     private var undoStack: Stack = Stack()
     private var redoStack: Stack = Stack()
     
-    public var prettyPrinted: Bool = false
+    public var prettyPrinted: Bool = true
     
     public init(directory: URL) {
         self.directory = directory
