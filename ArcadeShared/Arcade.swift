@@ -14,6 +14,8 @@ public final class Arcade {
 
     private var adapters: [String: Adapter] = [:]
     
+    public init() {}
+    
     public func addAdapter(_ adapter: Adapter, forKey key: String) {
         self.adapters[key] = adapter
     }
