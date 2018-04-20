@@ -61,13 +61,17 @@ public extension InMemoryAdapter {
         }
         
         mutating func update(_ storable: Storable) -> Bool {
-            return (delete(storable.uuid) && insert(storable))
+            if let existingStorable = find(storable.uuid) {
+                return delete(existingStorable.uuid) && insert(storable)
+            } else {
+                return insert(storable)
+            }
         }
         mutating func update(_ storables: [Storable]) -> Bool {
-            let uuids = storables.map{ $0.uuid }
-            let found = self.storables.filter{ uuids.contains($0.uuid) }
-            guard found.count >= storables.count else { return false }
-            return (delete(uuids) && insert(storables))
+            let results = storables.map { (storable) -> Bool in
+                return update(storable)
+            }
+            return !results.contains(false)
         }
         
         mutating func delete(_ uuid: UUID) -> Bool {

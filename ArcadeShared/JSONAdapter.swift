@@ -73,13 +73,17 @@ public extension JSONAdapter {
         }
         
         mutating func update(_ storable: Storable) -> Bool {
-            guard let existingStorable = find(storable.uuid) else { return false }
-            return (delete(existingStorable.uuid) && insert(storable))
+            if let existingStorable = find(storable.uuid) {
+                return delete(existingStorable.uuid) && insert(storable)
+            } else {
+                return insert(storable)
+            }
         }
         mutating func update(_ storables: [Storable]) -> Bool {
-            let found = self.storables.filter{ storables.map{ $0.uuid }.contains($0.uuid) }
-            guard found.count >= storables.count else { return false }
-            return (delete(storables.map{ $0.uuid }) && insert(storables))
+            let results = storables.map { (storable) -> Bool in
+                return update(storable)
+            }
+            return !results.contains(false)
         }
         
         mutating func delete(_ uuid: UUID) -> Bool {
