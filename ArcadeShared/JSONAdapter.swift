@@ -42,7 +42,6 @@ open class JSONAdapter {
     
 }
 
-
 public extension JSONAdapter {
     
     private struct AdapterTable {
@@ -259,6 +258,9 @@ extension JSONAdapter: Adapter {
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             
             let encoder = JSONEncoder()
+            encoder.dataEncodingStrategy = .base64
+            encoder.dateEncodingStrategy = .secondsSince1970
+            encoder.keyEncodingStrategy = .convertToSnakeCase
             
             if self.prettyPrinted {
                 encoder.outputFormatting = .prettyPrinted
@@ -295,7 +297,10 @@ extension JSONAdapter: Adapter {
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             
             let decoder = JSONDecoder()
-
+            decoder.dataDecodingStrategy = .base64
+            decoder.dateDecodingStrategy = .secondsSince1970
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     let fileURL = directory.appendingPathComponent("\(I.table.name).json")
