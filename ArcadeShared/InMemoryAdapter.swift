@@ -48,16 +48,19 @@ public extension InMemoryAdapter {
         
         func find(_ uuid: UUID) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
         func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            return Array(self.storables.filter { uuids.contains($0.uuid) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
-                return sort.sortDescriptor()
-            })).offset(by: offset).limit(to: limit))
+            var storables = self.storables.filter { uuids.contains($0.uuid) }
+            storables = self.sort(storables: storables, sorts: sorts)
+            return storables.offset(by: offset).limit(to: limit)
         }
         
         func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            guard let query = query else { return self.storables.offset(by: offset).limit(to: limit) }
-            return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
-                return sort.sortDescriptor()
-            })).offset(by: offset).limit(to: limit))
+            if let query = query {
+                var storables = self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }
+                storables = self.sort(storables: storables, sorts: sorts)
+                return storables.offset(by: offset).limit(to: limit)
+            } else {
+                return self.sort(storables: self.storables, sorts: sorts).offset(by: offset).limit(to: limit)
+            }
         }
         
         mutating func update(_ storable: Storable) -> Bool {
@@ -87,6 +90,37 @@ public extension InMemoryAdapter {
         
         func count(query: Query?) -> Int {
             return self.fetch(query, sorts: [], limit: 0, offset: 0).count
+        }
+        
+        func sort(storables: [Storable], sorts: [Sort]) -> [Storable] {
+            if sorts.isEmpty { return storables }
+            
+            var _storables = storables
+            
+            for sort in sorts {
+                _storables = self.sort(storables: _storables, sort: sort)
+            }
+            
+            return _storables
+        }
+        
+        func sort(storables: [Storable], sort: Sort) -> [Storable] {
+            let dicts = storables.map { (storable) -> [String : Any] in
+                return storable.dictionary
+            }
+            
+            let sorted = zip(dicts, storables).sorted { (a, b) -> Bool in
+                switch sort.sortDescriptor().compare(a.0, to: b.0) {
+                case .orderedAscending:
+                    return true
+                case .orderedDescending:
+                    return false
+                case .orderedSame:
+                    return true
+                }
+            }
+            
+            return sorted.map { $0.1 }
         }
     }
 }

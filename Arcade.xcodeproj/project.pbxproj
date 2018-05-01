@@ -55,6 +55,7 @@
 		F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F061C22D2028CAAA003597E9 /* SequenceSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */; };
 		F061C22E2028CAAA003597E9 /* SequenceSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */; };
+		F0858B44209827A300A83078 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0858B43209827A300A83078 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
 		F08E0A391FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
 		F08E0A3A1FA9FA6D00763001 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
@@ -75,7 +76,6 @@
 		F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5000E1FA9D9F700F42111 /* Arcade.framework */; };
 		F0F5001E1FA9D9F700F42111 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F500101FA9D9F700F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F500281FA9DB0A00F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500271FA9DAF500F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		F0F5002A1FA9DB2000F42111 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F500291FA9DB1700F42111 /* CoreData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F0F519752027458900AB1FFE /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519742027458900AB1FFE /* OwnerEntity.swift */; };
 		F0F519762027458900AB1FFE /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519742027458900AB1FFE /* OwnerEntity.swift */; };
 		F0F519782027459600AB1FFE /* PetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519772027459600AB1FFE /* PetEntity.swift */; };
@@ -158,6 +158,7 @@
 		F037F30320239B7D00ADC2FC /* Array+Limit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Limit.swift"; sourceTree = "<group>"; };
 		F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSComparisonPredicate+Description.swift"; sourceTree = "<group>"; };
 		F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceSortTests.swift; sourceTree = "<group>"; };
+		F0858B43209827A300A83078 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		F08E0A381FA9FA6D00763001 /* FutureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureTests.swift; sourceTree = "<group>"; };
 		F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonTests.swift; sourceTree = "<group>"; };
 		F08E0A411FA9FAC700763001 /* ExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTests.swift; sourceTree = "<group>"; };
@@ -173,7 +174,6 @@
 		F0F500161FA9D9F700F42111 /* ArcadeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArcadeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F5001D1FA9D9F700F42111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0F500271FA9DAF500F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		F0F500291FA9DB1700F42111 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		F0F519742027458900AB1FFE /* OwnerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerEntity.swift; sourceTree = "<group>"; };
 		F0F519772027459600AB1FFE /* PetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetEntity.swift; sourceTree = "<group>"; };
 		F0F5197A2027459F00AB1FFE /* ToyEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyEntity.swift; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0F5002A1FA9DB2000F42111 /* CoreData.framework in Frameworks */,
+				F0858B44209827A300A83078 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +394,7 @@
 		F0F500261FA9DAF500F42111 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F0F500291FA9DB1700F42111 /* CoreData.framework */,
+				F0858B43209827A300A83078 /* CoreData.framework */,
 				F0F500271FA9DAF500F42111 /* CoreData.framework */,
 			);
 			name = Frameworks;

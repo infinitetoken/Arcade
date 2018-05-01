@@ -117,6 +117,34 @@ class JSONAdapterTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
+    func testCanSort() {
+        let adapter = self.adapter
+        let expectation = XCTestExpectation(description: "Sort")
+        
+        let owner1 = Owner(uuid: UUID(), name: "Owner 1")
+        let owner2 = Owner(uuid: UUID(), name: "Owner 2")
+        
+        let query: Query? = nil
+        let sort = Sort(key: "name", order: .descending)
+        
+        adapter.connect().then({ (success) -> Future<Bool> in
+            XCTAssertTrue(success)
+            return adapter.insert(storables: [owner1, owner2])
+        }).then({ (success) -> Future<[Owner]> in
+            XCTAssertTrue(success)
+            return adapter.fetch(query: query, sorts: [sort], limit: 0, offset: 0)
+        }).subscribe({ (owners) in
+            XCTAssertEqual(owners.count, 2)
+            XCTAssertEqual(owners.first?.name, "Owner 2")
+            expectation.fulfill()
+        }) { (error) in
+            XCTFail(error.localizedDescription)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
     func testCanUpdate() {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Update")

@@ -26,9 +26,6 @@ open class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
-    private var undoStack: Stack = Stack()
-    private var redoStack: Stack = Stack()
-    
     public var prettyPrinted: Bool = true
     
     public init(directory: URL) {
@@ -59,16 +56,19 @@ public extension JSONAdapter {
         
         func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
         func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            return Array(self.storables.filter { uuids.contains($0.uuid) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
-                return sort.sortDescriptor()
-            })).offset(by: offset).limit(to: limit))
+            var storables = self.storables.filter { uuids.contains($0.uuid) }
+            storables = self.sort(storables: storables, sorts: sorts)
+            return storables.offset(by: offset).limit(to: limit)
         }
         
         func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            guard let query = query else { return self.storables.offset(by: offset).limit(to: limit) }
-            return Array(self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }.sorted(with: sorts.map({ (sort) -> NSSortDescriptor in
-                return sort.sortDescriptor()
-            })).offset(by: offset).limit(to: limit))
+            if let query = query {
+                var storables = self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }
+                storables = self.sort(storables: storables, sorts: sorts)
+                return storables.offset(by: offset).limit(to: limit)
+            } else {
+                return self.sort(storables: self.storables, sorts: sorts).offset(by: offset).limit(to: limit)
+            }
         }
         
         mutating func update(_ storable: Storable) -> Bool {
@@ -98,6 +98,37 @@ public extension JSONAdapter {
             return self.fetch(query, sorts: [], limit: 0, offset: 0).count
         }
         
+        func sort(storables: [Storable], sorts: [Sort]) -> [Storable] {
+            if sorts.isEmpty { return storables }
+            
+            var _storables = storables
+            
+            for sort in sorts {
+                _storables = self.sort(storables: _storables, sort: sort)
+            }
+            
+            return _storables
+        }
+        
+        func sort(storables: [Storable], sort: Sort) -> [Storable] {
+            let dicts = storables.map { (storable) -> [String : Any] in
+                return storable.dictionary
+            }
+            
+            let sorted = zip(dicts, storables).sorted { (a, b) -> Bool in
+                switch sort.sortDescriptor().compare(a.0, to: b.0) {
+                case .orderedAscending:
+                    return true
+                case .orderedDescending:
+                    return false
+                case .orderedSame:
+                    return true
+                }
+            }
+            
+            return sorted.map { $0.1 }
+        }
+        
     }
     
 }
@@ -121,7 +152,6 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[table.name] = adapterTable
-                self.undoStack.push(Stack.Operation(method: .insert, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -137,7 +167,6 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(Stack.Operation(method: .insert, storables: storables, table: I.table))
                 completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
@@ -189,7 +218,6 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(Stack.Operation(method: .update, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -205,7 +233,6 @@ extension JSONAdapter: Adapter {
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(Stack.Operation(method: .update, storables: storables, table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -216,12 +243,11 @@ extension JSONAdapter: Adapter {
     public func delete<I>(uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
-            guard let storable = adapterTable.find(uuid),
+            guard let _ = adapterTable.find(uuid),
                 adapterTable.delete(uuid)
                 else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
                 self.store[I.table.name] = adapterTable
-                self.undoStack.push(Stack.Operation(method: .delete, storables: [storable], table: I.table))
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -232,11 +258,9 @@ extension JSONAdapter: Adapter {
     public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
-            let storables = adapterTable.find(uuids)
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.undoStack.push(Stack.Operation(method: .delete, storables: storables, table: I.table))
                 self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
