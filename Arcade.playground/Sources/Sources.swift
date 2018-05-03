@@ -40,13 +40,6 @@ public struct Owner: Storable {
         return Children<Owner, Pet>(uuid: self.uuid)
     }
     
-    public var dictionary: [String: Any] {
-        return [
-            "uuid": self.uuid,
-            "name": self.name ?? NSNull()
-        ]
-    }
-    
     public init() {}
 }
 
@@ -71,14 +64,6 @@ public struct Pet: Storable {
         return Siblings<Pet, Toy, PetToy>(uuid: self.uuid)
     }
     
-    public var dictionary: [String: Any] {
-        return [
-            "uuid": self.uuid,
-            "name": self.name ?? NSNull(),
-            "ownerID": self.ownerID ?? NSNull()
-        ]
-    }
-    
     public init() {}
 }
 
@@ -99,14 +84,6 @@ public struct PetToy: Storable {
         return Parent<PetToy, Toy>(uuid: self.toyID)
     }
     
-    public var dictionary: [String: Any] {
-        return [
-            "uuid": self.uuid,
-            "petID": self.petID ?? NSNull(),
-            "toyID": self.toyID ?? NSNull()
-        ]
-    }
-    
     public init() {}
 }
 
@@ -123,13 +100,6 @@ public struct Toy: Storable {
     
     public var pets: Siblings<Toy, Pet, PetToy> {
         return Siblings<Toy, Pet, PetToy>(uuid: self.uuid)
-    }
-    
-    public var dictionary: [String: Any] {
-        return [
-            "uuid": self.uuid,
-            "name": self.name ?? NSNull()
-        ]
     }
     
     public init() {}

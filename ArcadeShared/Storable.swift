@@ -21,8 +21,6 @@ public protocol Storable: Codable {
     static var adapter: Adapter? { get }
     
     var uuid: UUID { get set }
-    
-    var dictionary: [String: Any] { get }
 
 }
 
@@ -85,6 +83,24 @@ public extension Storable {
         guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.delete(uuid: self.uuid, type: Self.self)
+    }
+    
+}
+
+extension Storable {
+    
+    var dictionary: [String : Any] {
+        let encoder = JSONEncoder()
+        
+        do {
+            let data = try encoder.encode(self)
+            
+            guard let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else { return [:] }
+            
+            return result
+        } catch {
+            return [:]
+        }
     }
     
 }

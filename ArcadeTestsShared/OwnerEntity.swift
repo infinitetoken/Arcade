@@ -32,15 +32,11 @@ extension OwnerEntity: CoreDataStorable {
         return Owner(uuid: self.uuid, name: self.name)
     }
     
-    public func update(withStorable dictionary: [String : Any]) -> Bool {
-        if let uuid = dictionary["uuid"] as? UUID {
-            self.uuid = uuid
-        }
-        if let name = dictionary["name"] as? String {
-            self.name = name
-        } else if dictionary["name"] is NSNull {
-            self.name = nil
-        }
+    public func update(with storable: Storable) -> Bool {
+        guard let owner = storable as? Owner else { return false }
+        
+        self.uuid = owner.uuid
+        self.name = owner.name
         
         return true
     }

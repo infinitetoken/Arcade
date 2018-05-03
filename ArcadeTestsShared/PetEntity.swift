@@ -33,18 +33,15 @@ extension PetEntity: CoreDataStorable {
         return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
     }
     
-    public func update(withStorable dictionary: [String : Any]) -> Bool {
-        if let uuid = dictionary["uuid"] as? UUID {
-            self.uuid = uuid
-        }
-        if let name = dictionary["name"] as? String {
-            self.name = name
-        } else if dictionary["name"] is NSNull {
-            self.name = nil
-        }
-        if let owner = dictionary["ownerID"] as? UUID, let managedObjectContext = self.managedObjectContext {
+    public func update(with storable: Storable) -> Bool {
+        guard let pet = storable as? Pet else { return false }
+        
+        self.uuid = pet.uuid
+        self.name = pet.name
+        
+        if let owner = pet.ownerID, let managedObjectContext = self.managedObjectContext {
             self.owner = OwnerEntity.object(with: owner, entityName: "OwnerEntity", in: managedObjectContext) as? OwnerEntity
-        } else if dictionary["ownerID"] is NSNull {
+        } else {
             self.owner = nil
         }
         

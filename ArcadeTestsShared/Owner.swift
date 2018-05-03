@@ -19,13 +19,6 @@ struct Owner: Storable {
     var uuid: UUID = UUID()
     var name: String?
     
-    var dictionary: [String : Any]  {
-        return [
-            "uuid": self.uuid,
-            "name": self.name ?? NSNull()
-        ]
-    }
-    
 }
 
 extension Owner {

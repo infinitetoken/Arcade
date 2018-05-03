@@ -32,15 +32,11 @@ extension ToyEntity: CoreDataStorable {
         return Toy(uuid: self.uuid, name: self.name)
     }
     
-    public func update(withStorable dictionary: [String : Any]) -> Bool {
-        if let uuid = dictionary["uuid"] as? UUID {
-            self.uuid = uuid
-        }
-        if let name = dictionary["name"] as? String {
-            self.name = name
-        } else if dictionary["name"] is NSNull {
-            self.name = nil
-        }
+    public func update(with storable: Storable) -> Bool {
+        guard let toy = storable as? Toy else { return false }
+        
+        self.uuid = toy.uuid
+        self.name = toy.name
         
         return true
     }

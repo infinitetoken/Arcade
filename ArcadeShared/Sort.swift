@@ -37,3 +37,26 @@ public extension Sort {
     }
     
 }
+
+public extension Sort {
+    
+    func sort(storables: [Storable]) -> [Storable] {
+        let dicts = storables.map { (storable) -> [String : Any] in
+            return storable.dictionary
+        }
+        
+        let sorted = zip(dicts, storables).sorted { (a, b) -> Bool in
+            switch self.sortDescriptor().compare(a.0, to: b.0) {
+            case .orderedAscending:
+                return true
+            case .orderedDescending:
+                return false
+            case .orderedSame:
+                return true
+            }
+        }
+        
+        return sorted.map { $0.1 }
+    }
+    
+}

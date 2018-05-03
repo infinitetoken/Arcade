@@ -21,14 +21,6 @@ struct PetToy: Storable {
     var petID: UUID?
     var toyID: UUID?
     
-    var dictionary: [String : Any]  {
-        return [
-            "uuid": self.uuid,
-            "petID": self.petID ?? NSNull(),
-            "toyID": self.toyID ?? NSNull()
-        ]
-    }
-    
 }
 
 extension PetToy {

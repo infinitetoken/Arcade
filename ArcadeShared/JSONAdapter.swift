@@ -63,7 +63,7 @@ public extension JSONAdapter {
         
         func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             if let query = query {
-                var storables = self.storables.filter { query.predicate().evaluate(with: $0.dictionary) }
+                var storables = self.storables.filter { query.evaluate(with: $0) }
                 storables = self.sort(storables: storables, sorts: sorts)
                 return storables.offset(by: offset).limit(to: limit)
             } else {
@@ -104,31 +104,11 @@ public extension JSONAdapter {
             var _storables = storables
             
             for sort in sorts {
-                _storables = self.sort(storables: _storables, sort: sort)
+                _storables = sort.sort(storables: _storables)
             }
             
             return _storables
         }
-        
-        func sort(storables: [Storable], sort: Sort) -> [Storable] {
-            let dicts = storables.map { (storable) -> [String : Any] in
-                return storable.dictionary
-            }
-            
-            let sorted = zip(dicts, storables).sorted { (a, b) -> Bool in
-                switch sort.sortDescriptor().compare(a.0, to: b.0) {
-                case .orderedAscending:
-                    return true
-                case .orderedDescending:
-                    return false
-                case .orderedSame:
-                    return true
-                }
-            }
-            
-            return sorted.map { $0.1 }
-        }
-        
     }
     
 }

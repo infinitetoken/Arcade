@@ -84,7 +84,7 @@ extension CoreDataAdapter: Adapter {
             else { return Future(CoreDataAdapterError.entityNotFound) }
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
             else { return Future(CoreDataAdapterError.entityNotStorable) }
-        guard object.update(withStorable: storable.dictionary) else { return Future(CoreDataAdapterError.updateFailed) }
+        guard object.update(with: storable) else { return Future(CoreDataAdapterError.updateFailed) }
         return Future(self.save())
     }
     
@@ -98,7 +98,7 @@ extension CoreDataAdapter: Adapter {
             guard $0 == nil else { return $0 }
             guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
                 else { return CoreDataAdapterError.entityNotStorable }
-            guard object.update(withStorable: $1.dictionary) else { return CoreDataAdapterError.updateFailed }
+            guard object.update(with: $1) else { return CoreDataAdapterError.updateFailed }
             return nil
         }) else { return Future(self.save()) }
         
@@ -231,7 +231,7 @@ extension CoreDataAdapter: Adapter {
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(withStorable: storable.dictionary) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.updateFailed))
+                        object.update(with: storable) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.updateFailed))
                     } else {
                         operation(.failure(CoreDataAdapterError.noResult))
                     }
@@ -266,11 +266,11 @@ extension CoreDataAdapter: Adapter {
                 DispatchQueue.main.async {
                     if let error = results.reduce(nil, { (error, coreDataStorable) -> CoreDataAdapterError? in
                         guard error == nil else { return error }
-                        guard let dictionary: Dictionary<String, Any> = storables.reduce(nil, {
+                        guard let storable: Storable = storables.reduce(nil, {
                             guard $0 == nil else { return $0 }
                             guard coreDataStorable.storable.uuid == $1.uuid else { return nil }
-                            return $1.dictionary
-                        }), coreDataStorable.update(withStorable: dictionary)
+                            return $1
+                        }), coreDataStorable.update(with: storable)
                             else { return CoreDataAdapterError.updateFailed }
                         return nil
                     }) {

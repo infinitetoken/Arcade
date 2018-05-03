@@ -46,6 +46,14 @@ public extension Query {
     
 }
 
+public extension Query {
+    
+    public func evaluate(with storable: Storable) -> Bool {
+        return self.predicate().evaluate(with: storable.dictionary)
+    }
+    
+}
+
 extension Query: CustomStringConvertible {
     
     public var description: String {

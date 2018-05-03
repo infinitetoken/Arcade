@@ -12,6 +12,6 @@ public protocol CoreDataStorable {
     
     var storable: Storable { get }
     
-    func update(withStorable dictionary: [String: Any]) -> Bool
+    func update(with storable: Storable) -> Bool
     
 }
