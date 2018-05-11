@@ -87,9 +87,9 @@ public extension Storable {
     
 }
 
-extension Storable {
+public extension Storable {
     
-    var dictionary: [String : Any] {
+    public var dictionary: [String : Any] {
         let encoder = JSONEncoder()
         
         do {
