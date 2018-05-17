@@ -25,7 +25,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
-        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString))).transform({ (throughs: [Through]) -> [UUID] in
+        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString.lowercased()))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.compactMap {
                 guard let uuid = $0.dictionary[Destination.table.foreignKey] as? String else { return nil }
                 return UUID(uuidString: uuid)
@@ -39,14 +39,14 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
-        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString))).transform({ (throughs: [Through]) -> [UUID] in
+        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString.lowercased()))).transform({ (throughs: [Through]) -> [UUID] in
             return throughs.compactMap {
                 guard let uuid = $0.dictionary[Destination.table.foreignKey] as? String else { return nil }
                 return UUID(uuidString: uuid)
             }
         }).then { (throughs: [UUID]) -> Future<[Destination]> in
             if let query = query {
-                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside("uuid", throughs.map { $0.uuidString })), query]), sorts: sorts, limit: limit, offset: offset)
+                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside("uuid", throughs.map { $0.uuidString.lowercased() })), query]), sorts: sorts, limit: limit, offset: offset)
             } else {
                 return adapter.find(uuids: throughs, sorts: sorts, limit: limit, offset: offset)
             }

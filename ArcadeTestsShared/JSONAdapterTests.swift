@@ -97,7 +97,7 @@ class JSONAdapterTests: XCTestCase {
         let uuid = UUID()
         let owner = Owner(uuid: uuid, name: "Test")
         
-        let expression = Expression.equal("uuid", uuid.uuidString)
+        let expression = Expression.equal("uuid", uuid.uuidString.lowercased())
         let query = Query.expression(expression)
         
         adapter.connect().then({ (success) -> Future<Bool> in
