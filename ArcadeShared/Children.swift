@@ -49,18 +49,15 @@ public struct Children<P, C> where P: Storable, C: Storable {
         
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
-                Swift.print("Foo: \(Query.or(parents.map { Expression.equal(P.table.foreignKey, $0.uuid.uuidString.lowercased()) }))")
                 return adapter.fetch(query: Query.or(parents.map { Expression.equal(P.table.foreignKey, $0.uuid.uuidString.lowercased()) }), sorts: sorts, limit: limit, offset: offset)
             })
         } else if let parent = parent {
             return parent.then({ (parent) -> Future<[C]> in
                 guard let parent = parent else { return Future([]) }
-                Swift.print("Foo2: \(Query.expression(.equal(P.table.foreignKey, parent.uuid.uuidString.lowercased())))")
                 return adapter.fetch(query: Query.expression(.equal(P.table.foreignKey, parent.uuid.uuidString.lowercased())), sorts: sorts, limit: limit, offset: offset)
             })
         } else {
             guard uuids.count > 0 else { return Future(ChildrenError.noUUID) }
-            Swift.print("Foo3: \(Query.or(uuids.map { Expression.equal(P.table.foreignKey, $0.uuidString.lowercased()) }))")
             return adapter.fetch(query: Query.or(uuids.map { Expression.equal(P.table.foreignKey, $0.uuidString.lowercased()) }), sorts: sorts, limit: limit, offset: offset)
         }
     }
