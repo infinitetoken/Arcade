@@ -13,7 +13,7 @@ import Arcade
 @objc(PetEntity)
 class PetEntity: NSManagedObject {
     
-    @NSManaged var uuid: UUID
+    @NSManaged var uuid: String
     @NSManaged var name: String?
     
     @NSManaged var owner: OwnerEntity?
@@ -22,7 +22,7 @@ class PetEntity: NSManagedObject {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
-        self.uuid = UUID()
+        self.uuid = UUID().uuidString
     }
     
 }

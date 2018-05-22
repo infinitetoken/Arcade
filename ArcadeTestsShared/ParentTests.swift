@@ -26,8 +26,8 @@ class ParentTests: XCTestCase {
     func testFind() {
         let expectation = XCTestExpectation(description: "Find")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
-        let pet = Pet(uuid: UUID(), name: "Test", ownerID: owner.uuid)
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
+        let pet = Pet(uuid: UUID().uuidString, name: "Test", ownerID: owner.uuid)
         
         guard let adapter = owner.adapter else { XCTFail(); return }
         

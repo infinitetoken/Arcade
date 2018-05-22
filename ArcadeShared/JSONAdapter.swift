@@ -54,8 +54,8 @@ public extension JSONAdapter {
             return true
         }
         
-        func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+        func find(_ uuid: String) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             var storables = self.storables.filter { uuids.contains($0.uuid) }
             storables = self.sort(storables: storables, sorts: sorts)
             return storables.offset(by: offset).limit(to: limit)
@@ -85,11 +85,11 @@ public extension JSONAdapter {
             return !results.contains(false)
         }
         
-        mutating func delete(_ uuid: UUID) -> Bool {
+        mutating func delete(_ uuid: String) -> Bool {
             storables = storables.filter { $0.uuid != uuid }
             return true
         }
-        mutating func delete(_ uuids: [UUID]) -> Bool {
+        mutating func delete(_ uuids: [String]) -> Bool {
             storables = storables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
@@ -154,7 +154,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: UUID) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String) -> Future<I?> where I : Storable {
         return Future<I?> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -166,7 +166,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -220,7 +220,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard let _ = adapterTable.find(uuid),
@@ -235,7 +235,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }

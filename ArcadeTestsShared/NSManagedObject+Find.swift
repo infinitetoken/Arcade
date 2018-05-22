@@ -11,7 +11,7 @@ import CoreData
 
 extension NSManagedObject {
     
-    public class func object(with uuid: UUID, entityName: String, in managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
+    public class func object(with uuid: String, entityName: String, in managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
         let leftExpression = NSExpression(forKeyPath: "uuid")
         let rightExpression = NSExpression(forConstantValue: uuid)
         let modifier = NSComparisonPredicate.Modifier.direct

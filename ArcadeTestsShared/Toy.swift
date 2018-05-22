@@ -16,7 +16,7 @@ struct Toy: Storable {
         return TestTable.adapter
     }
     
-    var uuid: UUID = UUID()
+    var uuid: String = UUID().uuidString
     var name: String?
     
 }
@@ -31,14 +31,14 @@ extension Toy {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(uuid.uuidString.lowercased(), forKey: .uuid)
+        try container.encode(uuid, forKey: .uuid)
         try container.encodeIfPresent(name, forKey: .name)
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.uuid = try container.decode(UUID.self, forKey: .uuid)
+        self.uuid = try container.decode(String.self, forKey: .uuid)
         self.name = try container.decodeIfPresent(String.self, forKey: .name)
     }
     

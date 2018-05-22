@@ -26,9 +26,9 @@ class SiblingsTests: XCTestCase {
     func testAll() {
         let expectation = XCTestExpectation(description: "All")
         
-        let pet = Pet(uuid: UUID(), name: "Test", ownerID: nil)
-        let toy = Toy(uuid: UUID(), name: "Test")
-        let petToy = PetToy(uuid: UUID(), petID: pet.uuid, toyID: toy.uuid)
+        let pet = Pet(uuid: UUID().uuidString, name: "Test", ownerID: nil)
+        let toy = Toy(uuid: UUID().uuidString, name: "Test")
+        let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
         guard let adapter = pet.adapter else { XCTFail(); return }
         
@@ -58,9 +58,9 @@ class SiblingsTests: XCTestCase {
     func testFetch() {
         let expectation = XCTestExpectation(description: "Fetch")
         
-        let pet = Pet(uuid: UUID(), name: "Test", ownerID: nil)
-        let toy = Toy(uuid: UUID(), name: "Test")
-        let petToy = PetToy(uuid: UUID(), petID: pet.uuid, toyID: toy.uuid)
+        let pet = Pet(uuid: UUID().uuidString, name: "Test", ownerID: nil)
+        let toy = Toy(uuid: UUID().uuidString, name: "Test")
+        let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
         guard let adapter = pet.adapter else { XCTFail(); return }
         
@@ -91,9 +91,9 @@ class SiblingsTests: XCTestCase {
     func testFind() {
         let expectation = XCTestExpectation(description: "Find")
         
-        let pet = Pet(uuid: UUID(), name: "Test", ownerID: nil)
-        let toy = Toy(uuid: UUID(), name: "Test")
-        let petToy = PetToy(uuid: UUID(), petID: pet.uuid, toyID: toy.uuid)
+        let pet = Pet(uuid: UUID().uuidString, name: "Test", ownerID: nil)
+        let toy = Toy(uuid: UUID().uuidString, name: "Test")
+        let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
         guard let adapter = pet.adapter else { XCTFail(); return }
         

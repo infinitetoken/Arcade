@@ -46,8 +46,8 @@ public extension InMemoryAdapter {
             return true
         }
         
-        func find(_ uuid: UUID) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+        func find(_ uuid: String) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             var storables = self.storables.filter { uuids.contains($0.uuid) }
             storables = self.sort(storables: storables, sorts: sorts)
             return storables.offset(by: offset).limit(to: limit)
@@ -77,11 +77,11 @@ public extension InMemoryAdapter {
             return !results.contains(false)
         }
         
-        mutating func delete(_ uuid: UUID) -> Bool {
+        mutating func delete(_ uuid: String) -> Bool {
             self.storables = self.storables.filter {$0.uuid != uuid}
             return true
         }
-        mutating func delete(_ uuids: [UUID]) -> Bool {
+        mutating func delete(_ uuids: [String]) -> Bool {
             let found = self.storables.filter{ storables.map{ $0.uuid }.contains($0.uuid) }
             guard found.count >= storables.count else { return false }
             self.storables = self.storables.filter { !(uuids.contains($0.uuid)) }
@@ -126,11 +126,11 @@ extension InMemoryAdapter: Adapter {
         return Future(true)
     }
     
-    public func find<I>(uuid: UUID) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String) -> Future<I?> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future(nil) }
         return Future(adapterTable.find(uuid) as? I)
     }
-    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
         return Future(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
@@ -157,7 +157,7 @@ extension InMemoryAdapter: Adapter {
         return Future(true)
     }
     
-    public func delete<I>(uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             let storable = adapterTable.find(uuid),
             adapterTable.delete(uuid)
@@ -166,7 +166,7 @@ extension InMemoryAdapter: Adapter {
         self.undoStack.push(Stack.Operation(method: .delete, storables: [storable], table: I.table))
         return Future(true)
     }
-    public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
         guard var adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
         let storables = adapterTable.find(uuids)
         guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
