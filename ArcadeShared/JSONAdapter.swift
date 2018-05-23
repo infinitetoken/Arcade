@@ -26,15 +26,21 @@ open class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
+    private var operationQueue: OperationQueue
+    
     public var prettyPrinted: Bool = true
     
     public init(directory: URL) {
         self.directory = directory
+        self.operationQueue = OperationQueue.init()
+        self.operationQueue.maxConcurrentOperationCount = 1
     }
     
     private init(_ store: [String : AdapterTable], directory: URL?) {
         self.store = store
         self.directory = directory
+        self.operationQueue = OperationQueue.init()
+        self.operationQueue.maxConcurrentOperationCount = 1
     }
     
 }
@@ -259,20 +265,18 @@ extension JSONAdapter: Adapter {
     
     private func save<I>(storables: [I]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
-            
-            let encoder = JSONEncoder()
-            encoder.dataEncodingStrategy = .base64
-            encoder.dateEncodingStrategy = .secondsSince1970
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            
-            if self.prettyPrinted {
-                encoder.outputFormatting = .prettyPrinted
-            }
-            
-            OperationQueue.main.maxConcurrentOperationCount = 1
-            
-            OperationQueue.main.addOperation {
+            self.operationQueue.addOperation {
+                guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
+                
+                let encoder = JSONEncoder()
+                encoder.dataEncodingStrategy = .base64
+                encoder.dateEncodingStrategy = .secondsSince1970
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                
+                if self.prettyPrinted {
+                    encoder.outputFormatting = .prettyPrinted
+                }
+                
                 do {
                     let fileURL = directory.appendingPathComponent("\(I.table.name).json")
                     
@@ -295,7 +299,6 @@ extension JSONAdapter: Adapter {
                     }
                 }
             }
-            
         }
     }
     
