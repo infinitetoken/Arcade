@@ -270,7 +270,9 @@ extension JSONAdapter: Adapter {
                 encoder.outputFormatting = .prettyPrinted
             }
             
-            DispatchQueue.global(qos: .userInitiated).async {
+            OperationQueue.main.maxConcurrentOperationCount = 1
+            
+            OperationQueue.main.addOperation {
                 do {
                     let fileURL = directory.appendingPathComponent("\(I.table.name).json")
                     
@@ -293,6 +295,7 @@ extension JSONAdapter: Adapter {
                     }
                 }
             }
+            
         }
     }
     
