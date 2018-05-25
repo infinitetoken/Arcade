@@ -136,8 +136,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.insert(storable) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
+            self.store[table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -151,8 +152,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.insert(storables) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
@@ -202,8 +204,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.update(storable) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -217,8 +220,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.update(storables) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -232,8 +236,10 @@ extension JSONAdapter: Adapter {
             guard let _ = adapterTable.find(uuid),
                 adapterTable.delete(uuid)
                 else { completion(.failure(JSONAdapterError.deleteFailed)); return }
+            
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -246,8 +252,9 @@ extension JSONAdapter: Adapter {
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))

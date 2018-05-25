@@ -20,9 +20,6 @@ open class InMemoryAdapter {
     
     private var store: [String : AdapterTable] = [:]
     
-    private var undoStack: Stack = Stack()
-    private var redoStack: Stack = Stack()
-    
     public init() {}
     
     private init(_ store: [String : AdapterTable]) {
@@ -115,14 +112,14 @@ extension InMemoryAdapter: Adapter {
         var adapterTable = self.store[storable.table.name] ?? AdapterTable()
         guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[storable.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .insert, storables: [storable], table: I.table))
+
         return Future(true)
     }
     public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
         guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .insert, storables: storables, table: I.table))
+
         return Future(true)
     }
     
@@ -145,7 +142,7 @@ extension InMemoryAdapter: Adapter {
             adapterTable.update(storable)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .update, storables: [storable], table: I.table))
+
         return Future(true)
     }
     public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
@@ -153,25 +150,22 @@ extension InMemoryAdapter: Adapter {
             adapterTable.update(storables)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .update, storables: storables, table: I.table))
+
         return Future(true)
     }
     
     public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
-        guard var adapterTable = self.store[I.table.name],
-            let storable = adapterTable.find(uuid),
-            adapterTable.delete(uuid)
+        guard var adapterTable = self.store[I.table.name], adapterTable.delete(uuid)
             else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .delete, storables: [storable], table: I.table))
+
         return Future(true)
     }
     public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
         guard var adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
-        let storables = adapterTable.find(uuids)
         guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
-        self.undoStack.push(Stack.Operation(method: .delete, storables: storables, table: I.table))
+
         return Future(true)
     }
     
