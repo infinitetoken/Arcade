@@ -10,7 +10,7 @@ import Foundation
 
 public struct Sort {
     
-    public enum Order {
+    public enum Order: Int {
         case ascending
         case descending
     }
@@ -21,6 +21,14 @@ public struct Sort {
     public init(key: String, order: Order) {
         self.key = key
         self.order = order
+    }
+    
+}
+
+public extension Sort {
+ 
+    public var dictionry: [String : Int] {
+        return [self.key : self.order.rawValue]
     }
     
 }

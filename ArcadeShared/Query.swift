@@ -16,21 +16,24 @@ public enum Query {
     case compoundOr([Query])
 }
 
-
-extension Query: Encodable {
-    
-    enum CodingKeys: CodingKey {
-        case query
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.description, forKey: .query)
+public extension Query {
+ 
+    public var dictionary: [String : Any] {
+        switch self {
+        case .expression(let expression):
+            return ["expression" : expression.dictionary]
+        case .and(let expressions):
+            return ["and" : expressions.map { $0.dictionary }]
+        case .or(let expressions):
+            return ["or" : expressions.map { $0.dictionary }]
+        case .compoundAnd(let queries):
+            return ["and" : queries.map { $0.dictionary }]
+        case .compoundOr(let queries):
+            return ["or" : queries.map { $0.dictionary }]
+        }
     }
     
 }
-
 
 public extension Query {
     

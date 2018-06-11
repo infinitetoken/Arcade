@@ -8,31 +8,84 @@
 
 import Foundation
 
-public typealias KeyPath = String
-public typealias Constant = Any?
+public typealias Key = String
+public typealias Value = Any?
 
 public enum Expression {
-    case equal(KeyPath, Constant)
-    case notEqual(KeyPath, Constant)
-    case contains(KeyPath, Constant)
-    case like(KeyPath, Constant)
-    case inside(KeyPath, Constant)
-    case comparison(KeyPath, Comparison, Constant, NSComparisonPredicate.Options)
-    case isNil(KeyPath)
-    case isNotNil(KeyPath)
+    case equal(Key, Value)
+    case notEqual(Key, Value)
+    case contains(Key, Value)
+    case like(Key, Value)
+    case inside(Key, Value)
+    case comparison(Key, Comparison, Value, NSComparisonPredicate.Options)
+    case isNil(Key)
+    case isNotNil(Key)
     case all
 }
 
-extension Expression: Encodable {
+public extension Expression {
     
-    enum CodingKeys: CodingKey {
-        case expression
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.description, forKey: .expression)
+    public var dictionary: [String : Any] {
+        switch self {
+        case .equal(let key, let value):
+            return [
+                "key" : key,
+                "comparison" : Comparison.equalTo.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
+        case .notEqual(let key, let value):
+            return [
+                "key" : key,
+                "comparison" : Comparison.notEqualTo.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
+        case .contains(let key, let value):
+            return [
+                "key" : key,
+                "comparison" : Comparison.contains.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
+        case .like(let key, let value):
+            return [
+                "key" : key,
+                "comparison" : Comparison.like.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
+        case .inside(let key, let value):
+            return [
+                "key" : key,
+                "comparison" : Comparison.inside.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
+        case .comparison(let key, let comparison, let value, let options):
+            return [
+                "key" : key,
+                "comparison" : comparison.rawValue,
+                "value": value != nil ? value! : NSNull(),
+                "options": options.description
+            ]
+        case .isNil(let key):
+            return [
+                "key" : key,
+                "comparison" : Comparison.equalTo.rawValue,
+                "value": NSNull(),
+                "options": NSNull()
+            ]
+        case .isNotNil(let key):
+            return [
+                "key" : key,
+                "comparison" : Comparison.notEqualTo.rawValue,
+                "value": NSNull(),
+                "options": NSNull()
+            ]
+        case .all:
+            return [:]
+        }
     }
     
 }
@@ -41,26 +94,26 @@ extension Expression {
     
     public func predicate() -> NSPredicate {
         switch self {
-        case let .equal(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.equalTo)
-        case let .notEqual(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.notEqualTo)
-        case let .contains(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.contains)
-        case let .like(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.like)
-        case let .inside(keyPath, constant): return self.comparisonPredicate(for: keyPath, constant: constant, comparison: Comparison.inside)
-        case let .comparison(keyPath, comparison, constant, options):
-            let leftExpression = NSExpression(forKeyPath: keyPath)
-            let rightExpression = NSExpression(forConstantValue: constant)
+        case let .equal(key, value): return self.comparisonPredicate(for: key, value: value, comparison: Comparison.equalTo)
+        case let .notEqual(key, value): return self.comparisonPredicate(for: key, value: value, comparison: Comparison.notEqualTo)
+        case let .contains(key, value): return self.comparisonPredicate(for: key, value: value, comparison: Comparison.contains)
+        case let .like(key, value): return self.comparisonPredicate(for: key, value: value, comparison: Comparison.like)
+        case let .inside(key, value): return self.comparisonPredicate(for: key, value: value, comparison: Comparison.inside)
+        case let .comparison(key, comparison, value, options):
+            let leftExpression = NSExpression(forKeyPath: key)
+            let rightExpression = NSExpression(forConstantValue: value)
             let modifier = NSComparisonPredicate.Modifier.direct
             let type = comparison.type()
             return NSComparisonPredicate(leftExpression: leftExpression, rightExpression: rightExpression, modifier: modifier, type: type, options: options)
-        case let .isNil(keyPath): return NSPredicate(format: "%K = nil", keyPath)
-        case let .isNotNil(keyPath): return NSPredicate(format: "%K != nil", keyPath)
+        case let .isNil(key): return NSPredicate(format: "%K = nil", key)
+        case let .isNotNil(key): return NSPredicate(format: "%K != nil", key)
         case .all: return NSPredicate(value: true)
         }
     }
     
-    private func comparisonPredicate(for keyPath: KeyPath, constant: Any?, comparison: Comparison) -> NSComparisonPredicate {
-        let leftExpression = NSExpression(forKeyPath: keyPath)
-        let rightExpression = NSExpression(forConstantValue: constant)
+    private func comparisonPredicate(for key: Key, value: Any?, comparison: Comparison) -> NSComparisonPredicate {
+        let leftExpression = NSExpression(forKeyPath: key)
+        let rightExpression = NSExpression(forConstantValue: value)
         let modifier = NSComparisonPredicate.Modifier.direct
         let type = comparison.type()
         return NSComparisonPredicate(leftExpression: leftExpression, rightExpression: rightExpression, modifier: modifier, type: type, options: [])
@@ -72,14 +125,14 @@ extension Expression: CustomStringConvertible {
     
     public var description: String {
         switch self {
-        case let .equal(keyPath, constant): return "\(keyPath) \(Comparison.equalTo) \(constant != nil ? constant! : "nil")"
-        case let .notEqual(keyPath, constant): return "\(keyPath) \(Comparison.notEqualTo) \(constant != nil ? constant! : "nil")"
-        case let .contains(keyPath, constant): return "\(keyPath) \(Comparison.contains) \(constant != nil ? constant! : "nil")"
-        case let .like(keyPath, constant): return "\(keyPath) \(Comparison.like) \(constant != nil ? constant! : "nil")"
-        case let .inside(keyPath, constant): return "\(keyPath) \(Comparison.inside) \(constant != nil ? constant! : "nil")"
-        case let .comparison(keyPath, comparison, constant, options): return options.rawValue == 0 ? "\(keyPath) \(comparison) \(constant != nil ? constant! : "nil")" : "\(keyPath) \(comparison)[\(options)] \(constant != nil ? constant! : "nil")"
-        case let .isNil(keyPath): return "\(keyPath) \(Comparison.equalTo) nil"
-        case let .isNotNil(keyPath): return "\(keyPath) \(Comparison.notEqualTo) nil"
+        case let .equal(key, value): return "\(key) \(Comparison.equalTo) \(value != nil ? value! : "nil")"
+        case let .notEqual(key, value): return "\(key) \(Comparison.notEqualTo) \(value != nil ? value! : "nil")"
+        case let .contains(key, value): return "\(key) \(Comparison.contains) \(value != nil ? value! : "nil")"
+        case let .like(key, value): return "\(key) \(Comparison.like) \(value != nil ? value! : "nil")"
+        case let .inside(key, value): return "\(key) \(Comparison.inside) \(value != nil ? value! : "nil")"
+        case let .comparison(key, comparison, value, options): return options.rawValue == 0 ? "\(key) \(comparison) \(value != nil ? value! : "nil")" : "\(key) \(comparison)[\(options)] \(value != nil ? value! : "nil")"
+        case let .isNil(key): return "\(key) \(Comparison.equalTo) nil"
+        case let .isNotNil(key): return "\(key) \(Comparison.notEqualTo) nil"
         case .all: return "true"
         }
     }
