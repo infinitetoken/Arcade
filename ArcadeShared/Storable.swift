@@ -20,7 +20,7 @@ public protocol Storable: Codable {
     static var table: Table { get }
     static var adapter: Adapter? { get }
     
-    var uuid: UUID { get set }
+    var uuid: String { get set }
 
 }
 
@@ -55,13 +55,13 @@ public extension Storable {
         return adapter.fetch(query: query, sorts: sorts, limit: limit, offset: offset)
     }
     
-    public static func find(uuid: UUID, adapter: Adapter? = Self.adapter) -> Future<Self?> {
+    public static func find(uuid: String, adapter: Adapter? = Self.adapter) -> Future<Self?> {
         guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.find(uuid: uuid)
     }
     
-    public static func find(uuids: [UUID], sorts: [Sort], limit: Int, offset: Int, adapter: Adapter? = Self.adapter) -> Future<[Self]> {
+    public static func find(uuids: [String], sorts: [Sort], limit: Int, offset: Int, adapter: Adapter? = Self.adapter) -> Future<[Self]> {
         guard let adapter = adapter else { return Future(StorableError.noAdapter) }
         
         return adapter.find(uuids: uuids, sorts: sorts, limit: limit, offset: offset)

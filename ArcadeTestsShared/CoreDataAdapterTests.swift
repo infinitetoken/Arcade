@@ -54,7 +54,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Insert")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
@@ -74,7 +74,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Find")
 
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
 
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
@@ -100,7 +100,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Fetch")
 
-        let uuid = UUID()
+        let uuid = UUID().uuidString
         let owner = Owner(uuid: uuid, name: "Test")
 
         let expression = Expression.equal("uuid", uuid)
@@ -127,8 +127,8 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Sort")
         
-        let owner1 = Owner(uuid: UUID(), name: "Owner 1")
-        let owner2 = Owner(uuid: UUID(), name: "Owner 2")
+        let owner1 = Owner(uuid: UUID().uuidString, name: "Owner 1")
+        let owner2 = Owner(uuid: UUID().uuidString, name: "Owner 2")
         
         let query: Query? = nil
         let sort = Sort(key: "name", order: .descending)
@@ -155,7 +155,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Update")
 
-        var owner = Owner(uuid: UUID(), name: "Test")
+        var owner = Owner(uuid: UUID().uuidString, name: "Test")
 
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
@@ -188,7 +188,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Delete")
 
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
 
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
@@ -214,7 +214,7 @@ class CoreDataAdapterTests: XCTestCase {
         let adapter = self.adapter
         let expectation = XCTestExpectation(description: "Count")
 
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
 
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)

@@ -26,15 +26,21 @@ open class JSONAdapter {
     private var store: [String : AdapterTable] = [:]
     private var directory: URL?
     
+    private var operationQueue: OperationQueue
+    
     public var prettyPrinted: Bool = true
     
     public init(directory: URL) {
         self.directory = directory
+        self.operationQueue = OperationQueue.init()
+        self.operationQueue.maxConcurrentOperationCount = 1
     }
     
     private init(_ store: [String : AdapterTable], directory: URL?) {
         self.store = store
         self.directory = directory
+        self.operationQueue = OperationQueue.init()
+        self.operationQueue.maxConcurrentOperationCount = 1
     }
     
 }
@@ -54,8 +60,8 @@ public extension JSONAdapter {
             return true
         }
         
-        func find(_ uuid: UUID) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+        func find(_ uuid: String) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
             var storables = self.storables.filter { uuids.contains($0.uuid) }
             storables = self.sort(storables: storables, sorts: sorts)
             return storables.offset(by: offset).limit(to: limit)
@@ -85,11 +91,11 @@ public extension JSONAdapter {
             return !results.contains(false)
         }
         
-        mutating func delete(_ uuid: UUID) -> Bool {
+        mutating func delete(_ uuid: String) -> Bool {
             storables = storables.filter { $0.uuid != uuid }
             return true
         }
-        mutating func delete(_ uuids: [UUID]) -> Bool {
+        mutating func delete(_ uuids: [String]) -> Bool {
             storables = storables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
@@ -130,8 +136,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.insert(storable) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
+            self.store[table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -145,8 +152,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.insert(storables) else { completion(.failure(JSONAdapterError.insertFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }) { (error) in
                 completion(.failure(error))
@@ -154,7 +162,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: UUID) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String) -> Future<I?> where I : Storable {
         return Future<I?> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -166,7 +174,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [UUID], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -196,8 +204,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.update(storable) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -211,8 +220,9 @@ extension JSONAdapter: Adapter {
             
             guard adapterTable.update(storables) else { completion(.failure(JSONAdapterError.updateFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -220,14 +230,16 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: UUID, type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard let _ = adapterTable.find(uuid),
                 adapterTable.delete(uuid)
                 else { completion(.failure(JSONAdapterError.deleteFailed)); return }
+            
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -235,13 +247,14 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [UUID], type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
             
+            self.store[I.table.name] = adapterTable
+            
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                self.store[I.table.name] = adapterTable
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -259,18 +272,18 @@ extension JSONAdapter: Adapter {
     
     private func save<I>(storables: [I]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
-            
-            let encoder = JSONEncoder()
-            encoder.dataEncodingStrategy = .base64
-            encoder.dateEncodingStrategy = .secondsSince1970
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            
-            if self.prettyPrinted {
-                encoder.outputFormatting = .prettyPrinted
-            }
-            
-            DispatchQueue.global(qos: .userInitiated).async {
+            self.operationQueue.addOperation {
+                guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
+                
+                let encoder = JSONEncoder()
+                encoder.dataEncodingStrategy = .base64
+                encoder.dateEncodingStrategy = .secondsSince1970
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                
+                if self.prettyPrinted {
+                    encoder.outputFormatting = .prettyPrinted
+                }
+                
                 do {
                     let fileURL = directory.appendingPathComponent("\(I.table.name).json")
                     

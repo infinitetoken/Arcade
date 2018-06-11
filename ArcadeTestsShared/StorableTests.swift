@@ -26,7 +26,7 @@ class StorableTests: XCTestCase {
     func testAll() {
         let expectation = XCTestExpectation(description: "All")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         guard let adapter = owner.adapter else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
@@ -49,7 +49,7 @@ class StorableTests: XCTestCase {
     func testFetch() {
         let expectation = XCTestExpectation(description: "Fetch")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         guard let adapter = owner.adapter else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
@@ -73,7 +73,7 @@ class StorableTests: XCTestCase {
     func testFind() {
         let expectation = XCTestExpectation(description: "Find")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         guard let adapter = owner.adapter else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
@@ -96,7 +96,7 @@ class StorableTests: XCTestCase {
     func testSave() {
         let expectation = XCTestExpectation(description: "Save")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         guard let adapter = owner.adapter else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
@@ -119,7 +119,7 @@ class StorableTests: XCTestCase {
     func testDelete() {
         let expectation = XCTestExpectation(description: "Delete")
         
-        let owner = Owner(uuid: UUID(), name: "Test")
+        let owner = Owner(uuid: UUID().uuidString, name: "Test")
         guard let adapter = owner.adapter else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in

@@ -15,18 +15,18 @@ enum ParentError: Error {
 
 public struct Parent<C, P> where C: Storable, P: Storable {
 
-    public let uuid: UUID?
+    public let uuid: String?
     
     let child: Future<C?>?
-    let toParent: ((C) -> UUID?)?
+    let toParent: ((C) -> String?)?
 
-    public init(uuid: UUID?) {
+    public init(uuid: String?) {
         self.uuid = uuid
         self.child = nil
         self.toParent = nil
     }
     
-    init(child: Future<C?>, toParent: @escaping (C) -> UUID?) {
+    init(child: Future<C?>, toParent: @escaping (C) -> String?) {
         self.uuid = nil
         self.child = child
         self.toParent = toParent
@@ -54,7 +54,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
 
 public extension Parent {
     
-    public func parent<T>(toParent: @escaping (P) -> UUID?) -> Parent<P, T> {
+    public func parent<T>(toParent: @escaping (P) -> String?) -> Parent<P, T> {
         return Parent<P, T>(child: find(), toParent: toParent)
     }
     

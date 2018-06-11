@@ -10,18 +10,18 @@ import Foundation
 
 public struct Parents<C,P> where C: Storable, P: Storable {
     
-    let uuids: [UUID]
+    let uuids: [String]
     
     let children: Future<[C]>?
-    let toParent: ((C) -> UUID?)?
+    let toParent: ((C) -> String?)?
     
-    public init(_ uuids: [UUID]) {
+    public init(_ uuids: [String]) {
         self.uuids = uuids
         self.children = nil
         self.toParent = nil
     }
     
-    init(_ children: Future<[C]>, toParent: @escaping (C) -> UUID?) {
+    init(_ children: Future<[C]>, toParent: @escaping (C) -> String?) {
         self.uuids = []
         self.children = children
         self.toParent = toParent
@@ -63,11 +63,11 @@ public struct Parents<C,P> where C: Storable, P: Storable {
 
 public extension Parents {
     
-    public func parents<T>(toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
+    public func parents<T>(toParent: @escaping (P) -> String?) -> Parents<P, T> {
         return Parents<P, T>(all(), toParent: toParent)
     }
     
-    public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> UUID?) -> Parents<P, T> {
+    public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> String?) -> Parents<P, T> {
         return Parents<P, T>(fetch(query: query), toParent: toParent)
     }
     

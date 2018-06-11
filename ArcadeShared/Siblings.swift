@@ -15,9 +15,9 @@ enum SiblingsError: Error {
 
 public struct Siblings<Origin, Destination, Through> where Origin: Storable, Destination: Storable, Through: Storable {
 
-    public let uuid: UUID?
+    public let uuid: String?
     
-    public init(uuid: UUID?) {
+    public init(uuid: String?) {
         self.uuid = uuid
     }
     
@@ -25,12 +25,9 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
-        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString.lowercased()))).transform({ (throughs: [Through]) -> [UUID] in
-            return throughs.compactMap {
-                guard let uuid = $0.dictionary[Destination.table.foreignKey] as? String else { return nil }
-                return UUID(uuidString: uuid)
-            }
-        }).then { (throughs: [UUID]) -> Future<[Destination]> in
+        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid))).transform({ (throughs: [Through]) -> [String] in
+            return throughs.compactMap { return $0.dictionary[Destination.table.foreignKey] as? String }
+        }).then { (throughs: [String]) -> Future<[Destination]> in
             return adapter.find(uuids: throughs, sorts: sorts, limit: limit, offset: offset)
         }
     }
@@ -39,21 +36,18 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
-        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid.uuidString.lowercased()))).transform({ (throughs: [Through]) -> [UUID] in
-            return throughs.compactMap {
-                guard let uuid = $0.dictionary[Destination.table.foreignKey] as? String else { return nil }
-                return UUID(uuidString: uuid)
-            }
-        }).then { (throughs: [UUID]) -> Future<[Destination]> in
+        return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid))).transform({ (throughs: [Through]) -> [String] in
+            return throughs.compactMap { return $0.dictionary[Destination.table.foreignKey] as? String }
+        }).then { (throughs: [String]) -> Future<[Destination]> in
             if let query = query {
-                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside("uuid", throughs.map { $0.uuidString.lowercased() })), query]), sorts: sorts, limit: limit, offset: offset)
+                return adapter.fetch(query: Query.compoundAnd([Query.expression(.inside("uuid", throughs)), query]), sorts: sorts, limit: limit, offset: offset)
             } else {
                 return adapter.find(uuids: throughs, sorts: sorts, limit: limit, offset: offset)
             }
         }
     }
     
-    public func find(uuid: UUID, adapter: Adapter? = Destination.adapter) -> Future<Destination?> {
+    public func find(uuid: String, adapter: Adapter? = Destination.adapter) -> Future<Destination?> {
         guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
         
         return adapter.find(uuid: uuid)
