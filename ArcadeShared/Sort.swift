@@ -11,8 +11,8 @@ import Foundation
 public struct Sort {
     
     public enum Order: Int {
-        case ascending
-        case descending
+        case ascending = 1
+        case descending = -1
     }
     
     public var key: String
