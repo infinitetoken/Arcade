@@ -27,7 +27,7 @@ public struct Sort {
 
 public extension Sort {
  
-    public var dictionry: [String : Int] {
+    public var dictionary: [String : Int] {
         return [self.key : self.order.rawValue]
     }
     
