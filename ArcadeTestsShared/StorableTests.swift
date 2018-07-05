@@ -27,14 +27,14 @@ class StorableTests: XCTestCase {
         let expectation = XCTestExpectation(description: "All")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then { (success) -> Future<[Owner]> in
             XCTAssertTrue(success)
-            return Owner.all()
+            return Owner.all(adapter: adapter)
         }.subscribe({ (owners) in
             XCTAssertEqual(owners.count, 1)
             expectation.fulfill()
@@ -50,15 +50,15 @@ class StorableTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then { (success) -> Future<[Owner]> in
             XCTAssertTrue(success)
             let query = Query.expression(Expression.equal("name", "Test"))
-            return Owner.fetch(query: query)
+            return Owner.fetch(query: query, adapter: adapter)
         }.subscribe({ (owners) in
             XCTAssertEqual(owners.count, 1)
             expectation.fulfill()
@@ -74,14 +74,14 @@ class StorableTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Find")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then { (success) -> Future<Owner?> in
             XCTAssertTrue(success)
-            return Owner.find(uuid: owner.uuid)
+            return Owner.find(uuid: owner.uuid, adapter: adapter)
         }.subscribe({ (owner) in
             XCTAssertNotNil(owner)
             expectation.fulfill()
@@ -97,11 +97,11 @@ class StorableTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Save")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then { (success) -> Future<Int> in
             XCTAssertTrue(success)
             return adapter.count(table: TestTable.owner)
@@ -120,17 +120,17 @@ class StorableTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Delete")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then { (success) -> Future<Int> in
             XCTAssertTrue(success)
             return adapter.count(table: TestTable.owner)
         }.then({ (count) -> Future<Bool> in
             XCTAssertEqual(count, 1)
-            return owner.delete()
+            return owner.delete(adapter: adapter)
         }).then({ (success) -> Future<Int> in
             XCTAssertTrue(success)
             return adapter.count(table: TestTable.owner)

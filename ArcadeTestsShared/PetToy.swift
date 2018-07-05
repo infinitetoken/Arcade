@@ -12,9 +12,6 @@ import Arcade
 struct PetToy: Storable {
     
     static var table: Table = TestTable.petToy
-    static var adapter: Adapter? {
-        return TestTable.adapter
-    }
     
     var uuid: String = UUID().uuidString
     

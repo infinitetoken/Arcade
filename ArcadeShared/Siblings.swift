@@ -10,7 +10,6 @@ import Foundation
 
 enum SiblingsError: Error {
     case noUUID
-    case noAdapter
 }
 
 public struct Siblings<Origin, Destination, Through> where Origin: Storable, Destination: Storable, Through: Storable {
@@ -21,9 +20,8 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         self.uuid = uuid
     }
     
-    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
-        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid))).transform({ (throughs: [Through]) -> [String] in
             return throughs.compactMap { return $0.dictionary[Destination.table.foreignKey] as? String }
@@ -32,9 +30,8 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
 
-    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = Origin.adapter) -> Future<[Destination]> {
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[Destination]> {
         guard let uuid = self.uuid else { return Future(SiblingsError.noUUID) }
-        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
 
         return adapter.fetch(query: Query.expression(.equal(Origin.table.foreignKey, uuid))).transform({ (throughs: [Through]) -> [String] in
             return throughs.compactMap { return $0.dictionary[Destination.table.foreignKey] as? String }
@@ -47,9 +44,7 @@ public struct Siblings<Origin, Destination, Through> where Origin: Storable, Des
         }
     }
     
-    public func find(uuid: String, adapter: Adapter? = Destination.adapter) -> Future<Destination?> {
-        guard let adapter = adapter else { return Future(SiblingsError.noAdapter) }
-        
+    public func find(uuid: String, adapter: Adapter) -> Future<Destination?> {
         return adapter.find(uuid: uuid)
     }
 

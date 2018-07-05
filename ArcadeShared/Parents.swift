@@ -27,8 +27,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         self.toParent = toParent
     }
     
-    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = C.adapter) -> Future<[P]> {
-        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[P]> {
         guard let toParent = self.toParent,
             let children = self.children
             else { return adapter.find(uuids: uuids, sorts: sorts, limit: limit, offset: offset) }
@@ -38,8 +37,7 @@ public struct Parents<C,P> where C: Storable, P: Storable {
         })
     }
     
-    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = C.adapter) -> Future<[P]> {
-        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[P]> {
         guard let toParent = self.toParent,
             let children = self.children
             else {
@@ -63,16 +61,16 @@ public struct Parents<C,P> where C: Storable, P: Storable {
 
 public extension Parents {
     
-    public func parents<T>(toParent: @escaping (P) -> String?) -> Parents<P, T> {
-        return Parents<P, T>(all(), toParent: toParent)
+    public func parents<T>(adapter: Adapter, toParent: @escaping (P) -> String?) -> Parents<P, T> {
+        return Parents<P, T>(all(adapter: adapter), toParent: toParent)
     }
     
-    public func parents<T>(afterFetch query: Query?, toParent: @escaping (P) -> String?) -> Parents<P, T> {
-        return Parents<P, T>(fetch(query: query), toParent: toParent)
+    public func parents<T>(afterFetch query: Query?, adapter: Adapter, toParent: @escaping (P) -> String?) -> Parents<P, T> {
+        return Parents<P, T>(fetch(query: query, sorts: [], limit: 0, offset: 0, adapter: adapter), toParent: toParent)
     }
     
-    public func children<T>(afterFetch query: Query?) -> Children<P, T> {
-        return Children<P, T>(parents: fetch(query: query))
+    public func children<T>(afterFetch query: Query?, adapter: Adapter) -> Children<P, T> {
+        return Children<P, T>(parents: fetch(query: query, sorts: [], limit: 0, offset: 0, adapter: adapter))
     }
     
 }

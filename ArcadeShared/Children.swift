@@ -44,9 +44,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
         self.parent = parent
     }
     
-    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = P.adapter) -> Future<[C]> {
-        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
-        
+    public func all(sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[C]> {
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
                 return adapter.fetch(query: Query.or(parents.map { Expression.equal(P.table.foreignKey, $0.uuid) }), sorts: sorts, limit: limit, offset: offset)
@@ -62,9 +60,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
         }
     }
 
-    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter? = P.adapter) -> Future<[C]> {
-        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
-        
+    public func fetch(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, adapter: Adapter) -> Future<[C]> {
         if let parents = parents {
             return parents.then({ (parents) -> Future<[C]> in
                 let uuids = Query.or(parents.map { Expression.equal(P.table.foreignKey, $0.uuid) })
@@ -99,9 +95,7 @@ public struct Children<P, C> where P: Storable, C: Storable {
         }
     }
 
-    public func find(uuid: String, adapter: Adapter? = P.adapter) -> Future<C?> {
-        guard let adapter = adapter else { return Future(ChildrenError.noAdapter) }
-        
+    public func find(uuid: String, adapter: Adapter) -> Future<C?> {
         let expressions = uuids.map { Expression.equal(P.table.foreignKey, $0) }
         let query = Query.compoundAnd([Query.or(expressions), Query.expression(.equal("uuid", uuid))])
         
@@ -114,16 +108,16 @@ public struct Children<P, C> where P: Storable, C: Storable {
 
 public extension Children {
     
-    public func parents<T>(toParent: @escaping (C) -> String?) -> Parents<C, T> {
-        return Parents<C, T>(all(), toParent: toParent)
+    public func parents<T>(adapter: Adapter, toParent: @escaping (C) -> String?) -> Parents<C, T> {
+        return Parents<C, T>(all(adapter: adapter), toParent: toParent)
     }
     
-    public func parents<T>(afterFetch query: Query?, toParent: @escaping (C) -> String?) -> Parents<C, T> {
-        return Parents<C, T>(fetch(query: query), toParent: toParent)
+    public func parents<T>(afterFetch query: Query?, adapter: Adapter, toParent: @escaping (C) -> String?) -> Parents<C, T> {
+        return Parents<C, T>(fetch(query: query, sorts: [], limit: 0, offset: 0, adapter: adapter), toParent: toParent)
     }
     
-    public func children<T>(afterFetch query: Query?) -> Children<C, T> {
-        return Children<C, T>(parents: fetch(query: query))
+    public func children<T>(afterFetch query: Query?, adapter: Adapter) -> Children<C, T> {
+        return Children<C, T>(parents: fetch(query: query, sorts: [], limit: 0, offset: 0, adapter: adapter))
     }
     
 }

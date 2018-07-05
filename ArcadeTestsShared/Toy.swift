@@ -12,9 +12,6 @@ import Arcade
 struct Toy: Storable {
     
     static var table: Table = TestTable.toy
-    static var adapter: Adapter? {
-        return TestTable.adapter
-    }
     
     var uuid: String = UUID().uuidString
     var name: String?

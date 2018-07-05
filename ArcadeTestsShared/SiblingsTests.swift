@@ -30,20 +30,20 @@ class SiblingsTests: XCTestCase {
         let toy = Toy(uuid: UUID().uuidString, name: "Test")
         let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
-        guard let adapter = pet.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return pet.save()
+            return pet.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return toy.save()
+            return toy.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return petToy.save()
+            return petToy.save(adapter: adapter)
         }).then { (success) -> Future<[Toy]> in
             XCTAssertTrue(success)
-            return pet.toys.all()
+            return pet.toys.all(adapter: adapter)
         }.subscribe({ (toys) in
             XCTAssertEqual(toys.count, 1)
             expectation.fulfill()
@@ -62,21 +62,21 @@ class SiblingsTests: XCTestCase {
         let toy = Toy(uuid: UUID().uuidString, name: "Test")
         let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
-        guard let adapter = pet.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return pet.save()
+            return pet.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return toy.save()
+            return toy.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return petToy.save()
+            return petToy.save(adapter: adapter)
         }).then { (success) -> Future<[Toy]> in
             XCTAssertTrue(success)
             let query = Query.expression(Expression.equal("name", "Test"))
-            return pet.toys.fetch(query: query)
+            return pet.toys.fetch(query: query, adapter: adapter)
         }.subscribe({ (toys) in
             XCTAssertEqual(toys.count, 1)
             expectation.fulfill()
@@ -95,20 +95,20 @@ class SiblingsTests: XCTestCase {
         let toy = Toy(uuid: UUID().uuidString, name: "Test")
         let petToy = PetToy(uuid: UUID().uuidString, petID: pet.uuid, toyID: toy.uuid)
         
-        guard let adapter = pet.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return pet.save()
+            return pet.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return toy.save()
+            return toy.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return petToy.save()
+            return petToy.save(adapter: adapter)
         }).then { (success) -> Future<Toy?> in
             XCTAssertTrue(success)
-            return pet.toys.find(uuid: toy.uuid)
+            return pet.toys.find(uuid: toy.uuid, adapter: adapter)
         }.subscribe({ (toy) in
             XCTAssertNotNil(toy)
             expectation.fulfill()

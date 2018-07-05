@@ -29,17 +29,17 @@ class ParentTests: XCTestCase {
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
         let pet = Pet(uuid: UUID().uuidString, name: "Test", ownerID: owner.uuid)
         
-        guard let adapter = owner.adapter else { XCTFail(); return }
+        guard let adapter = Arcade.shared.adapter(forKey: "Test") else { XCTFail(); return }
         
         adapter.connect().then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return owner.save()
+            return owner.save(adapter: adapter)
         }).then({ (success) -> Future<Bool> in
             XCTAssertTrue(success)
-            return pet.save()
+            return pet.save(adapter: adapter)
         }).then { (success) -> Future<Owner?> in
             XCTAssertTrue(success)
-            return pet.owner.find()
+            return pet.owner.find(adapter: adapter)
         }.subscribe({ (owner) in
             XCTAssertNotNil(owner)
             expectation.fulfill()

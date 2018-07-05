@@ -23,17 +23,12 @@ public enum ExampleTable: String, Table {
             return "toyID"
         }
     }
-    
-    public static var adapter: Adapter? {
-        return Arcade.shared.adapter(forKey: "Example")
-    }
 }
 
 public struct Owner: Storable {
     public static var table: Table = ExampleTable.owner
-    public static var adapter: Adapter? = ExampleTable.adapter
     
-    public var uuid: UUID = UUID()
+    public var uuid: String = UUID().uuidString
     public var name: String?
     
     public var pets: Children<Owner, Pet> {
@@ -45,12 +40,11 @@ public struct Owner: Storable {
 
 public struct Pet: Storable {
     public static var table: Table = ExampleTable.pet
-    public static var adapter: Adapter? = ExampleTable.adapter
     
-    public var uuid: UUID = UUID()
+    public var uuid: String = UUID().uuidString
     public var name: String?
     
-    public var ownerID: UUID?
+    public var ownerID: String?
     
     public var owner: Parent<Pet, Owner> {
         return Parent<Pet, Owner>(uuid: self.ownerID)
@@ -69,12 +63,11 @@ public struct Pet: Storable {
 
 public struct PetToy: Storable {
     public static var table: Table = ExampleTable.petToy
-    public static var adapter: Adapter? = ExampleTable.adapter
     
-    public var uuid: UUID = UUID()
+    public var uuid: String = UUID().uuidString
     
-    public var petID: UUID?
-    public var toyID: UUID?
+    public var petID: String?
+    public var toyID: String?
     
     public var pet: Parent<PetToy, Pet> {
         return Parent<PetToy, Pet>(uuid: self.petID)
@@ -89,9 +82,8 @@ public struct PetToy: Storable {
 
 public struct Toy: Storable {
     public static var table: Table = ExampleTable.toy
-    public static var adapter: Adapter? = ExampleTable.adapter
     
-    public var uuid: UUID = UUID()
+    public var uuid: String = UUID().uuidString
     public var name: String?
     
     public var petToys: Children<Toy, PetToy> {

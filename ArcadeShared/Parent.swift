@@ -9,7 +9,6 @@
 import Foundation
 
 enum ParentError: Error {
-    case noAdapter
     case noUUID
 }
 
@@ -32,9 +31,7 @@ public struct Parent<C, P> where C: Storable, P: Storable {
         self.toParent = toParent
     }
     
-    public func find(adapter: Adapter? = C.adapter) -> Future<P?> {
-        guard let adapter = adapter else { return Future(ParentError.noAdapter) }
-        
+    public func find(adapter: Adapter) -> Future<P?> {
         if let toParent = toParent {
             if let child = child {
                 return child.then({ (child) -> Future<P?> in
@@ -54,12 +51,12 @@ public struct Parent<C, P> where C: Storable, P: Storable {
 
 public extension Parent {
     
-    public func parent<T>(toParent: @escaping (P) -> String?) -> Parent<P, T> {
-        return Parent<P, T>(child: find(), toParent: toParent)
+    public func parent<T>(adapter: Adapter, toParent: @escaping (P) -> String?) -> Parent<P, T> {
+        return Parent<P, T>(child: find(adapter: adapter), toParent: toParent)
     }
     
-    public func children<T>(_ foreignKey: String) -> Children<P, T> {
-        return Children<P, T>(parent: find())
+    public func children<T>(_ foreignKey: String, adapter: Adapter) -> Children<P, T> {
+        return Children<P, T>(parent: find(adapter: adapter))
     }
     
 }
