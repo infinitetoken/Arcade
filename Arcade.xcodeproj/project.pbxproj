@@ -23,6 +23,57 @@
 		F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F01AE62F1FBF722100C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
 		F01AE6301FBF722200C21931 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
+		F01EA0AE2101C5300040FA96 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F01EA0A52101C5300040FA96 /* Arcade.framework */; };
+		F01EA0B52101C5300040FA96 /* ArcadeTV.h in Headers */ = {isa = PBXBuildFile; fileRef = F01EA0A72101C5300040FA96 /* ArcadeTV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0F1FA9F2F00036124E /* Arcade.swift */; };
+		F01EA0BE2101C5B10040FA96 /* CoreDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */; };
+		F01EA0BF2101C5B10040FA96 /* CoreDataStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */; };
+		F01EA0C02101C5B60040FA96 /* InMemoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */; };
+		F01EA0C12101C5BA0040FA96 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
+		F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
+		F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2FD2023930A00ADC2FC /* Sequence+Sort.swift */; };
+		F01EA0C42101C5C20040FA96 /* Array+Offset.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F3002023998900ADC2FC /* Array+Offset.swift */; };
+		F01EA0C52101C5C20040FA96 /* Array+Limit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F30320239B7D00ADC2FC /* Array+Limit.swift */; };
+		F01EA0C62101C5C90040FA96 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0D1FA9F2F00036124E /* Adapter.swift */; };
+		F01EA0C72101C5C90040FA96 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D131FA9F2F00036124E /* Table.swift */; };
+		F01EA0C82101C5C90040FA96 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D141FA9F2F00036124E /* Storable.swift */; };
+		F01EA0C92101C5CE0040FA96 /* Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D121FA9F2F00036124E /* Comparison.swift */; };
+		F01EA0CA2101C5CE0040FA96 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0A1FA9F2F00036124E /* Expression.swift */; };
+		F01EA0CB2101C5CE0040FA96 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D111FA9F2F00036124E /* Query.swift */; };
+		F01EA0CC2101C5D30040FA96 /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F720238E6700ADC2FC /* Sort.swift */; };
+		F01EA0CD2101C5DA0040FA96 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D101FA9F2F00036124E /* Future.swift */; };
+		F01EA0CE2101C5DA0040FA96 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB9092021218E00BBA9D7 /* Children.swift */; };
+		F01EA0CF2101C5DA0040FA96 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90C2021219C00BBA9D7 /* Parent.swift */; };
+		F01EA0D02101C5DA0040FA96 /* Parents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC898F38202F8A1B00DEA675 /* Parents.swift */; };
+		F01EA0D12101C5DA0040FA96 /* Siblings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDCB90F202121A500BBA9D7 /* Siblings.swift */; };
+		F01EA0D22101C5E70040FA96 /* ArcadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5FFFC1FA9D9C300F42111 /* ArcadeTests.swift */; };
+		F01EA0D32101C5EC0040FA96 /* InMemoryAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */; };
+		F01EA0D42101C5EC0040FA96 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
+		F01EA0D52101C5EC0040FA96 /* JSONAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */; };
+		F01EA0D62101C5F20040FA96 /* NSComparisionDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */; };
+		F01EA0D72101C5F20040FA96 /* SequenceSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */; };
+		F01EA0D82101C5F20040FA96 /* ArrayOffsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */; };
+		F01EA0D92101C5F20040FA96 /* ArrayLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556312028CBF500779008 /* ArrayLimitTests.swift */; };
+		F01EA0DA2101C5F60040FA96 /* StorableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556392028D4A800779008 /* StorableTests.swift */; };
+		F01EA0DB2101C5FC0040FA96 /* ComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A3B1FA9FA8F00763001 /* ComparisonTests.swift */; };
+		F01EA0DC2101C5FC0040FA96 /* ExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A411FA9FAC700763001 /* ExpressionTests.swift */; };
+		F01EA0DD2101C5FC0040FA96 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A441FA9FAD000763001 /* QueryTests.swift */; };
+		F01EA0DE2101C6010040FA96 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556352028CE4000779008 /* SortTests.swift */; };
+		F01EA0DF2101C6070040FA96 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A381FA9FA6D00763001 /* FutureTests.swift */; };
+		F01EA0E02101C6070040FA96 /* ChildrenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2ED2023506B00ADC2FC /* ChildrenTests.swift */; };
+		F01EA0E12101C6070040FA96 /* ParentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F02023507400ADC2FC /* ParentTests.swift */; };
+		F01EA0E22101C6070040FA96 /* SiblingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F2F32023507C00ADC2FC /* SiblingsTests.swift */; };
+		F01EA0E32101C60D0040FA96 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
+		F01EA0E42101C6100040FA96 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
+		F01EA0E52101C6150040FA96 /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519742027458900AB1FFE /* OwnerEntity.swift */; };
+		F01EA0E62101C6150040FA96 /* PetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F519772027459600AB1FFE /* PetEntity.swift */; };
+		F01EA0E72101C6150040FA96 /* PetToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197D202745A900AB1FFE /* PetToyEntity.swift */; };
+		F01EA0E82101C6150040FA96 /* ToyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F5197A2027459F00AB1FFE /* ToyEntity.swift */; };
+		F01EA0E92101C61C0040FA96 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51980202745B500AB1FFE /* Owner.swift */; };
+		F01EA0EA2101C61C0040FA96 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51983202745BB00AB1FFE /* Pet.swift */; };
+		F01EA0EB2101C61C0040FA96 /* PetToy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51989202745C900AB1FFE /* PetToy.swift */; };
+		F01EA0EC2101C61C0040FA96 /* Toy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F51986202745C300AB1FFE /* Toy.swift */; };
+		F01EA0ED2101C6210040FA96 /* NSManagedObject+Find.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556402028D62E00779008 /* NSManagedObject+Find.swift */; };
 		F03556322028CBF500779008 /* ArrayLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556312028CBF500779008 /* ArrayLimitTests.swift */; };
 		F03556332028CBF500779008 /* ArrayLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556312028CBF500779008 /* ArrayLimitTests.swift */; };
 		F03556362028CE4000779008 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03556352028CE4000779008 /* SortTests.swift */; };
@@ -114,6 +165,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F01EA0AF2101C5300040FA96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0F5FFE51FA9D9C300F42111 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F01EA0A42101C5300040FA96;
+			remoteInfo = ArcadeTV;
+		};
 		F0F500181FA9D9F700F42111 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F0F5FFE51FA9D9C300F42111 /* Project object */;
@@ -138,6 +196,11 @@
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
+		F01EA0A52101C5300040FA96 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F01EA0A72101C5300040FA96 /* ArcadeTV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArcadeTV.h; sourceTree = "<group>"; };
+		F01EA0A82101C5300040FA96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F01EA0AD2101C5300040FA96 /* ArcadeTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArcadeTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F01EA0B42101C5300040FA96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F03556312028CBF500779008 /* ArrayLimitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayLimitTests.swift; sourceTree = "<group>"; };
 		F03556352028CE4000779008 /* SortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTests.swift; sourceTree = "<group>"; };
 		F03556392028D4A800779008 /* StorableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableTests.swift; sourceTree = "<group>"; };
@@ -197,6 +260,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F01EA0A12101C5300040FA96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F01EA0AA2101C5300040FA96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F01EA0AE2101C5300040FA96 /* Arcade.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5000A1FA9D9F700F42111 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +316,31 @@
 				F01AE6291FBF711900C21931 /* JSONAdapter.swift */,
 			);
 			name = JSON;
+			sourceTree = "<group>";
+		};
+		F01EA0A62101C5300040FA96 /* ArcadeTV */ = {
+			isa = PBXGroup;
+			children = (
+				F01EA0BC2101C56C0040FA96 /* Supporting Files */,
+			);
+			path = ArcadeTV;
+			sourceTree = "<group>";
+		};
+		F01EA0B12101C5300040FA96 /* ArcadeTVTests */ = {
+			isa = PBXGroup;
+			children = (
+				F01EA0B42101C5300040FA96 /* Info.plist */,
+			);
+			path = ArcadeTVTests;
+			sourceTree = "<group>";
+		};
+		F01EA0BC2101C56C0040FA96 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F01EA0A72101C5300040FA96 /* ArcadeTV.h */,
+				F01EA0A82101C5300040FA96 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F03556342028CE2800779008 /* Sort */ = {
@@ -451,9 +554,11 @@
 				F0F5002B1FA9DB9500F42111 /* ArcadeShared */,
 				F0F5FFF01FA9D9C300F42111 /* Arcade */,
 				F0F5000F1FA9D9F700F42111 /* ArcadeMobile */,
+				F01EA0A62101C5300040FA96 /* ArcadeTV */,
 				F0F5002C1FA9DB9C00F42111 /* ArcadeTestsShared */,
 				F0F5FFFB1FA9D9C300F42111 /* ArcadeTests */,
 				F0F5001A1FA9D9F700F42111 /* ArcadeMobileTests */,
+				F01EA0B12101C5300040FA96 /* ArcadeTVTests */,
 				F0F500261FA9DAF500F42111 /* Frameworks */,
 				F0F5FFEF1FA9D9C300F42111 /* Products */,
 			);
@@ -466,6 +571,8 @@
 				F0F5FFF71FA9D9C300F42111 /* ArcadeTests.xctest */,
 				F0F5000E1FA9D9F700F42111 /* Arcade.framework */,
 				F0F500161FA9D9F700F42111 /* ArcadeMobileTests.xctest */,
+				F01EA0A52101C5300040FA96 /* Arcade.framework */,
+				F01EA0AD2101C5300040FA96 /* ArcadeTVTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -544,6 +651,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F01EA0A22101C5300040FA96 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F01EA0B52101C5300040FA96 /* ArcadeTV.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5000B1FA9D9F700F42111 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -563,6 +678,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F01EA0A42101C5300040FA96 /* ArcadeTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F01EA0BA2101C5300040FA96 /* Build configuration list for PBXNativeTarget "ArcadeTV" */;
+			buildPhases = (
+				F01EA0A02101C5300040FA96 /* Sources */,
+				F01EA0A12101C5300040FA96 /* Frameworks */,
+				F01EA0A22101C5300040FA96 /* Headers */,
+				F01EA0A32101C5300040FA96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArcadeTV;
+			productName = ArcadeTV;
+			productReference = F01EA0A52101C5300040FA96 /* Arcade.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F01EA0AC2101C5300040FA96 /* ArcadeTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F01EA0BB2101C5300040FA96 /* Build configuration list for PBXNativeTarget "ArcadeTVTests" */;
+			buildPhases = (
+				F01EA0A92101C5300040FA96 /* Sources */,
+				F01EA0AA2101C5300040FA96 /* Frameworks */,
+				F01EA0AB2101C5300040FA96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F01EA0B02101C5300040FA96 /* PBXTargetDependency */,
+			);
+			name = ArcadeTVTests;
+			productName = ArcadeTVTests;
+			productReference = F01EA0AD2101C5300040FA96 /* ArcadeTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F0F5000D1FA9D9F700F42111 /* ArcadeMobile */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0F5001F1FA9D9F700F42111 /* Build configuration list for PBXNativeTarget "ArcadeMobile" */;
@@ -641,10 +792,16 @@
 		F0F5FFE51FA9D9C300F42111 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "A.C. Wright Design";
 				TargetAttributes = {
+					F01EA0A42101C5300040FA96 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					F01EA0AC2101C5300040FA96 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					F0F5000D1FA9D9F700F42111 = {
 						CreatedOnToolsVersion = 9.0.1;
 						LastSwiftMigration = 0900;
@@ -681,11 +838,27 @@
 				F0F5FFF61FA9D9C300F42111 /* ArcadeTests */,
 				F0F5000D1FA9D9F700F42111 /* ArcadeMobile */,
 				F0F500151FA9D9F700F42111 /* ArcadeMobileTests */,
+				F01EA0A42101C5300040FA96 /* ArcadeTV */,
+				F01EA0AC2101C5300040FA96 /* ArcadeTVTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F01EA0A32101C5300040FA96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F01EA0AB2101C5300040FA96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F5000C1FA9D9F700F42111 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -717,6 +890,69 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F01EA0A02101C5300040FA96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F01EA0BE2101C5B10040FA96 /* CoreDataAdapter.swift in Sources */,
+				F01EA0D02101C5DA0040FA96 /* Parents.swift in Sources */,
+				F01EA0C92101C5CE0040FA96 /* Comparison.swift in Sources */,
+				F01EA0C52101C5C20040FA96 /* Array+Limit.swift in Sources */,
+				F01EA0C02101C5B60040FA96 /* InMemoryAdapter.swift in Sources */,
+				F01EA0C62101C5C90040FA96 /* Adapter.swift in Sources */,
+				F01EA0CA2101C5CE0040FA96 /* Expression.swift in Sources */,
+				F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */,
+				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
+				F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */,
+				F01EA0C12101C5BA0040FA96 /* JSONAdapter.swift in Sources */,
+				F01EA0CF2101C5DA0040FA96 /* Parent.swift in Sources */,
+				F01EA0CD2101C5DA0040FA96 /* Future.swift in Sources */,
+				F01EA0CB2101C5CE0040FA96 /* Query.swift in Sources */,
+				F01EA0D12101C5DA0040FA96 /* Siblings.swift in Sources */,
+				F01EA0CE2101C5DA0040FA96 /* Children.swift in Sources */,
+				F01EA0C42101C5C20040FA96 /* Array+Offset.swift in Sources */,
+				F01EA0C82101C5C90040FA96 /* Storable.swift in Sources */,
+				F01EA0CC2101C5D30040FA96 /* Sort.swift in Sources */,
+				F01EA0BF2101C5B10040FA96 /* CoreDataStorable.swift in Sources */,
+				F01EA0C72101C5C90040FA96 /* Table.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F01EA0A92101C5300040FA96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F01EA0DF2101C6070040FA96 /* FutureTests.swift in Sources */,
+				F01EA0E92101C61C0040FA96 /* Owner.swift in Sources */,
+				F01EA0D22101C5E70040FA96 /* ArcadeTests.swift in Sources */,
+				F01EA0D92101C5F20040FA96 /* ArrayLimitTests.swift in Sources */,
+				F01EA0D82101C5F20040FA96 /* ArrayOffsetTests.swift in Sources */,
+				F01EA0E62101C6150040FA96 /* PetEntity.swift in Sources */,
+				F01EA0D62101C5F20040FA96 /* NSComparisionDescriptionTests.swift in Sources */,
+				F01EA0DB2101C5FC0040FA96 /* ComparisonTests.swift in Sources */,
+				F01EA0EB2101C61C0040FA96 /* PetToy.swift in Sources */,
+				F01EA0D72101C5F20040FA96 /* SequenceSortTests.swift in Sources */,
+				F01EA0D32101C5EC0040FA96 /* InMemoryAdapterTests.swift in Sources */,
+				F01EA0EA2101C61C0040FA96 /* Pet.swift in Sources */,
+				F01EA0D42101C5EC0040FA96 /* CoreDataAdapterTests.swift in Sources */,
+				F01EA0E32101C60D0040FA96 /* TestModel.xcdatamodeld in Sources */,
+				F01EA0E12101C6070040FA96 /* ParentTests.swift in Sources */,
+				F01EA0DE2101C6010040FA96 /* SortTests.swift in Sources */,
+				F01EA0E42101C6100040FA96 /* TestTable.swift in Sources */,
+				F01EA0E22101C6070040FA96 /* SiblingsTests.swift in Sources */,
+				F01EA0ED2101C6210040FA96 /* NSManagedObject+Find.swift in Sources */,
+				F01EA0DD2101C5FC0040FA96 /* QueryTests.swift in Sources */,
+				F01EA0D52101C5EC0040FA96 /* JSONAdapterTests.swift in Sources */,
+				F01EA0E72101C6150040FA96 /* PetToyEntity.swift in Sources */,
+				F01EA0E52101C6150040FA96 /* OwnerEntity.swift in Sources */,
+				F01EA0DC2101C5FC0040FA96 /* ExpressionTests.swift in Sources */,
+				F01EA0DA2101C5F60040FA96 /* StorableTests.swift in Sources */,
+				F01EA0EC2101C61C0040FA96 /* Toy.swift in Sources */,
+				F01EA0E82101C6150040FA96 /* ToyEntity.swift in Sources */,
+				F01EA0E02101C6070040FA96 /* ChildrenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0F500091FA9D9F700F42111 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -846,6 +1082,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F01EA0B02101C5300040FA96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F01EA0A42101C5300040FA96 /* ArcadeTV */;
+			targetProxy = F01EA0AF2101C5300040FA96 /* PBXContainerItemProxy */;
+		};
 		F0F500191FA9D9F700F42111 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F0F5000D1FA9D9F700F42111 /* ArcadeMobile */;
@@ -859,6 +1100,112 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F01EA0B62101C5300040FA96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArcadeTV/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
+				PRODUCT_NAME = Arcade;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+			};
+			name = Debug;
+		};
+		F01EA0B72101C5300040FA96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArcadeTV/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
+				PRODUCT_NAME = Arcade;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F01EA0B82101C5300040FA96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				INFOPLIST_FILE = ArcadeTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+			};
+			name = Debug;
+		};
+		F01EA0B92101C5300040FA96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				INFOPLIST_FILE = ArcadeTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		F0F500001FA9D9C300F42111 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1184,6 +1531,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F01EA0BA2101C5300040FA96 /* Build configuration list for PBXNativeTarget "ArcadeTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F01EA0B62101C5300040FA96 /* Debug */,
+				F01EA0B72101C5300040FA96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F01EA0BB2101C5300040FA96 /* Build configuration list for PBXNativeTarget "ArcadeTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F01EA0B82101C5300040FA96 /* Debug */,
+				F01EA0B92101C5300040FA96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0F500021FA9D9C300F42111 /* Build configuration list for PBXNativeTarget "Arcade" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
