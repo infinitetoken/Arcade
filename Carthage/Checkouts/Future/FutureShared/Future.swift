@@ -1,9 +1,9 @@
 //
 //  Future.swift
-//  Arcade
+//  Future
 //
-//  Created by A.C. Wright Design on 10/30/17.
-//  Copyright © 2017 A.C. Wright Design. All rights reserved.
+//  Created by Aaron Wright on 8/17/18.
+//  Copyright © 2018 Aaron Wright. All rights reserved.
 //
 
 import Foundation
@@ -143,3 +143,4 @@ extension Future {
     }
     
 }
+

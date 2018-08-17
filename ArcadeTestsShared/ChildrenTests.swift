@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Future
 @testable import Arcade
 
 class ChildrenTests: XCTestCase {

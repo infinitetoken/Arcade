@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F01EA0A42101C5300040FA96"
-               BuildableName = "Arcade.framework"
-               BlueprintName = "ArcadeTV"
-               ReferencedContainer = "container:Arcade.xcodeproj">
+               BlueprintIdentifier = "F0FBAE432127028700902397"
+               BuildableName = "Future.framework"
+               BlueprintName = "Future"
+               ReferencedContainer = "container:Future.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,26 +26,27 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F01EA0AC2101C5300040FA96"
-               BuildableName = "ArcadeTVTests.xctest"
-               BlueprintName = "ArcadeTVTests"
-               ReferencedContainer = "container:Arcade.xcodeproj">
+               BlueprintIdentifier = "F0FBAE4C2127028700902397"
+               BuildableName = "FutureTests.xctest"
+               BlueprintName = "FutureTests"
+               ReferencedContainer = "container:Future.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F01EA0A42101C5300040FA96"
-            BuildableName = "Arcade.framework"
-            BlueprintName = "ArcadeTV"
-            ReferencedContainer = "container:Arcade.xcodeproj">
+            BlueprintIdentifier = "F0FBAE432127028700902397"
+            BuildableName = "Future.framework"
+            BlueprintName = "Future"
+            ReferencedContainer = "container:Future.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F01EA0A42101C5300040FA96"
-            BuildableName = "Arcade.framework"
-            BlueprintName = "ArcadeTV"
-            ReferencedContainer = "container:Arcade.xcodeproj">
+            BlueprintIdentifier = "F0FBAE432127028700902397"
+            BuildableName = "Future.framework"
+            BlueprintName = "Future"
+            ReferencedContainer = "container:Future.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -82,10 +83,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F01EA0A42101C5300040FA96"
-            BuildableName = "Arcade.framework"
-            BlueprintName = "ArcadeTV"
-            ReferencedContainer = "container:Arcade.xcodeproj">
+            BlueprintIdentifier = "F0FBAE432127028700902397"
+            BuildableName = "Future.framework"
+            BlueprintName = "Future"
+            ReferencedContainer = "container:Future.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Future
 
 public enum CoreDataAdapterError: Error {
     case parameterNotGiven

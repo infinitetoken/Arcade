@@ -1,20 +1,20 @@
 //
 //  FutureTests.swift
-//  Arcade
+//  Future
 //
-//  Created by A.C. Wright Design on 11/1/17.
-//  Copyright © 2017 A.C. Wright Design. All rights reserved.
+//  Created by Aaron Wright on 8/17/18.
+//  Copyright © 2018 Aaron Wright. All rights reserved.
 //
 
 import XCTest
-@testable import Arcade
+@testable import Future
 
 enum FutureTestError: Error {
     case error
 }
 
 class FutureTests: XCTestCase {
-
+    
     func testSuccess() {
         let future = Future<Int>(1)
         
@@ -79,3 +79,4 @@ class FutureTests: XCTestCase {
     }
     
 }
+

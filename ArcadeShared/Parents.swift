@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Future
 
 public struct Parents<C,P> where C: Storable, P: Storable {
     

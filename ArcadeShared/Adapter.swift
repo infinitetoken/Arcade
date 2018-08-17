@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Future
 
 public protocol Adapter {
     

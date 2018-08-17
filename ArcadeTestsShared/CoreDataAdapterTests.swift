@@ -8,6 +8,7 @@
 
 import XCTest
 import CoreData
+import Future
 @testable import Arcade
 
 class CoreDataAdapterTests: XCTestCase {

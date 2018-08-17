@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Future
 
 public func !=(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid != rhs.uuid }
 public func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid == rhs.uuid }

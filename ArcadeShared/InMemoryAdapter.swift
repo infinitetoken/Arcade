@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Future
 
 public enum InMemoryAdapterError: Error {
     case insertFailed
