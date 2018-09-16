@@ -45,19 +45,3 @@ extension Pet {
     }
     
 }
-
-extension Pet {
-    
-    var owner: Parent<Pet, Owner> {
-        return Parent<Pet, Owner>(uuid: self.ownerID)
-    }
-    
-    var petToys: Children<Pet, PetToy> {
-        return Children<Pet, PetToy>(uuid: self.uuid)
-    }
-    
-    var toys: Siblings<Pet, Toy, PetToy> {
-        return Siblings<Pet, Toy, PetToy>(uuid: self.uuid)
-    }
-    
-}

@@ -40,15 +40,3 @@ extension Toy {
     }
     
 }
-
-extension Toy {
-    
-    var petToys: Children<Toy, PetToy> {
-        return Children<Toy, PetToy>(uuid: self.uuid)
-    }
-    
-    var pets: Siblings<Toy, Pet, PetToy> {
-        return Siblings<Toy, Pet, PetToy>(uuid: self.uuid)
-    }
-    
-}
