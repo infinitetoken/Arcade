@@ -20,6 +20,7 @@ public enum Expression {
     case comparison(Key, Comparison, Value, NSComparisonPredicate.Options)
     case isNil(Key)
     case isNotNil(Key)
+    case search(Value)
     case all
 }
 
@@ -83,6 +84,13 @@ public extension Expression {
                 "value": NSNull(),
                 "options": NSNull()
             ]
+        case .search(let value):
+            return [
+                "key" : NSNull(),
+                "comparison" : "search",
+                "value": value != nil ? value! : NSNull(),
+                "options": NSNull()
+            ]
         case .all:
             return [:]
         }
@@ -107,6 +115,7 @@ extension Expression {
             return NSComparisonPredicate(leftExpression: leftExpression, rightExpression: rightExpression, modifier: modifier, type: type, options: options)
         case let .isNil(key): return NSPredicate(format: "%K = nil", key)
         case let .isNotNil(key): return NSPredicate(format: "%K != nil", key)
+        case .search(_): return NSPredicate(value: true)
         case .all: return NSPredicate(value: true)
         }
     }
@@ -133,6 +142,7 @@ extension Expression: CustomStringConvertible {
         case let .comparison(key, comparison, value, options): return options.rawValue == 0 ? "\(key) \(comparison) \(value != nil ? value! : "nil")" : "\(key) \(comparison)[\(options)] \(value != nil ? value! : "nil")"
         case let .isNil(key): return "\(key) \(Comparison.equalTo) nil"
         case let .isNotNil(key): return "\(key) \(Comparison.notEqualTo) nil"
+        case let .search(value): return "search \(value != nil ? value! : "nil")"
         case .all: return "true"
         }
     }
