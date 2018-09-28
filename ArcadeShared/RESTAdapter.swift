@@ -307,13 +307,13 @@ extension RESTAdapter: Adapter {
     
     // MARK: - Helpers
     
-    func url(forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents()) -> URL? {
+    public func url(forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents()) -> URL? {
         var urlComponents = urlComponents
         urlComponents.scheme = self.apiScheme
         
         if let table = table {
             urlComponents.host = self.apiHost
-            urlComponents.path = "/\(self.apiHost)/\(table.name)"
+            urlComponents.path = self.apiPath != nil ? "/\(self.apiPath!)/\(table.name)" : "/\(table.name)"
         }
         
         let path = urlComponents.path
@@ -323,7 +323,7 @@ extension RESTAdapter: Adapter {
         return urlComponents.url
     }
     
-    func urlComponents(forQuery query: Query?, search: String?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) throws -> URLComponents {
+    public func urlComponents(forQuery query: Query?, search: String?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) throws -> URLComponents {
         var urlComponents = URLComponents()
         
         urlComponents.queryItems = try RESTQueryBuilder(query: query, search: search, sorts: sorts, limit: limit, offset: offset).queryItems()
@@ -331,7 +331,7 @@ extension RESTAdapter: Adapter {
         return urlComponents
     }
     
-    func urlRequest(forURL url: URL, method: String, data: Data?) -> URLRequest {
+    public func urlRequest(forURL url: URL, method: String, data: Data?) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
@@ -346,7 +346,7 @@ extension RESTAdapter: Adapter {
         return request
     }
     
-    func encode<T>(value: T) throws -> Data? where T : Encodable {
+    public func encode<T>(value: T) throws -> Data? where T : Encodable {
         let encoder = JSONEncoder()
         encoder.dataEncodingStrategy = .base64
         encoder.dateEncodingStrategy = .secondsSince1970
@@ -355,7 +355,7 @@ extension RESTAdapter: Adapter {
         return try encoder.encode(value)
     }
     
-    func decodeStorable<T>(from data: Data, table: Table) throws -> T where T : Storable {
+    public func decodeStorable<T>(from data: Data, table: Table) throws -> T where T : Storable {
         let decoder = JSONDecoder()
         decoder.dataDecodingStrategy = .base64
         decoder.dateDecodingStrategy = .secondsSince1970
@@ -364,7 +364,7 @@ extension RESTAdapter: Adapter {
         return try decoder.decode(T.self, from: data)
     }
     
-    func decodeArray<T>(from data: Data, table: Table) throws -> [T] where T : Storable {
+    public func decodeArray<T>(from data: Data, table: Table) throws -> [T] where T : Storable {
         let decoder = JSONDecoder()
         decoder.dataDecodingStrategy = .base64
         decoder.dateDecodingStrategy = .secondsSince1970
