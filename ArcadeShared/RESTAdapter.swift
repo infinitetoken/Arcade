@@ -355,6 +355,15 @@ extension RESTAdapter: Adapter {
         return try encoder.encode(value)
     }
     
+    public func decode<T>(data: Data) throws -> T where T : Decodable {
+        let decoder = JSONDecoder()
+        decoder.dataDecodingStrategy = .base64
+        decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        return try decoder.decode(T.self, from: data)
+    }
+    
     public func decodeStorable<T>(from data: Data, table: Table) throws -> T where T : Storable {
         let decoder = JSONDecoder()
         decoder.dataDecodingStrategy = .base64
