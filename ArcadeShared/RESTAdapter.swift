@@ -24,15 +24,17 @@ open class RESTAdapter {
     public var apiKey: String
     public var apiScheme: String
     public var apiHost: String
+    public var apiPort: Int?
     public var apiPath: String?
     
     // MARK: - Lifecycle
     
-    public init(apiKey: String, apiScheme: String, apiHost: String, apiPath: String?, session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+    public init(apiKey: String, apiScheme: String, apiHost: String, apiPort: Int?, apiPath: String?, session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         self.apiKey = apiKey
         self.apiScheme = apiScheme
         self.apiHost = apiHost
         self.apiPath = apiPath
+        self.apiPort = apiPort
         self.session = session
     }
     
@@ -314,6 +316,7 @@ extension RESTAdapter: Adapter {
         if let table = table {
             urlComponents.host = self.apiHost
             urlComponents.path = self.apiPath != nil ? "/\(self.apiPath!)/\(table.name)" : "/\(table.name)"
+            urlComponents.port = self.apiPort
         }
         
         let path = urlComponents.path
