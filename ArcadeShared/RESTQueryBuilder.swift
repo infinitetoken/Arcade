@@ -111,6 +111,8 @@ public struct RESTQueryBuilder {
             return true
         case .search(_):
             return true
+        case .isEmpty(_):
+            return true
         case .equal(_, _):
             return true
         case .notEqual(_, _):

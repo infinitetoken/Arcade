@@ -33,7 +33,7 @@ extension Comparison {
         case .contains: return NSComparisonPredicate.Operator.contains
         case .like: return NSComparisonPredicate.Operator.like
         case .inside: return NSComparisonPredicate.Operator.in
-        }
+        }        
     }
     
 }
