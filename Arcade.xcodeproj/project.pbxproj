@@ -11,6 +11,8 @@
 		ACAA63B4218B7C7200ADB9C2 /* ArcadeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */; };
 		ACAA63B5218B7C7300ADB9C2 /* ArcadeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */; };
 		ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
+		ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
+		ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
@@ -947,6 +949,7 @@
 				F01EA0C62101C5C90040FA96 /* Adapter.swift in Sources */,
 				F01EA0CA2101C5CE0040FA96 /* Expression.swift in Sources */,
 				F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */,
+				ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
 				F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */,
 				F01EA0C12101C5BA0040FA96 /* JSONAdapter.swift in Sources */,
@@ -1007,6 +1010,7 @@
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
 				F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
+				ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
 				F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */,
