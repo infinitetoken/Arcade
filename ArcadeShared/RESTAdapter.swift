@@ -15,27 +15,18 @@ public enum RESTAdapterError: Error {
     case encodeError
     case responseError
     case noData
+    case noResponse
+    case HTTPResponse(code: Int, error: Error)
 }
 
 open class RESTAdapter {
     
-    private var session: URLSession?
-    
-    public var apiKey: String
-    public var apiScheme: String
-    public var apiHost: String
-    public var apiPort: Int?
-    public var apiPath: String?
+    public var configuration: RESTConfiguration
     
     // MARK: - Lifecycle
     
-    public init(apiKey: String, apiScheme: String, apiHost: String, apiPort: Int?, apiPath: String?, session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
-        self.apiKey = apiKey
-        self.apiScheme = apiScheme
-        self.apiHost = apiHost
-        self.apiPath = apiPath
-        self.apiPort = apiPort
-        self.session = session
+    public init(configuration: RESTConfiguration) {
+        self.configuration = configuration
     }
     
 }
@@ -69,9 +60,18 @@ extension RESTAdapter: Adapter {
                 
                 let urlRequest = self.urlRequest(forURL: url, method: "POST", data: data)
                 
-                self.session?.dataTask(with: urlRequest) { (data, response, error) in
+                self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                    guard let response = response as? HTTPURLResponse else {
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.noResponse))
+                        }
+                        return
+                    }
+                    
                     guard error == nil else {
-                        DispatchQueue.main.async { completion(.failure(error!)) }
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        }
                         return
                     }
                     
@@ -98,9 +98,18 @@ extension RESTAdapter: Adapter {
             
             let urlRequest = self.urlRequest(forURL: url, method: "GET", data: nil)
             
-            self.session?.dataTask(with: urlRequest) { (data, response, error) in
+            self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noResponse))
+                    }
+                    return
+                }
+                
                 guard error == nil else {
-                    DispatchQueue.main.async { completion(.failure(error!)) }
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                    }
                     return
                 }
                 
@@ -139,9 +148,18 @@ extension RESTAdapter: Adapter {
             
             let urlRequest = self.urlRequest(forURL: url, method: "GET", data: nil)
             
-            self.session?.dataTask(with: urlRequest) { (data, response, error) in
+            self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noResponse))
+                    }
+                    return
+                }
+                
                 guard error == nil else {
-                    DispatchQueue.main.async { completion(.failure(error!)) }
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                    }
                     return
                 }
                 
@@ -181,9 +199,18 @@ extension RESTAdapter: Adapter {
             
             let urlRequest = self.urlRequest(forURL: url, method: "GET", data: nil)
             
-            self.session?.dataTask(with: urlRequest) { (data, response, error) in
+            self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noResponse))
+                    }
+                    return
+                }
+                
                 guard error == nil else {
-                    DispatchQueue.main.async { completion(.failure(error!)) }
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                    }
                     return
                 }
                 
@@ -214,9 +241,18 @@ extension RESTAdapter: Adapter {
                 
                 let urlRequest = self.urlRequest(forURL: url, method: "PUT", data: data)
                 
-                self.session?.dataTask(with: urlRequest) { (data, response, error) in
+                self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                    guard let response = response as? HTTPURLResponse else {
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.noResponse))
+                        }
+                        return
+                    }
+                    
                     guard error == nil else {
-                        DispatchQueue.main.async { completion(.failure(error!)) }
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        }
                         return
                     }
                     
@@ -243,9 +279,18 @@ extension RESTAdapter: Adapter {
             
             let urlRequest = self.urlRequest(forURL: url, method: "DELETE", data: nil)
             
-            self.session?.dataTask(with: urlRequest) { (data, response, error) in
+            self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noResponse))
+                    }
+                    return
+                }
+                
                 guard error == nil else {
-                    DispatchQueue.main.async { completion(.failure(error!)) }
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                    }
                     return
                 }
                 
@@ -282,9 +327,18 @@ extension RESTAdapter: Adapter {
             
             let urlRequest = self.urlRequest(forURL: url, method: "GET", data: nil)
             
-            self.session?.dataTask(with: urlRequest) { (data, response, error) in
+            self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noResponse))
+                    }
+                    return
+                }
+                
                 guard error == nil else {
-                    DispatchQueue.main.async { completion(.failure(error!)) }
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                    }
                     return
                 }
                 
@@ -311,12 +365,12 @@ extension RESTAdapter: Adapter {
     
     public func url(forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents()) -> URL? {
         var urlComponents = urlComponents
-        urlComponents.scheme = self.apiScheme
+        urlComponents.scheme = self.configuration.apiScheme
         
         if let table = table {
-            urlComponents.host = self.apiHost
-            urlComponents.path = self.apiPath != nil ? "/\(self.apiPath!)/\(table.name)" : "/\(table.name)"
-            urlComponents.port = self.apiPort
+            urlComponents.host = self.configuration.apiHost
+            urlComponents.path = self.configuration.apiPath != nil ? "/\(self.configuration.apiPath!)/\(table.name)" : "/\(table.name)"
+            urlComponents.port = self.configuration.apiPort
         }
         
         let path = urlComponents.path
@@ -341,7 +395,7 @@ extension RESTAdapter: Adapter {
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         headers["Accept"] = "application/json"
-        headers["Authorization"] = "Bearer \(self.apiKey)"
+        headers["Authorization"] = "Bearer \(self.configuration.apiKey)"
         
         request.allHTTPHeaderFields = headers
         request.httpBody = data
