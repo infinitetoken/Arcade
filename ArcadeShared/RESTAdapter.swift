@@ -395,7 +395,8 @@ extension RESTAdapter: Adapter {
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         headers["Accept"] = "application/json"
-        headers["Authorization"] = "Bearer \(self.configuration.apiKey)"
+        
+        if let key = self.configuration.apiKey { headers["Authorization"] = "Bearer \(key)" }
         
         request.allHTTPHeaderFields = headers
         request.httpBody = data
