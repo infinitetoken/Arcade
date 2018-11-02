@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ACAA63B3218B7C6D00ADB9C2 /* ArcadeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */; };
-		ACAA63B4218B7C7200ADB9C2 /* ArcadeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */; };
-		ACAA63B5218B7C7300ADB9C2 /* ArcadeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */; };
 		ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
+		ACAA63C3218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
+		ACAA63C4218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
+		ACAA63C5218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
 		F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
@@ -190,8 +190,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeError.swift; sourceTree = "<group>"; };
 		ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTConfiguration.swift; sourceTree = "<group>"; };
+		ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseCodes.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
@@ -544,7 +544,7 @@
 				F0F86D2D1FA9F3A60036124E /* Query */,
 				F037F2F620238E5300ADC2FC /* Sort */,
 				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
-				ACAA63B2218B7C6D00ADB9C2 /* ArcadeError.swift */,
+				ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */,
 			);
 			path = ArcadeShared;
 			sourceTree = "<group>";
@@ -944,11 +944,11 @@
 				F027933C215DF89200A0E517 /* RESTQueryBuilder.swift in Sources */,
 				F01EA0C92101C5CE0040FA96 /* Comparison.swift in Sources */,
 				F01EA0C52101C5C20040FA96 /* Array+Limit.swift in Sources */,
-				ACAA63B5218B7C7300ADB9C2 /* ArcadeError.swift in Sources */,
 				F01EA0C02101C5B60040FA96 /* InMemoryAdapter.swift in Sources */,
 				F01EA0C62101C5C90040FA96 /* Adapter.swift in Sources */,
 				F01EA0CA2101C5CE0040FA96 /* Expression.swift in Sources */,
 				F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */,
+				ACAA63C5218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
 				F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */,
@@ -1005,11 +1005,11 @@
 				F027933B215DF89200A0E517 /* RESTQueryBuilder.swift in Sources */,
 				F0F86D181FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1C1FA9F2F10036124E /* Adapter.swift in Sources */,
-				ACAA63B4218B7C7200ADB9C2 /* ArcadeError.swift in Sources */,
 				F037F2FF2023930A00ADC2FC /* Sequence+Sort.swift in Sources */,
 				F0F86D2A1FA9F2F10036124E /* Storable.swift in Sources */,
 				F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
+				ACAA63C4218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
@@ -1066,11 +1066,11 @@
 				F027933A215DF89200A0E517 /* RESTQueryBuilder.swift in Sources */,
 				F0F86D171FA9F2F10036124E /* CoreDataAdapter.swift in Sources */,
 				F0F86D1B1FA9F2F10036124E /* Adapter.swift in Sources */,
-				ACAA63B3218B7C6D00ADB9C2 /* ArcadeError.swift in Sources */,
 				F037F2FE2023930A00ADC2FC /* Sequence+Sort.swift in Sources */,
 				F0F86D291FA9F2F10036124E /* Storable.swift in Sources */,
 				F037F30420239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,
+				ACAA63C3218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,

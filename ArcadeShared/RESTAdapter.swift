@@ -16,7 +16,7 @@ public enum RESTAdapterError: Error {
     case responseError
     case noData
     case noResponse
-    case HTTPResponse(code: Int, error: Error)
+    case HTTPResponse(code: Int, error: Error?)
 }
 
 open class RESTAdapter {
@@ -70,12 +70,26 @@ extension RESTAdapter: Adapter {
                     
                     guard error == nil else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error)))
                         }
                         return
                     }
                     
-                    DispatchQueue.main.async { completion(.success(true)) }
+                    guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        }
+                        return
+                    }
+                    
+                    switch responseCode {
+                    case .created:
+                        DispatchQueue.main.async { completion(.success(true)) }
+                    default:
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        }
+                    }
                 }.resume()
             } catch {
                 completion(.failure(error))
@@ -113,15 +127,35 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                if let data = data {
-                    do {
-                        let storable = try self.decodeStorable(from: data, table: I.table) as I
-                        DispatchQueue.main.async { completion(.success(storable)) }
-                    } catch {
-                        DispatchQueue.main.async { completion(.failure(error)) }
+                guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
                     }
-                } else {
-                    completion(.failure(RESTAdapterError.noData))
+                    return
+                }
+                
+                switch responseCode {
+                case .ok:
+                    if let data = data {
+                        do {
+                            let storable = try self.decodeStorable(from: data, table: I.table) as I
+                            DispatchQueue.main.async { completion(.success(storable)) }
+                        } catch {
+                            DispatchQueue.main.async { completion(.failure(error)) }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.noData))
+                        }
+                    }
+                case .notFound:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noData))
+                    }
+                default:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
                 }
             }.resume()
         }
@@ -163,15 +197,33 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                if let data = data {
-                    do {
-                        let storables = try self.decodeArray(from: data, table: I.table) as [I]
-                        DispatchQueue.main.async { completion(.success(storables)) }
-                    } catch {
-                        DispatchQueue.main.async { completion(.failure(error)) }
+                guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
                     }
-                } else {
-                    completion(.failure(RESTAdapterError.noData))
+                    return
+                }
+                
+                switch responseCode {
+                case .ok:
+                    if let data = data {
+                        do {
+                            let storables = try self.decodeArray(from: data, table: I.table) as [I]
+                            DispatchQueue.main.async { completion(.success(storables)) }
+                        } catch {
+                            DispatchQueue.main.async { completion(.failure(error)) }
+                        }
+                    } else {
+                        DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                    }
+                case .notFound:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.noData))
+                    }
+                default:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
                 }
             }.resume()
         }
@@ -214,13 +266,27 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
+                guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
+                    return
+                }
                 
-                do {
-                    let storables = try self.decodeArray(from: data, table: I.table) as [I]
-                    DispatchQueue.main.async { completion(.success(storables)) }
-                } catch {
-                    DispatchQueue.main.async { completion(.failure(error)) }
+                switch responseCode {
+                case .ok:
+                    guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
+                    
+                    do {
+                        let storables = try self.decodeArray(from: data, table: I.table) as [I]
+                        DispatchQueue.main.async { completion(.success(storables)) }
+                    } catch {
+                        DispatchQueue.main.async { completion(.failure(error)) }
+                    }
+                default:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
                 }
             }.resume()
         }
@@ -256,7 +322,21 @@ extension RESTAdapter: Adapter {
                         return
                     }
                     
-                    DispatchQueue.main.async { completion(.success(true)) }
+                    guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        }
+                        return
+                    }
+                    
+                    switch responseCode {
+                    case .ok:
+                        DispatchQueue.main.async { completion(.success(true)) }
+                    default:
+                        DispatchQueue.main.async {
+                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        }
+                    }
                 }.resume()
             } catch {
                 completion(.failure(error))
@@ -294,7 +374,21 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                DispatchQueue.main.async { completion(.success(true)) }
+                guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
+                    return
+                }
+                
+                switch responseCode {
+                case .noContent:
+                    DispatchQueue.main.async { completion(.success(true)) }
+                default:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
+                }
             }.resume()
         }
     }
@@ -342,20 +436,34 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
+                guard let responseCode = HTTPResponseCodes(rawValue: response.statusCode) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
+                    return
+                }
                 
-                do {
-                    guard let object = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Int] else {
-                        completion(.failure(RESTAdapterError.noData)); return
-                    }
+                switch responseCode {
+                case .ok:
+                    guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
                     
-                    if let count = object["count"] {
-                        DispatchQueue.main.async { completion(.success(count)) }
-                    } else {
-                        DispatchQueue.main.async { completion(.failure(RESTAdapterError.responseError)) }
+                    do {
+                        guard let object = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Int] else {
+                            completion(.failure(RESTAdapterError.noData)); return
+                        }
+                        
+                        if let count = object["count"] {
+                            DispatchQueue.main.async { completion(.success(count)) }
+                        } else {
+                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.responseError)) }
+                        }
+                    } catch {
+                        completion(.failure(error))
                     }
-                } catch {
-                    completion(.failure(error))
+                default:
+                    DispatchQueue.main.async {
+                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                    }
                 }
             }.resume()
         }
