@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public struct RESTConfiguration {
     
     public var session: URLSession?
