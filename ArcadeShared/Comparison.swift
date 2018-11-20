@@ -9,12 +9,12 @@
 import Foundation
 
 public enum Comparison: String {
-    case equalTo = "="
-    case notEqualTo = "!="
-    case greaterThan = ">"
-    case greaterThanOrEqualTo = ">="
-    case lessThan = "<"
-    case lessThanOrEqualTo = "<="
+    case equalTo = "equal_to"
+    case notEqualTo = "not_equal_to"
+    case greaterThan = "greater_than"
+    case greaterThanOrEqualTo = "greater_than_or_equal_to"
+    case lessThan = "less_than"
+    case lessThanOrEqualTo = "less_than_or_equal_to"
     case contains = "contains"
     case like = "like"
     case inside = "in"
