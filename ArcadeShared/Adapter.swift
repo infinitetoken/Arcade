@@ -13,15 +13,15 @@ public protocol Adapter {
     
     func connect() -> Future<Bool>
     func disconnect() -> Future<Bool>
-    func insert<I>(storable: I) -> Future<Bool> where I: Storable
-    func insert<I>(storables: [I]) -> Future<Bool> where I: Storable
+    func insert<I>(storable: I) -> Future<I> where I: Storable
+    func insert<I>(storables: [I]) -> Future<[I]> where I: Storable
     func find<I>(uuid: String) -> Future<I?> where I: Storable
     func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I: Storable
     func fetch<I>() -> Future<[I]> where I: Storable
     func fetch<I>(query: Query?) -> Future<[I]> where I: Storable
     func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int) -> Future<[I]> where I: Storable
-    func update<I>(storable: I) -> Future<Bool> where I: Storable
-    func update<I>(storables: [I]) -> Future<Bool> where I: Storable
+    func update<I>(storable: I) -> Future<I> where I: Storable
+    func update<I>(storables: [I]) -> Future<[I]> where I: Storable
     func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I: Storable
     func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I: Storable
     func count<T>(table: T) -> Future<Int> where T: Table

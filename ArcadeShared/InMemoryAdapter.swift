@@ -109,19 +109,19 @@ extension InMemoryAdapter: Adapter {
     public func connect() -> Future<Bool> { return Future(true) }
     public func disconnect() -> Future<Bool> { return Future(true) }
     
-    public func insert<I>(storable: I) -> Future<Bool> where I : Storable {
+    public func insert<I>(storable: I) -> Future<I> where I : Storable {
         var adapterTable = self.store[storable.table.name] ?? AdapterTable()
         guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[storable.table.name] = adapterTable
 
-        return Future(true)
+        return Future(storable)
     }
-    public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
+    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
         guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[I.table.name] = adapterTable
 
-        return Future(true)
+        return Future(storables)
     }
     
     public func find<I>(uuid: String) -> Future<I?> where I : Storable {
@@ -138,21 +138,21 @@ extension InMemoryAdapter: Adapter {
         return Future(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
     
-    public func update<I>(storable: I) -> Future<Bool> where I : Storable {
+    public func update<I>(storable: I) -> Future<I> where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storable)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
 
-        return Future(true)
+        return Future(storable)
     }
-    public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
+    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storables)
             else { return Future(InMemoryAdapterError.updateFailed) }
         self.store[I.table.name] = adapterTable
 
-        return Future(true)
+        return Future(storables)
     }
     
     public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {

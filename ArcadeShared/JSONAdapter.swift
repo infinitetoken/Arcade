@@ -130,8 +130,8 @@ extension JSONAdapter: Adapter {
         return Future(true)
     }
     
-    public func insert<I>(storable: I) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func insert<I>(storable: I) -> Future<I> where I : Storable {
+        return Future<I> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             let table = I.table
             
@@ -140,15 +140,15 @@ extension JSONAdapter: Adapter {
             self.store[table.name] = adapterTable
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                completion(.success(success))
+                completion(.success(storable))
             }, { (error) in
                 completion(.failure(error))
             })
         }
     }
     
-    public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
+        return Future<[I]> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.insert(storables) else { completion(.failure(JSONAdapterError.insertFailed)); return }
@@ -156,7 +156,7 @@ extension JSONAdapter: Adapter {
             self.store[I.table.name] = adapterTable
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                completion(.success(success))
+                completion(.success(storables))
             }) { (error) in
                 completion(.failure(error))
             }
@@ -199,8 +199,8 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func update<I>(storable: I) -> Future<I> where I : Storable {
+        return Future<I> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.update(storable) else { completion(.failure(JSONAdapterError.updateFailed)); return }
@@ -208,15 +208,15 @@ extension JSONAdapter: Adapter {
             self.store[I.table.name] = adapterTable
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                completion(.success(success))
+                completion(.success(storable))
             }, { (error) in
                 completion(.failure(error))
             })
         }
     }
     
-    public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
+        return Future<[I]> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
             guard adapterTable.update(storables) else { completion(.failure(JSONAdapterError.updateFailed)); return }
@@ -224,7 +224,7 @@ extension JSONAdapter: Adapter {
             self.store[I.table.name] = adapterTable
             
             self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
-                completion(.success(success))
+                completion(.success(storables))
             }, { (error) in
                 completion(.failure(error))
             })

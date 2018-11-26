@@ -15,6 +15,7 @@ public enum CoreDataAdapterError: Error {
     case entityNotFound
     case entityNotStorable
     case updateFailed
+    case saveFailed
     case notConnected
     case noResult
     case error(error: Error)
@@ -78,7 +79,7 @@ extension CoreDataAdapter: Adapter {
         return Future(true)
     }
     
-    public func insert<I>(storable: I) -> Future<Bool> where I : Storable {
+    public func insert<I>(storable: I) -> Future<I> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext
             else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext)
@@ -86,22 +87,23 @@ extension CoreDataAdapter: Adapter {
         guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
             else { return Future(CoreDataAdapterError.entityNotStorable) }
         guard object.update(with: storable) else { return Future(CoreDataAdapterError.updateFailed) }
-        return Future(self.save())
+        
+        return Future(self.save()).then { $0 ? Future(storable) : Future(CoreDataAdapterError.saveFailed) }
     }
     
-    public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
+    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext
             else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext)
             else { return Future(CoreDataAdapterError.entityNotFound) }
-        
         guard let error: CoreDataAdapterError = storables.reduce(nil, {
-            guard $0 == nil else { return $0 }
-            guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
-                else { return CoreDataAdapterError.entityNotStorable }
-            guard object.update(with: $1) else { return CoreDataAdapterError.updateFailed }
-            return nil
-        }) else { return Future(self.save()) }
+                    guard $0 == nil else { return $0 }
+                    guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
+                        else { return CoreDataAdapterError.entityNotStorable }
+                    guard object.update(with: $1) else { return CoreDataAdapterError.updateFailed }
+                    return nil
+                })
+            else { return Future(self.save()).then { $0 ? Future(storables) : Future(CoreDataAdapterError.saveFailed) } }
         
         managedObjectContext.undo()
         return Future(error)
@@ -212,7 +214,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I) -> Future<Bool> where I : Storable {
+    public func update<I>(storable: I) -> Future<I> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -232,7 +234,15 @@ extension CoreDataAdapter: Adapter {
                 
                 DispatchQueue.main.async {
                     if let object = result.first {
-                        object.update(with: storable) ? operation(self.save()) : operation(.failure(CoreDataAdapterError.updateFailed))
+                        if object.update(with: storable) {                            
+                            Future(self.save()).subscribe({ (success) in
+                                success ? operation(.success(storable)) : operation(.failure(CoreDataAdapterError.saveFailed))
+                            }, { (error) in
+                                operation(.failure(error))
+                            })
+                        } else {
+                            operation(.failure(CoreDataAdapterError.updateFailed))
+                        }
                     } else {
                         operation(.failure(CoreDataAdapterError.noResult))
                     }
@@ -247,7 +257,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
+    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -278,7 +288,11 @@ extension CoreDataAdapter: Adapter {
                         managedObjectContext.undo()
                         operation(.failure(error))
                     } else {
-                        operation(self.save())
+                        Future(self.save()).subscribe({ (success) in
+                            success ? operation(.success(storables)) : operation(.failure(CoreDataAdapterError.saveFailed))
+                        }, { (error) in
+                            operation(.failure(error))
+                        })
                     }
                 }
             }

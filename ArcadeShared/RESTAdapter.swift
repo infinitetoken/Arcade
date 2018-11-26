@@ -45,8 +45,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storable: I) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func insert<I>(storable: I) -> Future<I> where I : Storable {
+        return Future<I> { completion in
             guard let url = self.url(forTable: I.table, uuid: nil) else {
                 completion(.failure(RESTAdapterError.urlError))
                 return
@@ -84,7 +84,16 @@ extension RESTAdapter: Adapter {
                     
                     switch responseCode {
                     case .created:
-                        DispatchQueue.main.async { completion(.success(true)) }
+                        if let data = data {
+                            do {
+                                let storable = try self.decodeStorable(from: data, table: I.table) as I
+                                DispatchQueue.main.async { completion(.success(storable)) }
+                            } catch {
+                                DispatchQueue.main.async { completion(.failure(error)) }
+                            }
+                        } else {
+                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                        }
                     default:
                         DispatchQueue.main.async {
                             completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
@@ -97,8 +106,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I]) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
+        return Future<[I]> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
         }
     }
@@ -292,8 +301,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func update<I>(storable: I) -> Future<I> where I : Storable {
+        return Future<I> { completion in
             guard let url = self.url(forTable: I.table, uuid: storable.uuid) else {
                 completion(.failure(RESTAdapterError.urlError))
                 return
@@ -331,7 +340,16 @@ extension RESTAdapter: Adapter {
                     
                     switch responseCode {
                     case .ok:
-                        DispatchQueue.main.async { completion(.success(true)) }
+                        if let data = data {
+                            do {
+                                let storable = try self.decodeStorable(from: data, table: I.table) as I
+                                DispatchQueue.main.async { completion(.success(storable)) }
+                            } catch {
+                                DispatchQueue.main.async { completion(.failure(error)) }
+                            }
+                        } else {
+                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                        }
                     default:
                         DispatchQueue.main.async {
                             completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
@@ -344,8 +362,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I]) -> Future<Bool> where I : Storable {
-        return Future<Bool> { completion in
+    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
+        return Future<[I]> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
         }
     }
