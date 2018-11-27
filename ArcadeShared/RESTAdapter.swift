@@ -159,7 +159,7 @@ extension RESTAdapter: Adapter {
                     }
                 case .notFound:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noData))
+                        completion(.success(nil))
                     }
                 default:
                     DispatchQueue.main.async {
@@ -227,7 +227,7 @@ extension RESTAdapter: Adapter {
                     }
                 case .notFound:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noData))
+                        completion(.success([]))
                     }
                 default:
                     DispatchQueue.main.async {
