@@ -292,6 +292,8 @@ extension RESTAdapter: Adapter {
                     } catch {
                         DispatchQueue.main.async { completion(.failure(error)) }
                     }
+                case .noContent:
+                    DispatchQueue.main.async { completion(.success([])) }
                 default:
                     DispatchQueue.main.async {
                         completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
