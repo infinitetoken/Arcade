@@ -64,13 +64,15 @@ public struct RESTQueryBuilder {
     public func sortQueryItem() throws -> URLQueryItem? {
         if self.sorts.isEmpty { return nil }
         
-        var sortDictionary: [String: Any] = [:]
-        
-        for sort in self.sorts {
-            sortDictionary = sortDictionary.merging(sort.dictionary) { (key, _) in key }
+        let sortsArray: [[String:Any]] = self.sorts.reduce([]) {
+            var result = $0
+            result.append($1.dictionary)
+            return result
         }
         
-        guard let jsonString = try sortDictionary.jsonString() else { return nil }
+        let data = try JSONSerialization.data(withJSONObject: sortsArray, options: .sortedKeys)
+        
+        guard let jsonString = String(data: data, encoding: .utf8) else { return nil }
         guard let queryString = jsonString.data(using: .utf8)?.base64EncodedString() else { return nil }
         
         return URLQueryItem(name: "sort", value: queryString)
