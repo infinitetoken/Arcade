@@ -130,7 +130,7 @@ extension JSONAdapter: Adapter {
         return Future(true)
     }
     
-    public func insert<I>(storable: I) -> Future<I> where I : Storable {
+    public func insert<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
         return Future<I> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             let table = I.table
@@ -147,7 +147,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
+    public func insert<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
@@ -163,7 +163,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [String:Codable] = [:]) -> Future<I?> where I : Storable {
         return Future<I?> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -175,7 +175,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -187,7 +187,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             self.load().subscribe({ (storables: [I]) in
                 let adapterTable = AdapterTable(storables: storables)
@@ -199,7 +199,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I) -> Future<I> where I : Storable {
+    public func update<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
         return Future<I> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
@@ -215,7 +215,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
+    public func update<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             
@@ -231,7 +231,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard let _ = adapterTable.find(uuid),
@@ -248,7 +248,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             var adapterTable = self.store[I.table.name] ?? AdapterTable()
             guard adapterTable.delete(uuids) else { completion(.failure(JSONAdapterError.deleteFailed)); return }
@@ -263,7 +263,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
+    public func count<T>(table: T, query: Query?, options: [String:Codable] = [:]) -> Future<Int> where T : Table {
         return Future<Int> { completion in
             guard let adapterTable = self.store[table.name] else { completion(.success(0)); return }
             
@@ -271,7 +271,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    private func save<I>(storables: [I]) -> Future<Bool> where I : Storable {
+    private func save<I>(storables: [I], options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             self.operationQueue.addOperation {
                 guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }

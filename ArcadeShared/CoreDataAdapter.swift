@@ -79,7 +79,7 @@ extension CoreDataAdapter: Adapter {
         return Future(true)
     }
     
-    public func insert<I>(storable: I) -> Future<I> where I : Storable {
+    public func insert<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext
             else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext)
@@ -91,7 +91,7 @@ extension CoreDataAdapter: Adapter {
         return Future(self.save()).then { $0 ? Future(storable) : Future(CoreDataAdapterError.saveFailed) }
     }
     
-    public func insert<I>(storables: [I]) -> Future<[I]> where I : Storable {
+    public func insert<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext
             else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext)
@@ -109,7 +109,7 @@ extension CoreDataAdapter: Adapter {
         return Future(error)
     }
     
-    public func find<I>(uuid: String) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [String:Codable] = [:]) -> Future<I?> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -144,7 +144,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -176,7 +176,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -214,7 +214,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I) -> Future<I> where I : Storable {
+    public func update<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -257,7 +257,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I]) -> Future<[I]> where I : Storable {
+    public func update<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -305,7 +305,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -341,7 +341,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [String], type: I.Type) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -377,7 +377,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func count<T>(table: T, query: Query?) -> Future<Int> where T : Table {
+    public func count<T>(table: T, query: Query?, options: [String:Codable] = [:]) -> Future<Int> where T : Table {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: table.name, in: managedObjectContext),
             let entityName = entity.name
