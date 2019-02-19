@@ -11,7 +11,7 @@ import Foundation
 
 public protocol QueryOption {
     
-    var key: String { get set }
-    var value: Codable { get set }
+    var key: String { get }
+    var value: Codable { get }
     
 }
