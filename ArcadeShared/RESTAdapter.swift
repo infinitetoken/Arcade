@@ -33,6 +33,7 @@ open class RESTAdapter {
 
 extension RESTAdapter: Adapter {
     
+    
     public func connect() -> Future<Bool> {
         return Future<Bool> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
@@ -45,7 +46,7 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
+    public func insert<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         return Future<I> { completion in
             guard let url = self.url(forTable: I.table, uuid: nil, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
@@ -106,13 +107,13 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func insert<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
         }
     }
     
-    public func find<I>(uuid: String, options: [String:Codable] = [:]) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
         return Future<I?> { completion in
             guard let url = self.url(forTable: I.table, uuid: uuid, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
@@ -170,7 +171,7 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             let expression = Expression.inside("uuid", uuids)
             let query = Query.expression(expression)
@@ -238,11 +239,11 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return self.fetch(query: query, sorts: [], limit: 0, offset: 0)
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             var urlComponents: URLComponents
             
@@ -303,7 +304,7 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func update<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
+    public func update<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         return Future<I> { completion in
             guard let url = self.url(forTable: I.table, uuid: storable.uuid, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
@@ -364,13 +365,13 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func update<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             guard let url = self.url(forTable: I.table, uuid: uuid, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
@@ -413,17 +414,17 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [String], type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             completion(.failure(RESTAdapterError.methodNotSupported))
         }
     }
     
-    public func count<T>(table: T, query: Query?, options: [String:Codable] = [:]) -> Future<Int> where T : Table {
+    public func count<T>(table: T, query: Query?, options: [QueryOption] = []) -> Future<Int> where T : Table {
         return self.count(table: table, query: query, search: nil)
     }
     
-    public func count<T>(table: T, query: Query?, search: String?, options: [String:Codable] = [:]) -> Future<Int> where T : Table {
+    public func count<T>(table: T, query: Query?, search: String?, options: [QueryOption] = []) -> Future<Int> where T : Table {
         return Future<Int> { completion in
             var urlComponents: URLComponents
             
@@ -491,7 +492,7 @@ extension RESTAdapter: Adapter {
     
     // MARK: - Helpers
     
-    public func url(forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [String:Codable]) -> URL? {
+    public func url(forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption]) -> URL? {
         var urlComponents = urlComponents
         urlComponents.scheme = self.configuration.apiScheme
         

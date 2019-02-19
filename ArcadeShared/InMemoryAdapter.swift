@@ -109,14 +109,14 @@ extension InMemoryAdapter: Adapter {
     public func connect() -> Future<Bool> { return Future(true) }
     public func disconnect() -> Future<Bool> { return Future(true) }
     
-    public func insert<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
+    public func insert<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         var adapterTable = self.store[storable.table.name] ?? AdapterTable()
         guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[storable.table.name] = adapterTable
 
         return Future(storable)
     }
-    public func insert<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func insert<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
         guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
         self.store[I.table.name] = adapterTable
@@ -124,21 +124,21 @@ extension InMemoryAdapter: Adapter {
         return Future(storables)
     }
     
-    public func find<I>(uuid: String, options: [String:Codable] = [:]) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future(nil) }
         return Future(adapterTable.find(uuid) as? I)
     }
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
         return Future(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
         return Future(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
     
-    public func update<I>(storable: I, options: [String:Codable] = [:]) -> Future<I> where I : Storable {
+    public func update<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storable)
             else { return Future(InMemoryAdapterError.updateFailed) }
@@ -146,7 +146,7 @@ extension InMemoryAdapter: Adapter {
 
         return Future(storable)
     }
-    public func update<I>(storables: [I], options: [String:Codable] = [:]) -> Future<[I]> where I : Storable {
+    public func update<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storables)
             else { return Future(InMemoryAdapterError.updateFailed) }
@@ -155,14 +155,14 @@ extension InMemoryAdapter: Adapter {
         return Future(storables)
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         guard var adapterTable = self.store[I.table.name], adapterTable.delete(uuid)
             else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
 
         return Future(true)
     }
-    public func delete<I>(uuids: [String], type: I.Type, options: [String:Codable] = [:]) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         guard var adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
         guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
         self.store[I.table.name] = adapterTable
@@ -170,7 +170,7 @@ extension InMemoryAdapter: Adapter {
         return Future(true)
     }
     
-    public func count<T>(table: T, query: Query?, options: [String:Codable] = [:]) -> Future<Int> where T : Table {
+    public func count<T>(table: T, query: Query?, options: [QueryOption] = []) -> Future<Int> where T : Table {
         guard let adapterTable = self.store[table.name] else { return Future(0) }
         return Future(adapterTable.count(query: query))
     }
