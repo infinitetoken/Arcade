@@ -506,7 +506,11 @@ extension RESTAdapter: Adapter {
         
         options.forEach {
             if let value = $0.value as? String {
-                urlComponents.queryItems?.append(URLQueryItem(name: $0.key, value: value))
+                if urlComponents.queryItems == nil {
+                    urlComponents.queryItems = [URLQueryItem(name: $0.key, value: value)]
+                } else {
+                    urlComponents.queryItems?.append(URLQueryItem(name: $0.key, value: value))
+                }
             }
         }
         
