@@ -502,15 +502,13 @@ extension RESTAdapter: Adapter {
             urlComponents.port = self.configuration.apiPort
         }
         
+        if let uuid = uuid { urlComponents.path += "/\(uuid)" }
+        
         options.forEach {
             if let value = $0.value as? String {
                 urlComponents.queryItems?.append(URLQueryItem(name: $0.key, value: value))
             }
         }
-        
-        let path = urlComponents.path
-        
-        if let uuid = uuid { urlComponents.path = "\(path)/\(uuid)" }
         
         return urlComponents.url
     }
