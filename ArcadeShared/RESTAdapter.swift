@@ -240,7 +240,7 @@ extension RESTAdapter: Adapter {
     }
     
     public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
-        return self.fetch(query: query, sorts: [], limit: 0, offset: 0)
+        return self.fetch(query: query, sorts: [], limit: 0, offset: 0, options: options)
     }
     
     public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
