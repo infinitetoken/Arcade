@@ -109,7 +109,7 @@ extension CoreDataAdapter: Adapter {
         return Future(error)
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -122,14 +122,14 @@ extension CoreDataAdapter: Adapter {
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-                guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
+                guard let result = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
                 DispatchQueue.main.async {
-                    let object = result.map({ (object) -> Storable in
-                        return object.storable
+                    let object = result.map({ (object) -> Viewable in
+                        return object.viewable
                     }).first
         
                     operation(.success(object as! I?))
@@ -144,7 +144,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -160,12 +160,12 @@ extension CoreDataAdapter: Adapter {
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-                guard let results = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
+                guard let results = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
-                DispatchQueue.main.async { operation(.success(results.map { $0.storable } as! [I])) }
+                DispatchQueue.main.async { operation(.success(results.map { $0.viewable } as! [I])) }
             }
             
             do {
@@ -176,7 +176,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -192,14 +192,14 @@ extension CoreDataAdapter: Adapter {
         
         return Future { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-                guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
+                guard let result = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
                     return
                 }
                 
                 DispatchQueue.main.async {
-                    let objects = result.map({ (object) -> Storable in
-                        return object.storable
+                    let objects = result.map({ (object) -> Viewable in
+                        return object.viewable
                     })
                     
                     operation(.success(objects as! [I]))

@@ -15,11 +15,11 @@ public protocol Adapter {
     func disconnect() -> Future<Bool>
     func insert<I>(storable: I, options: [QueryOption]) -> Future<I> where I: Storable
     func insert<I>(storables: [I], options: [QueryOption]) -> Future<[I]> where I: Storable
-    func find<I>(uuid: String, options: [QueryOption]) -> Future<I?> where I: Storable
-    func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption]) -> Future<[I]> where I: Storable
-    func fetch<I>(options: [QueryOption]) -> Future<[I]> where I: Storable
-    func fetch<I>(query: Query?, options: [QueryOption]) -> Future<[I]> where I: Storable
-    func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption]) -> Future<[I]> where I: Storable
+    func find<I>(uuid: String, options: [QueryOption]) -> Future<I?> where I: Viewable
+    func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption]) -> Future<[I]> where I: Viewable
+    func fetch<I>(options: [QueryOption]) -> Future<[I]> where I: Viewable
+    func fetch<I>(query: Query?, options: [QueryOption]) -> Future<[I]> where I: Viewable
+    func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption]) -> Future<[I]> where I: Viewable
     func update<I>(storable: I, options: [QueryOption]) -> Future<I> where I: Storable
     func update<I>(storables: [I], options: [QueryOption]) -> Future<[I]> where I: Storable
     func delete<I>(uuid: String, type: I.Type, options: [QueryOption]) -> Future<Bool> where I: Storable
@@ -31,11 +31,11 @@ public protocol Adapter {
 
 extension Adapter {
     
-    public func fetch<I>(options: [QueryOption] = []) -> Future<[I]> where I: Storable {
+    public func fetch<I>(options: [QueryOption] = []) -> Future<[I]> where I: Viewable {
         return self.fetch(query: nil, options: options)
     }
     
-    public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I: Storable {
+    public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I: Viewable {
         return self.fetch(query: query, sorts: [], limit: 0, offset: 0, options: options)
     }
     

@@ -8,10 +8,10 @@
 
 import Foundation
 
-public protocol CoreDataStorable {
+public protocol CoreDataStorable: CoreDataViewable {
     
     var storable: Storable { get }
-    
+        
     func update(with storable: Storable) -> Bool
     
 }

@@ -50,31 +50,31 @@ public extension JSONAdapter {
     
     private struct AdapterTable {
         
-        var storables: [Storable] = []
+        var viewables: [Viewable] = []
         
         mutating func insert(_ storable: Storable) -> Bool {
-            self.storables.append(storable)
+            self.viewables.append(storable)
             return true
         }
         mutating func insert(_ storables: [Storable]) -> Bool {
-            self.storables.append(contentsOf: storables)
+            self.viewables.append(contentsOf: storables)
             return true
         }
         
-        func find(_ uuid: String) -> Storable? { return storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            var storables = self.storables.filter { uuids.contains($0.uuid) }
-            storables = self.sort(storables: storables, sorts: sorts)
-            return storables.offset(by: offset).limit(to: limit)
+        func find(_ uuid: String) -> Viewable? { return viewables.filter { $0.uuid == uuid }.first }
+        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
+            var viewables = self.viewables.filter { uuids.contains($0.uuid) }
+            viewables = self.sort(viewables: viewables, sorts: sorts)
+            return viewables.offset(by: offset).limit(to: limit)
         }
         
-        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
             if let query = query {
-                var storables = self.storables.filter { query.evaluate(with: $0) }
-                storables = self.sort(storables: storables, sorts: sorts)
-                return storables.offset(by: offset).limit(to: limit)
+                var viewables = self.viewables.filter { query.evaluate(with: $0) }
+                viewables = self.sort(viewables: viewables, sorts: sorts)
+                return viewables.offset(by: offset).limit(to: limit)
             } else {
-                return self.sort(storables: self.storables, sorts: sorts).offset(by: offset).limit(to: limit)
+                return self.sort(viewables: self.viewables, sorts: sorts).offset(by: offset).limit(to: limit)
             }
         }
         
@@ -93,11 +93,11 @@ public extension JSONAdapter {
         }
         
         mutating func delete(_ uuid: String) -> Bool {
-            storables = storables.filter { $0.uuid != uuid }
+            viewables = viewables.filter { $0.uuid != uuid }
             return true
         }
         mutating func delete(_ uuids: [String]) -> Bool {
-            storables = storables.filter { !(uuids.contains($0.uuid)) }
+            viewables = viewables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
         
@@ -105,16 +105,16 @@ public extension JSONAdapter {
             return self.fetch(query, sorts: [], limit: 0, offset: 0).count
         }
         
-        func sort(storables: [Storable], sorts: [Sort]) -> [Storable] {
-            if sorts.isEmpty { return storables }
+        func sort(viewables: [Viewable], sorts: [Sort]) -> [Viewable] {
+            if sorts.isEmpty { return viewables }
             
-            var _storables = storables
+            var _viewables = viewables
             
             for sort in sorts {
-                _storables = sort.sort(storables: _storables)
+                _viewables = sort.sort(viewables: _viewables)
             }
             
-            return _storables
+            return _viewables
         }
     }
     
@@ -139,7 +139,7 @@ extension JSONAdapter: Adapter {
             
             self.store[table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(storable))
             }, { (error) in
                 completion(.failure(error))
@@ -155,7 +155,7 @@ extension JSONAdapter: Adapter {
             
             self.store[I.table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(storables))
             }) { (error) in
                 completion(.failure(error))
@@ -163,10 +163,10 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
         return Future<I?> { completion in
-            self.load().subscribe({ (storables: [I]) in
-                let adapterTable = AdapterTable(storables: storables)
+            self.load().subscribe({ (viewables: [I]) in
+                let adapterTable = AdapterTable(viewables: viewables)
                 self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.find(uuid) as? I))
             }, { (error) in
@@ -175,10 +175,10 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
-            self.load().subscribe({ (storables: [I]) in
-                let adapterTable = AdapterTable(storables: storables)
+            self.load().subscribe({ (viewables: [I]) in
+                let adapterTable = AdapterTable(viewables: viewables)
                 self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? []))
             }, { (error) in
@@ -187,10 +187,10 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
-            self.load().subscribe({ (storables: [I]) in
-                let adapterTable = AdapterTable(storables: storables)
+            self.load().subscribe({ (viewables: [I]) in
+                let adapterTable = AdapterTable(viewables: viewables)
                 self.store[I.table.name] = adapterTable
                 completion(.success(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as! [I]))
             }, { (error) in
@@ -207,7 +207,7 @@ extension JSONAdapter: Adapter {
             
             self.store[I.table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(storable))
             }, { (error) in
                 completion(.failure(error))
@@ -223,7 +223,7 @@ extension JSONAdapter: Adapter {
             
             self.store[I.table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(storables))
             }, { (error) in
                 completion(.failure(error))
@@ -240,7 +240,7 @@ extension JSONAdapter: Adapter {
             
             self.store[I.table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -255,7 +255,7 @@ extension JSONAdapter: Adapter {
             
             self.store[I.table.name] = adapterTable
             
-            self.save(storables: adapterTable.storables as! [I]).subscribe({ (success) in
+            self.save(storables: adapterTable.viewables as! [I]).subscribe({ (success) in
                 completion(.success(success))
             }, { (error) in
                 completion(.failure(error))
@@ -310,7 +310,7 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    private func load<I>() -> Future<[I]> where I : Storable {
+    private func load<I>() -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
             guard let directory = self.directory else { completion(.failure(JSONAdapterError.noDirectory)); return }
             

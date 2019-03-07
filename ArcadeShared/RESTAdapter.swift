@@ -87,7 +87,7 @@ extension RESTAdapter: Adapter {
                     case .created:
                         if let data = data {
                             do {
-                                let storable = try self.decodeStorable(from: data, table: I.table) as I
+                                let storable = try self.decodeViewable(from: data, table: I.table) as I
                                 DispatchQueue.main.async { completion(.success(storable)) }
                             } catch {
                                 DispatchQueue.main.async { completion(.failure(error)) }
@@ -113,7 +113,7 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
         return Future<I?> { completion in
             guard let url = self.url(forTable: I.table, uuid: uuid, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
@@ -148,8 +148,8 @@ extension RESTAdapter: Adapter {
                 case .ok:
                     if let data = data {
                         do {
-                            let storable = try self.decodeStorable(from: data, table: I.table) as I
-                            DispatchQueue.main.async { completion(.success(storable)) }
+                            let viewable = try self.decodeViewable(from: data, table: I.table) as I
+                            DispatchQueue.main.async { completion(.success(viewable)) }
                         } catch {
                             DispatchQueue.main.async { completion(.failure(error)) }
                         }
@@ -171,7 +171,7 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
             let expression = Expression.inside("uuid", uuids)
             let query = Query.expression(expression)
@@ -218,8 +218,8 @@ extension RESTAdapter: Adapter {
                 case .ok:
                     if let data = data {
                         do {
-                            let storables = try self.decodeArray(from: data, table: I.table) as [I]
-                            DispatchQueue.main.async { completion(.success(storables)) }
+                            let viewables = try self.decodeArray(from: data, table: I.table) as [I]
+                            DispatchQueue.main.async { completion(.success(viewables)) }
                         } catch {
                             DispatchQueue.main.async { completion(.failure(error)) }
                         }
@@ -239,11 +239,11 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return self.fetch(query: query, sorts: [], limit: 0, offset: 0, options: options)
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
             var urlComponents: URLComponents
             
@@ -288,8 +288,8 @@ extension RESTAdapter: Adapter {
                     guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
                     
                     do {
-                        let storables = try self.decodeArray(from: data, table: I.table) as [I]
-                        DispatchQueue.main.async { completion(.success(storables)) }
+                        let viewables = try self.decodeArray(from: data, table: I.table) as [I]
+                        DispatchQueue.main.async { completion(.success(viewables)) }
                     } catch {
                         DispatchQueue.main.async { completion(.failure(error)) }
                     }
@@ -345,7 +345,7 @@ extension RESTAdapter: Adapter {
                     case .ok:
                         if let data = data {
                             do {
-                                let storable = try self.decodeStorable(from: data, table: I.table) as I
+                                let storable = try self.decodeViewable(from: data, table: I.table) as I
                                 DispatchQueue.main.async { completion(.success(storable)) }
                             } catch {
                                 DispatchQueue.main.async { completion(.failure(error)) }
@@ -559,22 +559,12 @@ extension RESTAdapter: Adapter {
         return try decoder.decode(T.self, from: data)
     }
     
-    public func decodeStorable<T>(from data: Data, table: Table) throws -> T where T : Storable {
-        let decoder = JSONDecoder()
-        decoder.dataDecodingStrategy = .base64
-        decoder.dateDecodingStrategy = .secondsSince1970
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        return try decoder.decode(T.self, from: data)
+    public func decodeViewable<T>(from data: Data, table: Table) throws -> T where T : Viewable {
+        return try self.decode(data: data)
     }
     
-    public func decodeArray<T>(from data: Data, table: Table) throws -> [T] where T : Storable {
-        let decoder = JSONDecoder()
-        decoder.dataDecodingStrategy = .base64
-        decoder.dateDecodingStrategy = .secondsSince1970
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        return try decoder.decode([T].self, from: data)
+    public func decodeArray<T>(from data: Data, table: Table) throws -> [T] where T : Viewable {
+        return try self.decode(data: data)
     }
     
 }

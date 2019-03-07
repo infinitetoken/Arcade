@@ -33,31 +33,33 @@ public extension InMemoryAdapter {
     
     private struct AdapterTable {
         
-        var storables: [Storable] = []
+        var viewables: [Viewable] = []
         
         mutating func insert(_ storable: Storable) -> Bool {
-            self.storables.append(storable)
-            return true
-        }
-        mutating func insert(_ storables: [Storable]) -> Bool {
-            self.storables.append(contentsOf: storables)
+            self.viewables.append(storable)
             return true
         }
         
-        func find(_ uuid: String) -> Storable? { return self.storables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
-            var storables = self.storables.filter { uuids.contains($0.uuid) }
-            storables = self.sort(storables: storables, sorts: sorts)
+        mutating func insert(_ storables: [Storable]) -> Bool {
+            self.viewables.append(contentsOf: storables)
+            return true
+        }
+        
+        func find(_ uuid: String) -> Viewable? { return self.viewables.filter { $0.uuid == uuid }.first }
+        
+        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
+            var storables = self.viewables.filter { uuids.contains($0.uuid) }
+            storables = self.sort(viewables: viewables, sorts: sorts)
             return storables.offset(by: offset).limit(to: limit)
         }
         
-        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Storable] {
+        func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
             if let query = query {
-                var storables = self.storables.filter { query.evaluate(with: $0) }
-                storables = self.sort(storables: storables, sorts: sorts)
+                var storables = self.viewables.filter { query.evaluate(with: $0) }
+                storables = self.sort(viewables: viewables, sorts: sorts)
                 return storables.offset(by: offset).limit(to: limit)
             } else {
-                return self.sort(storables: self.storables, sorts: sorts).offset(by: offset).limit(to: limit)
+                return self.sort(viewables: self.viewables, sorts: sorts).offset(by: offset).limit(to: limit)
             }
         }
         
@@ -68,6 +70,7 @@ public extension InMemoryAdapter {
                 return insert(storable)
             }
         }
+        
         mutating func update(_ storables: [Storable]) -> Bool {
             let results = storables.map { (storable) -> Bool in
                 return update(storable)
@@ -76,13 +79,12 @@ public extension InMemoryAdapter {
         }
         
         mutating func delete(_ uuid: String) -> Bool {
-            self.storables = self.storables.filter {$0.uuid != uuid}
+            self.viewables = self.viewables.filter {$0.uuid != uuid}
             return true
         }
+        
         mutating func delete(_ uuids: [String]) -> Bool {
-            let found = self.storables.filter{ storables.map{ $0.uuid }.contains($0.uuid) }
-            guard found.count >= storables.count else { return false }
-            self.storables = self.storables.filter { !(uuids.contains($0.uuid)) }
+            self.viewables = self.viewables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
         
@@ -90,16 +92,8 @@ public extension InMemoryAdapter {
             return self.fetch(query, sorts: [], limit: 0, offset: 0).count
         }
         
-        func sort(storables: [Storable], sorts: [Sort]) -> [Storable] {
-            if sorts.isEmpty { return storables }
-            
-            var _storables = storables
-            
-            for sort in sorts {
-                _storables = sort.sort(storables: storables)
-            }
-            
-            return _storables
+        func sort(viewables: [Viewable], sorts: [Sort]) -> [Viewable] {
+            return sorts.reduce(viewables) { $1.sort(viewables: $0) }
         }
     }
 }
@@ -124,16 +118,16 @@ extension InMemoryAdapter: Adapter {
         return Future(storables)
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Storable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
         guard let adapterTable = self.store[I.table.name] else { return Future(nil) }
         return Future(adapterTable.find(uuid) as? I)
     }
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
         return Future(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
         return Future(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
     }

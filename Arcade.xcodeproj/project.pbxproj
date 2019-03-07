@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC08682E22319BC00056DBB3 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC08682D22319BC00056DBB3 /* Viewable.swift */; };
+		AC086A602231A90C0056DBB3 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC08682D22319BC00056DBB3 /* Viewable.swift */; };
+		AC086A612231A90D0056DBB3 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC08682D22319BC00056DBB3 /* Viewable.swift */; };
+		AC086A632231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
+		AC086A642231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
+		AC086A652231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
 		ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
@@ -196,6 +202,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC08682D22319BC00056DBB3 /* Viewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
+		AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewable.swift; sourceTree = "<group>"; };
 		ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTConfiguration.swift; sourceTree = "<group>"; };
 		ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseCodes.swift; sourceTree = "<group>"; };
 		ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryOption.swift; sourceTree = "<group>"; };
@@ -654,6 +662,7 @@
 			children = (
 				F0F86D0B1FA9F2F00036124E /* CoreDataAdapter.swift */,
 				F0F86D0E1FA9F2F00036124E /* CoreDataStorable.swift */,
+				AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -694,6 +703,7 @@
 				F0F86D131FA9F2F00036124E /* Table.swift */,
 				F0F86D141FA9F2F00036124E /* Storable.swift */,
 				ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */,
+				AC08682D22319BC00056DBB3 /* Viewable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -959,6 +969,7 @@
 				F01EA0CA2101C5CE0040FA96 /* Expression.swift in Sources */,
 				ACC41EB5221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */,
+				AC086A652231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				ACAA63C5218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
@@ -967,6 +978,7 @@
 				F01EA0CB2101C5CE0040FA96 /* Query.swift in Sources */,
 				F01EA0C42101C5C20040FA96 /* Array+Offset.swift in Sources */,
 				F01EA0C82101C5C90040FA96 /* Storable.swift in Sources */,
+				AC086A612231A90D0056DBB3 /* Viewable.swift in Sources */,
 				F01EA0CC2101C5D30040FA96 /* Sort.swift in Sources */,
 				F01EA0BF2101C5B10040FA96 /* CoreDataStorable.swift in Sources */,
 				F01EA0C72101C5C90040FA96 /* Table.swift in Sources */,
@@ -1022,6 +1034,7 @@
 				F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				ACC41EB4221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
+				AC086A642231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				ACAA63C4218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
@@ -1030,6 +1043,7 @@
 				F037F2F920238E6700ADC2FC /* Sort.swift in Sources */,
 				F0F86D281FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
+				AC086A602231A90C0056DBB3 /* Viewable.swift in Sources */,
 				F0F86D261FA9F2F10036124E /* Comparison.swift in Sources */,
 				F0F86D201FA9F2F10036124E /* Arcade.swift in Sources */,
 				F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */,
@@ -1085,6 +1099,7 @@
 				F037F30420239B7D00ADC2FC /* Array+Limit.swift in Sources */,
 				ACC41EB3221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,
+				AC086A632231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				ACAA63C3218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
 				ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
@@ -1093,6 +1108,7 @@
 				F037F2F820238E6700ADC2FC /* Sort.swift in Sources */,
 				F0F86D271FA9F2F10036124E /* Table.swift in Sources */,
 				F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
+				AC08682E22319BC00056DBB3 /* Viewable.swift in Sources */,
 				F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */,
 				F0F86D1F1FA9F2F10036124E /* Arcade.swift in Sources */,
 				F03FE85B1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */,

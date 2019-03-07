@@ -51,8 +51,8 @@ public extension Query {
 
 public extension Query {
     
-    public func evaluate(with storable: Storable) -> Bool {
-        return self.predicate().evaluate(with: storable.dictionary)
+    public func evaluate(with viewable: Viewable) -> Bool {
+        return self.predicate().evaluate(with: viewable.dictionary)
     }
     
 }

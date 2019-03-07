@@ -7,39 +7,8 @@
 //
 
 import Foundation
-import Future
 
 public func !=(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid != rhs.uuid }
 public func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid == rhs.uuid }
 
-public protocol Storable: Codable {
-    
-    static var table: Table { get }
-    
-    var uuid: String { get set }
-
-}
-
-public extension Storable {
-    
-    public var table: Table { return Self.table }
-    
-}
-
-public extension Storable {
-    
-    public var dictionary: [String : Any] {
-        let encoder = JSONEncoder()
-        
-        do {
-            let data = try encoder.encode(self)
-            
-            guard let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else { return [:] }
-            
-            return result
-        } catch {
-            return [:]
-        }
-    }
-    
-}
+public protocol Storable: Viewable {}

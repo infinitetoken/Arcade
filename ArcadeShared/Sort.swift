@@ -48,12 +48,12 @@ public extension Sort {
 
 public extension Sort {
     
-    func sort(storables: [Storable]) -> [Storable] {
-        let dicts = storables.map { (storable) -> [String : Any] in
-            return storable.dictionary
+    func sort(viewables: [Viewable]) -> [Viewable] {
+        let dicts = viewables.map { (viewable) -> [String : Any] in
+            return viewable.dictionary
         }
         
-        let sorted = zip(dicts, storables).sorted { (a, b) -> Bool in
+        let sorted = zip(dicts, viewables).sorted { (a, b) -> Bool in
             switch self.sortDescriptor().compare(a.0, to: b.0) {
             case .orderedAscending:
                 return true
