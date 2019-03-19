@@ -54,11 +54,11 @@ class JSONAdapterTests: XCTestCase {
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).subscribe({ (success) in
-            XCTAssertTrue(success)
+        }).subscribe({ (owner) in
+            XCTAssertNotNil(owner)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -74,11 +74,11 @@ class JSONAdapterTests: XCTestCase {
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<Owner?> in
-            XCTAssertTrue(success)
+        }).then({ (owner) -> Future<Owner?> in
+            XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (owner) in
             XCTAssertNotNil(owner)
@@ -101,11 +101,11 @@ class JSONAdapterTests: XCTestCase {
         let expression = Expression.equal("uuid", uuid)
         let query = Query.expression(expression)
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<[Owner]> in
-            XCTAssertTrue(success)
+        }).then({ (owner) -> Future<[Owner]> in
+            XCTAssertNotNil(owner)
             return adapter.fetch(query: query)
         }).subscribe({ (owners) in
             XCTAssertEqual(owners.count, 1)
@@ -128,11 +128,11 @@ class JSONAdapterTests: XCTestCase {
         let query: Query? = nil
         let sort = Sort(key: "name", order: .descending)
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<[Owner]> in
             XCTAssertTrue(success)
             return adapter.insert(storables: [owner1, owner2])
-        }).then({ (success) -> Future<[Owner]> in
-            XCTAssertTrue(success)
+        }).then({ (owners) -> Future<[Owner]> in
+            XCTAssertEqual(owners.count, 2)
             return adapter.fetch(query: query, sorts: [sort], limit: 0, offset: 0)
         }).subscribe({ (owners) in
             XCTAssertEqual(owners.count, 2)
@@ -152,20 +152,20 @@ class JSONAdapterTests: XCTestCase {
         
         var owner = Owner(uuid: UUID().uuidString, name: "Test")
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<Owner?> in
-            XCTAssertTrue(success)
+        }).then({ (owner) -> Future<Owner?> in
+            XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
-        }).then({ (fetchedOwner) -> Future<Bool> in
+        }).then({ (fetchedOwner) -> Future<Owner> in
             XCTAssertNotNil(fetchedOwner)
             
             owner.name = "Foo"
             
             return adapter.update(storable: owner)
         }).then({ (success) -> Future<Owner?> in
-            XCTAssertTrue(success)
+            XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (fetchedOwner) in
             XCTAssertNotNil(fetchedOwner)
@@ -185,11 +185,11 @@ class JSONAdapterTests: XCTestCase {
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<Bool> in
-            XCTAssertTrue(success)
+        }).then({ (owner) -> Future<Bool> in
+            XCTAssertNotNil(owner)
             return adapter.delete(uuid: owner.uuid, type: Owner.self)
         }).then({ (success) -> Future<Int> in
             XCTAssertTrue(success)
@@ -214,11 +214,11 @@ class JSONAdapterTests: XCTestCase {
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
         
-        adapter.connect().then({ (success) -> Future<Bool> in
+        adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<Int> in
-            XCTAssertTrue(success)
+        }).then({ (owner) -> Future<Int> in
+            XCTAssertNotNil(owner)
             return adapter.count(table: TestTable.owner, query: query)
         }).subscribe({ (count) in
             XCTAssertEqual(count, 1)

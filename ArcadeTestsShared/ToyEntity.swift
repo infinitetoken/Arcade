@@ -28,6 +28,10 @@ class ToyEntity: NSManagedObject {
 
 extension ToyEntity: CoreDataStorable {
     
+    public var viewable: Viewable {
+        return Toy(uuid: self.uuid, name: self.name)
+    }
+    
     public var storable: Storable {
         return Toy(uuid: self.uuid, name: self.name)
     }

@@ -29,6 +29,10 @@ class PetEntity: NSManagedObject {
 
 extension PetEntity: CoreDataStorable {
     
+    public var viewable: Viewable {
+        return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
+    }
+    
     public var storable: Storable {
         return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
     }

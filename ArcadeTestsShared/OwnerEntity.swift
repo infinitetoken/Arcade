@@ -28,6 +28,10 @@ class OwnerEntity: NSManagedObject {
 
 extension OwnerEntity: CoreDataStorable {
     
+    public var viewable: Viewable {
+        return Owner(uuid: self.uuid, name: self.name)
+    }
+    
     public var storable: Storable {
         return Owner(uuid: self.uuid, name: self.name)
     }

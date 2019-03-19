@@ -12,12 +12,12 @@ import XCTest
 class ComparisonTests: XCTestCase {
 
     func testDescription() {
-        XCTAssertEqual(Comparison.equalTo.description, "=")
-        XCTAssertEqual(Comparison.notEqualTo.description, "!=")
-        XCTAssertEqual(Comparison.greaterThan.description, ">")
-        XCTAssertEqual(Comparison.greaterThanOrEqualTo.description, ">=")
-        XCTAssertEqual(Comparison.lessThan.description, "<")
-        XCTAssertEqual(Comparison.lessThanOrEqualTo.description, "<=")
+        XCTAssertEqual(Comparison.equalTo.description, "equal_to")
+        XCTAssertEqual(Comparison.notEqualTo.description, "not_equal_to")
+        XCTAssertEqual(Comparison.greaterThan.description, "greater_than")
+        XCTAssertEqual(Comparison.greaterThanOrEqualTo.description, "greater_than_or_equal_to")
+        XCTAssertEqual(Comparison.lessThan.description, "less_than")
+        XCTAssertEqual(Comparison.lessThanOrEqualTo.description, "less_than_or_equal_to")
         XCTAssertEqual(Comparison.contains.description, "contains")
         XCTAssertEqual(Comparison.like.description, "like")
         XCTAssertEqual(Comparison.inside.description, "in")

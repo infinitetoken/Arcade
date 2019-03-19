@@ -16,9 +16,9 @@
 		ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
-		ACAA63C3218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
-		ACAA63C4218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
-		ACAA63C5218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */; };
+		ACAA63C3218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
+		ACAA63C4218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
+		ACAA63C5218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
 		ACC41EB3221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
 		ACC41EB4221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
 		ACC41EB5221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
@@ -131,6 +131,12 @@
 		F0D3DE4E2127090F0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE48212708C10078232F /* Future.framework */; };
 		F0D3DE4F2127091C0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE4A212708D40078232F /* Future.framework */; };
 		F0D3DE502127092D0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE4C212708E10078232F /* Future.framework */; };
+		F0D8C8AD22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
+		F0D8C8AE22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
+		F0D8C8AF22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
+		F0D8C8B122415DF800719593 /* DictionaryJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8B022415DF800719593 /* DictionaryJSONTests.swift */; };
+		F0D8C8B222415DF800719593 /* DictionaryJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8B022415DF800719593 /* DictionaryJSONTests.swift */; };
+		F0D8C8B322415DF800719593 /* DictionaryJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8B022415DF800719593 /* DictionaryJSONTests.swift */; };
 		F0EF7EF42028CBC800E744AF /* ArrayOffsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */; };
 		F0EF7EF52028CBC800E744AF /* ArrayOffsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */; };
 		F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F5000E1FA9D9F700F42111 /* Arcade.framework */; };
@@ -205,7 +211,7 @@
 		AC08682D22319BC00056DBB3 /* Viewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewable.swift; sourceTree = "<group>"; };
 		ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTConfiguration.swift; sourceTree = "<group>"; };
-		ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseCodes.swift; sourceTree = "<group>"; };
+		ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTResponseCodes.swift; sourceTree = "<group>"; };
 		ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryOption.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -246,6 +252,8 @@
 		F0D3DE48212708C10078232F /* Future.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Future.framework; path = Carthage/Build/Mac/Future.framework; sourceTree = "<group>"; };
 		F0D3DE4A212708D40078232F /* Future.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Future.framework; path = Carthage/Build/iOS/Future.framework; sourceTree = "<group>"; };
 		F0D3DE4C212708E10078232F /* Future.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Future.framework; path = Carthage/Build/tvOS/Future.framework; sourceTree = "<group>"; };
+		F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTResponseCodesTests.swift; sourceTree = "<group>"; };
+		F0D8C8B022415DF800719593 /* DictionaryJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryJSONTests.swift; sourceTree = "<group>"; };
 		F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOffsetTests.swift; sourceTree = "<group>"; };
 		F0F5000E1FA9D9F700F42111 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F500101FA9D9F700F42111 /* Arcade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arcade.h; sourceTree = "<group>"; };
@@ -377,6 +385,7 @@
 				F027933D215DF96100A0E517 /* RESTAdapter.swift */,
 				ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */,
 				F0279339215DF89200A0E517 /* RESTQueryBuilder.swift */,
+				ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */,
 			);
 			name = REST;
 			sourceTree = "<group>";
@@ -387,6 +396,7 @@
 				F0279345215E03D100A0E517 /* RESTAdapterTests.swift */,
 				F0279349215E042C00A0E517 /* RESTQueryBuilderTests.swift */,
 				F02F5541218BD765002CDF8A /* RESTConfigurationTests.swift */,
+				F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */,
 			);
 			name = REST;
 			sourceTree = "<group>";
@@ -442,10 +452,11 @@
 		F037F2E920234BEA00ADC2FC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F03556312028CBF500779008 /* ArrayLimitTests.swift */,
+				F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */,
+				F0D8C8B022415DF800719593 /* DictionaryJSONTests.swift */,
 				F037F2EA20234C0300ADC2FC /* NSComparisionDescriptionTests.swift */,
 				F061C22C2028CAAA003597E9 /* SequenceSortTests.swift */,
-				F0EF7EF32028CBC800E744AF /* ArrayOffsetTests.swift */,
-				F03556312028CBF500779008 /* ArrayLimitTests.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -561,7 +572,6 @@
 				F0F86D2D1FA9F3A60036124E /* Query */,
 				F037F2F620238E5300ADC2FC /* Sort */,
 				F0F86CF11FA9DBFF0036124E /* Supporting Files */,
-				ACAA63C2218CCBAD00ADB9C2 /* HTTPResponseCodes.swift */,
 			);
 			path = ArcadeShared;
 			sourceTree = "<group>";
@@ -970,7 +980,7 @@
 				ACC41EB5221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F01EA0C22101C5C20040FA96 /* NSComparisonPredicate+Description.swift in Sources */,
 				AC086A652231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
-				ACAA63C5218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
+				ACAA63C5218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
 				ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
 				F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */,
@@ -998,6 +1008,7 @@
 				F02F5544218BD765002CDF8A /* RESTConfigurationTests.swift in Sources */,
 				F027934F215E047100A0E517 /* RESTAdapterTests.swift in Sources */,
 				F01EA0DB2101C5FC0040FA96 /* ComparisonTests.swift in Sources */,
+				F0D8C8AF22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */,
 				F0279352215E047700A0E517 /* RESTQueryBuilderTests.swift in Sources */,
 				F01EA0EB2101C61C0040FA96 /* PetToy.swift in Sources */,
 				F01EA0D72101C5F20040FA96 /* SequenceSortTests.swift in Sources */,
@@ -1009,6 +1020,7 @@
 				F01EA0E42101C6100040FA96 /* TestTable.swift in Sources */,
 				F01EA0ED2101C6210040FA96 /* NSManagedObject+Find.swift in Sources */,
 				F01EA0DD2101C5FC0040FA96 /* QueryTests.swift in Sources */,
+				F0D8C8B322415DF800719593 /* DictionaryJSONTests.swift in Sources */,
 				F01EA0D52101C5EC0040FA96 /* JSONAdapterTests.swift in Sources */,
 				F01EA0E72101C6150040FA96 /* PetToyEntity.swift in Sources */,
 				F01EA0E52101C6150040FA96 /* OwnerEntity.swift in Sources */,
@@ -1035,7 +1047,7 @@
 				ACC41EB4221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F0F86D161FA9F2F10036124E /* Expression.swift in Sources */,
 				AC086A642231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
-				ACAA63C4218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
+				ACAA63C4218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
 				ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
@@ -1063,6 +1075,7 @@
 				F02F5543218BD765002CDF8A /* RESTConfigurationTests.swift in Sources */,
 				F027934E215E047000A0E517 /* RESTAdapterTests.swift in Sources */,
 				F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */,
+				F0D8C8AE22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */,
 				F0279351215E047500A0E517 /* RESTQueryBuilderTests.swift in Sources */,
 				F0F519792027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A461FA9FAD000763001 /* QueryTests.swift in Sources */,
@@ -1074,6 +1087,7 @@
 				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
 				F0F5197C2027459F00AB1FFE /* ToyEntity.swift in Sources */,
 				F03556422028D62E00779008 /* NSManagedObject+Find.swift in Sources */,
+				F0D8C8B222415DF800719593 /* DictionaryJSONTests.swift in Sources */,
 				F004FF141FAA1E48008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A431FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F0F5197F202745A900AB1FFE /* PetToyEntity.swift in Sources */,
@@ -1100,7 +1114,7 @@
 				ACC41EB3221CBF9E00B6BB66 /* QueryOption.swift in Sources */,
 				F0F86D151FA9F2F10036124E /* Expression.swift in Sources */,
 				AC086A632231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
-				ACAA63C3218CCBAD00ADB9C2 /* HTTPResponseCodes.swift in Sources */,
+				ACAA63C3218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
 				ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
 				F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
@@ -1128,6 +1142,7 @@
 				F02F5542218BD765002CDF8A /* RESTConfigurationTests.swift in Sources */,
 				F027934D215E046E00A0E517 /* RESTAdapterTests.swift in Sources */,
 				F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */,
+				F0D8C8AD22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */,
 				F0279350215E047400A0E517 /* RESTQueryBuilderTests.swift in Sources */,
 				F0F519782027459600AB1FFE /* PetEntity.swift in Sources */,
 				F08E0A451FA9FAD000763001 /* QueryTests.swift in Sources */,
@@ -1139,6 +1154,7 @@
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
 				F0F5197B2027459F00AB1FFE /* ToyEntity.swift in Sources */,
 				F03556412028D62E00779008 /* NSManagedObject+Find.swift in Sources */,
+				F0D8C8B122415DF800719593 /* DictionaryJSONTests.swift in Sources */,
 				F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */,
 				F08E0A421FA9FAC700763001 /* ExpressionTests.swift in Sources */,
 				F0F5197E202745A900AB1FFE /* PetToyEntity.swift in Sources */,

@@ -12,16 +12,16 @@ import XCTest
 class ExpressionTests: XCTestCase {
 
     func testDescription() {
-        XCTAssertEqual(Expression.equal("foo", "bar").description, "foo = bar")
-        XCTAssertEqual(Expression.equal("foo", 1).description, "foo = 1")
-        XCTAssertEqual(Expression.notEqual("foo", "bar").description, "foo != bar")
+        XCTAssertEqual(Expression.equal("foo", "bar").description, "foo equal_to bar")
+        XCTAssertEqual(Expression.equal("foo", 1).description, "foo equal_to 1")
+        XCTAssertEqual(Expression.notEqual("foo", "bar").description, "foo not_equal_to bar")
         XCTAssertEqual(Expression.contains("foo", "bar").description, "foo contains bar")
         XCTAssertEqual(Expression.like("foo", "bar").description, "foo like bar")
         XCTAssertEqual(Expression.inside("foo", ["foo", "bar"]).description, "foo in [\"foo\", \"bar\"]")
-        XCTAssertEqual(Expression.comparison("foo", Comparison.equalTo, "bar", []).description, "foo = bar")
+        XCTAssertEqual(Expression.comparison("foo", Comparison.equalTo, "bar", []).description, "foo equal_to bar")
         XCTAssertEqual(Expression.comparison("foo", Comparison.contains, "bar", [.caseInsensitive]).description, "foo contains[c] bar")
-        XCTAssertEqual(Expression.isNil("foo").description, "foo = nil")
-        XCTAssertEqual(Expression.isNotNil("foo").description, "foo != nil")
+        XCTAssertEqual(Expression.isNil("foo").description, "foo equal_to nil")
+        XCTAssertEqual(Expression.isNotNil("foo").description, "foo not_equal_to nil")
     }
     
     func testPredicate() {
