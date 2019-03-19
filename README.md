@@ -42,15 +42,8 @@ struct Owner: Storable {
 
     static var table: Table = AppTable.owner
 
-    var uuid: UUID
+    var uuid: String
     var name: String?
-    
-    var dictionary: [String : Any]  {
-        return [
-            "uuid": self.uuid,
-            "name": self.name ?? NSNull()
-        ]
-    }
 
 }
 ```
@@ -98,7 +91,7 @@ import Arcade
 
 let owner = Owner(uuid: UUID(), name: "Foo")
 
-arcade.insert(storable: owner).subscribe({ (success) in
+arcade.insert(storable: owner).subscribe({ (owner) in
     // Inserted!
 }) { (error) in
     // Error
@@ -112,7 +105,7 @@ import Arcade
 
 owner.name = "Fred"
 
-arcade.update(storable: owner).subscribe({ (success) in
+arcade.update(storable: owner).subscribe({ (owner) in
     // Updated!
 }) { (error) in
     // Error
@@ -191,6 +184,10 @@ class OwnerEntity: NSManagedObject {
 }
 
 extension OwnerEntity: CoreDataStorable {
+
+    public var viewable: Viewable {
+        return Owner(uuid: self.uuid, name: self.name)
+    }
 
     public var storable: Storable {
         return Owner(uuid: self.uuid, name: self.name)
