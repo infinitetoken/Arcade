@@ -6,7 +6,6 @@ Arcade is a lightweight persistence layer for Swift structures or objects!
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Relationships](#relationships)
 - [CoreData](#coredata)
 - [License](#license)
 
