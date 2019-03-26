@@ -10,7 +10,7 @@ import Foundation
 
 public extension Dictionary {
     
-    public func jsonString() throws -> String? {
+    func jsonString() throws -> String? {
         guard let dict = self as? [String : Any] else { return nil }
         
         let data = try JSONSerialization.data(withJSONObject: dict, options: .sortedKeys)

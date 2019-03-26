@@ -18,7 +18,7 @@ public enum Query {
 
 public extension Query {
  
-    public var dictionary: [String : Any] {
+    var dictionary: [String : Any] {
         switch self {
         case .expression(let expression):
             return ["expression" : expression.dictionary]
@@ -37,7 +37,7 @@ public extension Query {
 
 public extension Query {
     
-    public func predicate() -> NSPredicate {
+    func predicate() -> NSPredicate {
         switch self {
         case let .expression(exp): return exp.predicate()
         case let .and(exps): return NSCompoundPredicate.init(andPredicateWithSubpredicates: exps.map { $0.predicate() })
@@ -51,7 +51,7 @@ public extension Query {
 
 public extension Query {
     
-    public func evaluate(with viewable: Viewable) -> Bool {
+    func evaluate(with viewable: Viewable) -> Bool {
         return self.predicate().evaluate(with: viewable.dictionary)
     }
     

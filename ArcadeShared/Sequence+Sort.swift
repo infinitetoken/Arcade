@@ -10,7 +10,7 @@ import Foundation
 
 public extension Sequence where Iterator.Element : Any {
     
-    public func sorted(with sortDescriptors: [NSSortDescriptor]) -> [Self.Iterator.Element] {
+    func sorted(with sortDescriptors: [NSSortDescriptor]) -> [Self.Iterator.Element] {
         return sorted {
             for sortDescriptor in sortDescriptors {
                 switch sortDescriptor.compare($0, to: $1) {

@@ -10,7 +10,7 @@ import Foundation
 
 public extension Array {
     
-    public func offset(by offset: Int) -> [Array.Iterator.Element] {
+    func offset(by offset: Int) -> [Array.Iterator.Element] {
         if offset > self.endIndex {
             return []
         } else if offset > 0 {

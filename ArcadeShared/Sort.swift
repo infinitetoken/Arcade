@@ -27,7 +27,7 @@ public struct Sort {
 
 public extension Sort {
  
-    public var dictionary: [String : Int] {
+    var dictionary: [String : Int] {
         return [self.key : self.order.rawValue]
     }
     
@@ -35,7 +35,7 @@ public extension Sort {
 
 public extension Sort {
     
-    public func sortDescriptor() -> NSSortDescriptor {
+    func sortDescriptor() -> NSSortDescriptor {
         switch self.order {
         case .ascending:
             return NSSortDescriptor(key: self.key, ascending: true)

@@ -21,13 +21,13 @@ public protocol Viewable: Codable {
 
 public extension Viewable {
     
-    public var table: Table { return Self.table }
+    var table: Table { return Self.table }
     
 }
 
 public extension Viewable {
     
-    public var dictionary: [String : Any] {
+    var dictionary: [String : Any] {
         let encoder = JSONEncoder()
         
         do {

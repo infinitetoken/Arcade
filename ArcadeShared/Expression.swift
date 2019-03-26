@@ -27,7 +27,7 @@ public enum Expression {
 
 public extension Expression {
     
-    public var dictionary: [String : Any] {
+    var dictionary: [String : Any] {
         switch self {
         case .equal(let key, let value):
             return [
