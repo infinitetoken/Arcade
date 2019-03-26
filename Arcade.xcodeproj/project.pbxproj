@@ -868,11 +868,11 @@
 				TargetAttributes = {
 					F01EA0A42101C5300040FA96 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					F01EA0AC2101C5300040FA96 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					F0F5000D1FA9D9F700F42111 = {
 						CreatedOnToolsVersion = 9.0.1;
@@ -886,12 +886,12 @@
 					};
 					F0F5FFED1FA9D9C300F42111 = {
 						CreatedOnToolsVersion = 9.0.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					F0F5FFF61FA9D9C300F42111 = {
 						CreatedOnToolsVersion = 9.0.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1213,7 +1213,7 @@
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
@@ -1244,7 +1244,7 @@
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1273,9 +1273,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 12.2;
 			};
 			name = Debug;
 		};
@@ -1302,9 +1302,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 12.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1456,7 +1456,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1487,7 +1487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1511,7 +1511,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1535,7 +1535,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
