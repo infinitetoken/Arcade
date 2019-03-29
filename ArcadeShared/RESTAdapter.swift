@@ -161,6 +161,10 @@ extension RESTAdapter: Adapter {
                     DispatchQueue.main.async {
                         completion(.success(nil))
                     }
+                case .NoContent:
+                    DispatchQueue.main.async {
+                        completion(.success(nil))
+                    }
                 default:
                     DispatchQueue.main.async {
                         completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
@@ -226,6 +230,10 @@ extension RESTAdapter: Adapter {
                         DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
                     }
                 case .NotFound:
+                    DispatchQueue.main.async {
+                        completion(.success([]))
+                    }
+                case .NoContent:
                     DispatchQueue.main.async {
                         completion(.success([]))
                     }
