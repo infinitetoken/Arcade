@@ -65,7 +65,7 @@ struct RESTHelper {
         return urlComponents
     }
     
-    public static func urlRequest(forURL url: URL, method: String, apiKey: String?, data: Data?) -> URLRequest {
+    public static func urlRequest(forURL url: URL, method: String, token: String?, data: Data?) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
@@ -73,7 +73,23 @@ struct RESTHelper {
         headers["Content-Type"] = "application/json"
         headers["Accept"] = "application/json"
         
-        if let token = apiKey { headers["Authorization"] = "Bearer \(token)" }
+        if let token = token { headers["Authorization"] = "Bearer \(token)" }
+        
+        request.allHTTPHeaderFields = headers
+        request.httpBody = data
+        
+        return request
+    }
+    
+    public static func urlRequest(forURL url: URL, method: String, email: String, password: String, data: Data?) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        
+        var headers = request.allHTTPHeaderFields ?? [:]
+        headers["Content-Type"] = "application/json"
+        headers["Accept"] = "application/json"
+        
+        if let auth = "\(email):\(password)".data(using: .utf8)?.base64EncodedString() { headers["Authorization"] = "Basic \(auth)" }
         
         request.allHTTPHeaderFields = headers
         request.httpBody = data
