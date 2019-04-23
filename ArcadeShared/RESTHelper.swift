@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RESTHelper {
+public struct RESTHelper {
     
     public static func url(configuration: RESTConfiguration, forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
         var urlComponents = urlComponents

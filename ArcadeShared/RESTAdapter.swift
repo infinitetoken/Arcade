@@ -58,7 +58,7 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                let urlRequest = RESTHelper.urlRequest(forURL: url, method: "POST", apiKey: self.configuration.apiKey, data: data)
+                let urlRequest = RESTHelper.urlRequest(forURL: url, method: "POST", token: self.configuration.apiKey, data: data)
                 
                 self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                     guard let response = response as? HTTPURLResponse else {
@@ -119,7 +119,7 @@ extension RESTAdapter: Adapter {
                 return
             }
             
-            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", apiKey: self.configuration.apiKey, data: nil)
+            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", token: self.configuration.apiKey, data: nil)
             
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
@@ -193,7 +193,7 @@ extension RESTAdapter: Adapter {
                 return
             }
             
-            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", apiKey: self.configuration.apiKey, data: nil)
+            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", token: self.configuration.apiKey, data: nil)
             
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
@@ -266,7 +266,7 @@ extension RESTAdapter: Adapter {
                 return
             }
             
-            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", apiKey: self.configuration.apiKey, data: nil)
+            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "GET", token: self.configuration.apiKey, data: nil)
             
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
@@ -326,7 +326,7 @@ extension RESTAdapter: Adapter {
                     return
                 }
                 
-                let urlRequest = RESTHelper.urlRequest(forURL: url, method: "PUT", apiKey: self.configuration.apiKey, data: data)
+                let urlRequest = RESTHelper.urlRequest(forURL: url, method: "PUT", token: self.configuration.apiKey, data: data)
                 
                 self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                     guard let response = response as? HTTPURLResponse else {
@@ -387,7 +387,7 @@ extension RESTAdapter: Adapter {
                 return
             }
             
-            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "DELETE", apiKey: self.configuration.apiKey, data: nil)
+            let urlRequest = RESTHelper.urlRequest(forURL: url, method: "DELETE", token: self.configuration.apiKey, data: nil)
             
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
