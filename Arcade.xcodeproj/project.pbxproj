@@ -22,6 +22,12 @@
 		ACC41EB3221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
 		ACC41EB4221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
 		ACC41EB5221CBF9E00B6BB66 /* QueryOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */; };
+		F0022B5F226F810300EE53EA /* RESTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B5E226F810300EE53EA /* RESTHelper.swift */; };
+		F0022B60226F810300EE53EA /* RESTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B5E226F810300EE53EA /* RESTHelper.swift */; };
+		F0022B61226F810300EE53EA /* RESTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B5E226F810300EE53EA /* RESTHelper.swift */; };
+		F0022B63226F830500EE53EA /* RESTHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B62226F830500EE53EA /* RESTHelperTests.swift */; };
+		F0022B64226F830500EE53EA /* RESTHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B62226F830500EE53EA /* RESTHelperTests.swift */; };
+		F0022B65226F830500EE53EA /* RESTHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B62226F830500EE53EA /* RESTHelperTests.swift */; };
 		F004FF111FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF121FAA1154008EAD16 /* TestTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F004FF101FAA1154008EAD16 /* TestTable.swift */; };
 		F004FF131FAA1E46008EAD16 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0B33B761FAA023C009BCB0A /* TestModel.xcdatamodeld */; };
@@ -213,6 +219,8 @@
 		ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTConfiguration.swift; sourceTree = "<group>"; };
 		ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTResponseCodes.swift; sourceTree = "<group>"; };
 		ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryOption.swift; sourceTree = "<group>"; };
+		F0022B5E226F810300EE53EA /* RESTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelper.swift; sourceTree = "<group>"; };
+		F0022B62226F830500EE53EA /* RESTHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelperTests.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
@@ -384,6 +392,7 @@
 			children = (
 				F027933D215DF96100A0E517 /* RESTAdapter.swift */,
 				ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */,
+				F0022B5E226F810300EE53EA /* RESTHelper.swift */,
 				F0279339215DF89200A0E517 /* RESTQueryBuilder.swift */,
 				ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */,
 			);
@@ -394,8 +403,9 @@
 			isa = PBXGroup;
 			children = (
 				F0279345215E03D100A0E517 /* RESTAdapterTests.swift */,
-				F0279349215E042C00A0E517 /* RESTQueryBuilderTests.swift */,
 				F02F5541218BD765002CDF8A /* RESTConfigurationTests.swift */,
+				F0022B62226F830500EE53EA /* RESTHelperTests.swift */,
+				F0279349215E042C00A0E517 /* RESTQueryBuilderTests.swift */,
 				F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */,
 			);
 			name = REST;
@@ -988,6 +998,7 @@
 				F01EA0C12101C5BA0040FA96 /* JSONAdapter.swift in Sources */,
 				F01EA0CB2101C5CE0040FA96 /* Query.swift in Sources */,
 				F01EA0C42101C5C20040FA96 /* Array+Offset.swift in Sources */,
+				F0022B61226F810300EE53EA /* RESTHelper.swift in Sources */,
 				F01EA0C82101C5C90040FA96 /* Storable.swift in Sources */,
 				AC086A612231A90D0056DBB3 /* Viewable.swift in Sources */,
 				F01EA0CC2101C5D30040FA96 /* Sort.swift in Sources */,
@@ -1017,6 +1028,7 @@
 				F01EA0EA2101C61C0040FA96 /* Pet.swift in Sources */,
 				F01EA0D42101C5EC0040FA96 /* CoreDataAdapterTests.swift in Sources */,
 				F01EA0E32101C60D0040FA96 /* TestModel.xcdatamodeld in Sources */,
+				F0022B65226F830500EE53EA /* RESTHelperTests.swift in Sources */,
 				F01EA0DE2101C6010040FA96 /* SortTests.swift in Sources */,
 				F01EA0E42101C6100040FA96 /* TestTable.swift in Sources */,
 				F01EA0ED2101C6210040FA96 /* NSManagedObject+Find.swift in Sources */,
@@ -1055,6 +1067,7 @@
 				F01AE62B1FBF711900C21931 /* JSONAdapter.swift in Sources */,
 				F037F2F920238E6700ADC2FC /* Sort.swift in Sources */,
 				F0F86D281FA9F2F10036124E /* Table.swift in Sources */,
+				F0022B60226F810300EE53EA /* RESTHelper.swift in Sources */,
 				F0F86D1E1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
 				AC086A602231A90C0056DBB3 /* Viewable.swift in Sources */,
 				F0F86D261FA9F2F10036124E /* Comparison.swift in Sources */,
@@ -1084,6 +1097,7 @@
 				F0F519762027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EC20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F061C22E2028CAAA003597E9 /* SequenceSortTests.swift in Sources */,
+				F0022B64226F830500EE53EA /* RESTHelperTests.swift in Sources */,
 				F0F5198B202745C900AB1FFE /* PetToy.swift in Sources */,
 				F08E0A371FA9F96B00763001 /* ArcadeTests.swift in Sources */,
 				F0F5197C2027459F00AB1FFE /* ToyEntity.swift in Sources */,
@@ -1122,6 +1136,7 @@
 				F01AE62A1FBF711900C21931 /* JSONAdapter.swift in Sources */,
 				F037F2F820238E6700ADC2FC /* Sort.swift in Sources */,
 				F0F86D271FA9F2F10036124E /* Table.swift in Sources */,
+				F0022B5F226F810300EE53EA /* RESTHelper.swift in Sources */,
 				F0F86D1D1FA9F2F10036124E /* CoreDataStorable.swift in Sources */,
 				AC08682E22319BC00056DBB3 /* Viewable.swift in Sources */,
 				F0F86D251FA9F2F10036124E /* Comparison.swift in Sources */,
@@ -1151,6 +1166,7 @@
 				F0F519752027458900AB1FFE /* OwnerEntity.swift in Sources */,
 				F037F2EB20234C0300ADC2FC /* NSComparisionDescriptionTests.swift in Sources */,
 				F061C22D2028CAAA003597E9 /* SequenceSortTests.swift in Sources */,
+				F0022B63226F830500EE53EA /* RESTHelperTests.swift in Sources */,
 				F0F5198A202745C900AB1FFE /* PetToy.swift in Sources */,
 				F0F5FFFD1FA9D9C300F42111 /* ArcadeTests.swift in Sources */,
 				F0F5197B2027459F00AB1FFE /* ToyEntity.swift in Sources */,
@@ -1194,7 +1210,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1225,7 +1241,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1435,7 +1451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1468,7 +1484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1546,7 +1562,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1580,7 +1596,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
