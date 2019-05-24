@@ -163,12 +163,16 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
-        return Future<I?> { completion in
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
+        return Future<I> { completion in
             self.load().subscribe({ (viewables: [I]) in
                 let adapterTable = AdapterTable(viewables: viewables)
                 self.store[I.table.name] = adapterTable
-                completion(.success(adapterTable.find(uuid) as? I))
+                if let result = adapterTable.find(uuid) as? I {
+                    completion(.success(result))
+                } else {
+                    completion(.failure(JSONAdapterError.noResult))
+                }
             }, { (error) in
                 completion(.failure(error))
             })

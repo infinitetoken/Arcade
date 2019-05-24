@@ -15,7 +15,7 @@ public protocol Adapter {
     func disconnect() -> Future<Bool>
     func insert<I>(storable: I, options: [QueryOption]) -> Future<I> where I: Storable
     func insert<I>(storables: [I], options: [QueryOption]) -> Future<[I]> where I: Storable
-    func find<I>(uuid: String, options: [QueryOption]) -> Future<I?> where I: Viewable
+    func find<I>(uuid: String, options: [QueryOption]) -> Future<I> where I: Viewable
     func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption]) -> Future<[I]> where I: Viewable
     func fetch<I>(options: [QueryOption]) -> Future<[I]> where I: Viewable
     func fetch<I>(query: Query?, options: [QueryOption]) -> Future<[I]> where I: Viewable

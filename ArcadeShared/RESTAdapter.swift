@@ -16,6 +16,8 @@ public enum RESTAdapterError: Error {
     case responseError
     case noData
     case noResponse
+    case noContent
+    case notFound
     case HTTPResponse(code: Int, error: Error?)
 }
 
@@ -112,8 +114,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
-        return Future<I?> { completion in
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
+        return Future<I> { completion in
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
                 completion(.failure(RESTAdapterError.urlError))
                 return
@@ -159,11 +161,11 @@ extension RESTAdapter: Adapter {
                     }
                 case .NotFound:
                     DispatchQueue.main.async {
-                        completion(.success(nil))
+                        completion(.failure(RESTAdapterError.notFound))
                     }
                 case .NoContent:
                     DispatchQueue.main.async {
-                        completion(.success(nil))
+                        completion(.failure(RESTAdapterError.noContent))
                     }
                 default:
                     DispatchQueue.main.async {

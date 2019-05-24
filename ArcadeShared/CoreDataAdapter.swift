@@ -109,7 +109,7 @@ extension CoreDataAdapter: Adapter {
         return Future(error)
     }
     
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { return Future(CoreDataAdapterError.notConnected) }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
@@ -120,7 +120,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()
         
-        return Future { operation in
+        return Future<I> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -128,11 +128,13 @@ extension CoreDataAdapter: Adapter {
                 }
                 
                 DispatchQueue.main.async {
-                    let object = result.map({ (object) -> Viewable in
+                    if let object = result.map({ (object) -> Viewable in
                         return object.viewable
-                    }).first
-        
-                    operation(.success(object as! I?))
+                    }).first as? I {
+                        operation(.success(object))
+                    } else {
+                        operation(.failure(CoreDataAdapterError.noResult))
+                    }
                 }
             }
             
@@ -158,7 +160,7 @@ extension CoreDataAdapter: Adapter {
         })
         fetchRequest.predicate = Expression.comparison("uuid", Comparison.inside, uuids, []).predicate()
         
-        return Future { operation in
+        return Future<[I]> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let results = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -190,7 +192,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = limit
         fetchRequest.fetchOffset = offset
         
-        return Future { operation in
+        return Future<[I]> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -225,7 +227,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()
         
-        return Future { operation in
+        return Future<I> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -268,7 +270,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = storables.count
         fetchRequest.predicate = expression.predicate()
         
-        return Future { operation in
+        return Future<[I]> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let results = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -316,7 +318,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()
         
-        return Future { operation in
+        return Future<Bool> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let result = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
                     operation(.failure(CoreDataAdapterError.noResult))
@@ -352,7 +354,7 @@ extension CoreDataAdapter: Adapter {
         fetchRequest.fetchLimit = uuids.count
         fetchRequest.predicate = expression.predicate()
         
-        return Future { operation in
+        return Future<Bool> { operation in
             let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
                 guard let results = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
                     operation(.failure(CoreDataAdapterError.noResult))

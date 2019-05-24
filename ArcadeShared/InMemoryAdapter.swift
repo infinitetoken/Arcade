@@ -14,6 +14,7 @@ public enum InMemoryAdapterError: Error {
     case updateFailed
     case deleteFailed
     case noResult
+    case noTable
     case error(error: Error)
 }
 
@@ -117,10 +118,14 @@ extension InMemoryAdapter: Adapter {
 
         return Future(storables)
     }
-    
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I?> where I : Viewable {
-        guard let adapterTable = self.store[I.table.name] else { return Future(nil) }
-        return Future(adapterTable.find(uuid) as? I)
+    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
+        guard let adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.noTable) }
+        
+        if let result = adapterTable.find(uuid) as? I {
+            return Future(result)
+        } else {
+            return Future(InMemoryAdapterError.noResult)
+        }
     }
     public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         guard let adapterTable = self.store[I.table.name] else { return Future([]) }
