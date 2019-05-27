@@ -10,15 +10,26 @@ import Foundation
 import Future
 
 public enum RESTAdapterError: Error {
-    case methodNotSupported
-    case urlError
-    case encodeError
-    case responseError
-    case noData
-    case noResponse
-    case noContent
-    case notFound
-    case HTTPResponse(code: Int, error: Error?)
+    case methodNotSupported(function: AdapterFunction, table: Table?)
+    case urlError(function: AdapterFunction, table: Table?)
+    case encodeError(function: AdapterFunction, table: Table?)
+    case responseError(function: AdapterFunction, table: Table?)
+    case noData(function: AdapterFunction, table: Table?)
+    case noResponse(function: AdapterFunction, table: Table?)
+    case noContent(function: AdapterFunction, table: Table?)
+    case notFound(function: AdapterFunction, table: Table?)
+    case HTTPResponse(function: AdapterFunction, table: Table?, code: Int, error: Error?)
+}
+
+public enum AdapterFunction: String {
+    case connect = "connect"
+    case disconnect = "disconnect"
+    case count = "count"
+    case find = "find"
+    case fetch = "fetch"
+    case insert = "insert"
+    case delete = "delete"
+    case update = "update"
 }
 
 open class RESTAdapter {
@@ -37,26 +48,26 @@ extension RESTAdapter: Adapter {
     
     public func connect() -> Future<Bool> {
         return Future<Bool> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .connect, table: nil)))
         }
     }
     
     public func disconnect() -> Future<Bool> {
         return Future<Bool> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .disconnect, table: nil)))
         }
     }
     
     public func insert<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         return Future<I> { completion in
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .insert, table: storable.table)))
                 return
             }
             
             do {
                 guard let data = try RESTHelper.encode(value: storable) else {
-                    completion(.failure(RESTAdapterError.encodeError))
+                    completion(.failure(RESTAdapterError.encodeError(function: .insert, table: storable.table)))
                     return
                 }
                 
@@ -65,21 +76,21 @@ extension RESTAdapter: Adapter {
                 self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                     guard let response = response as? HTTPURLResponse else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.noResponse))
+                            completion(.failure(RESTAdapterError.noResponse(function: .insert, table: storable.table)))
                         }
                         return
                     }
                     
                     guard error == nil else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .insert, table: storable.table, code: response.statusCode, error: error)))
                         }
                         return
                     }
                     
                     guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .insert, table: storable.table, code: response.statusCode, error: nil)))
                         }
                         return
                     }
@@ -94,11 +105,11 @@ extension RESTAdapter: Adapter {
                                 DispatchQueue.main.async { completion(.failure(error)) }
                             }
                         } else {
-                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData(function: .insert, table: storable.table))) }
                         }
                     default:
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .insert, table: storable.table, code: response.statusCode, error: nil)))
                         }
                     }
                 }.resume()
@@ -110,14 +121,14 @@ extension RESTAdapter: Adapter {
     
     public func insert<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .insert, table: I.table)))
         }
     }
     
     public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
         return Future<I> { completion in
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .find, table: I.table)))
                 return
             }
             
@@ -126,21 +137,21 @@ extension RESTAdapter: Adapter {
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noResponse))
+                        completion(.failure(RESTAdapterError.noResponse(function: .find, table: I.table)))
                     }
                     return
                 }
                 
                 guard error == nil else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: error!)))
                     }
                     return
                 }
                 
                 guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
                     }
                     return
                 }
@@ -156,20 +167,20 @@ extension RESTAdapter: Adapter {
                         }
                     } else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.noData))
+                            completion(.failure(RESTAdapterError.noData(function: .find, table: I.table)))
                         }
                     }
                 case .NotFound:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.notFound))
+                        completion(.failure(RESTAdapterError.notFound(function: .find, table: I.table)))
                     }
                 case .NoContent:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noContent))
+                        completion(.failure(RESTAdapterError.noContent(function: .find, table: I.table)))
                     }
                 default:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
                     }
                 }
             }.resume()
@@ -191,7 +202,7 @@ extension RESTAdapter: Adapter {
             }
             
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, urlComponents: urlComponents, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .find, table: I.table)))
                 return
             }
             
@@ -200,21 +211,21 @@ extension RESTAdapter: Adapter {
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noResponse))
+                        completion(.failure(RESTAdapterError.noResponse(function: .find, table: I.table)))
                     }
                     return
                 }
                 
                 guard error == nil else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: error!)))
                     }
                     return
                 }
                 
                 guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
                     }
                     return
                 }
@@ -229,7 +240,7 @@ extension RESTAdapter: Adapter {
                             DispatchQueue.main.async { completion(.failure(error)) }
                         }
                     } else {
-                        DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                        DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData(function: .find, table: I.table))) }
                     }
                 case .NotFound:
                     DispatchQueue.main.async {
@@ -241,7 +252,7 @@ extension RESTAdapter: Adapter {
                     }
                 default:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
                     }
                 }
             }.resume()
@@ -264,7 +275,7 @@ extension RESTAdapter: Adapter {
             }
             
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, urlComponents: urlComponents, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .fetch, table: I.table)))
                 return
             }
             
@@ -273,28 +284,28 @@ extension RESTAdapter: Adapter {
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noResponse))
+                        completion(.failure(RESTAdapterError.noResponse(function: .fetch, table: I.table)))
                     }
                     return
                 }
                 
                 guard error == nil else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .fetch, table: I.table, code: response.statusCode, error: error!)))
                     }
                     return
                 }
                 
                 guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .fetch, table: I.table, code: response.statusCode, error: nil)))
                     }
                     return
                 }
                 
                 switch responseCode {
                 case .OK:
-                    guard let data = data else { completion(.failure(RESTAdapterError.noData)); return }
+                    guard let data = data else { completion(.failure(RESTAdapterError.noData(function: .fetch, table: I.table))); return }
                     
                     do {
                         let viewables = try RESTHelper.decodeArray(from: data, table: I.table) as [I]
@@ -308,7 +319,7 @@ extension RESTAdapter: Adapter {
                     DispatchQueue.main.async { completion(.success([])) }
                 default:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .fetch, table: I.table, code: response.statusCode, error: nil)))
                     }
                 }
             }.resume()
@@ -318,13 +329,13 @@ extension RESTAdapter: Adapter {
     public func update<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
         return Future<I> { completion in
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: storable.uuid, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .update, table: I.table)))
                 return
             }
             
             do {
                 guard let data = try RESTHelper.encode(value: storable) else {
-                    completion(.failure(RESTAdapterError.encodeError))
+                    completion(.failure(RESTAdapterError.encodeError(function: .update, table: I.table)))
                     return
                 }
                 
@@ -333,21 +344,21 @@ extension RESTAdapter: Adapter {
                 self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                     guard let response = response as? HTTPURLResponse else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.noResponse))
+                            completion(.failure(RESTAdapterError.noResponse(function: .update, table: I.table)))
                         }
                         return
                     }
                     
                     guard error == nil else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .update, table: I.table, code: response.statusCode, error: error!)))
                         }
                         return
                     }
                     
                     guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .update, table: I.table, code: response.statusCode, error: nil)))
                         }
                         return
                     }
@@ -362,11 +373,11 @@ extension RESTAdapter: Adapter {
                                 DispatchQueue.main.async { completion(.failure(error)) }
                             }
                         } else {
-                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData)) }
+                            DispatchQueue.main.async { completion(.failure(RESTAdapterError.noData(function: .update, table: I.table))) }
                         }
                     default:
                         DispatchQueue.main.async {
-                            completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                            completion(.failure(RESTAdapterError.HTTPResponse(function: .update, table: I.table, code: response.statusCode, error: nil)))
                         }
                     }
                 }.resume()
@@ -378,14 +389,14 @@ extension RESTAdapter: Adapter {
     
     public func update<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
         return Future<[I]> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .update, table: I.table)))
         }
     }
     
     public func delete<I>(uuid: String, type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
             guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
-                completion(.failure(RESTAdapterError.urlError))
+                completion(.failure(RESTAdapterError.urlError(function: .delete, table: I.table)))
                 return
             }
             
@@ -394,21 +405,21 @@ extension RESTAdapter: Adapter {
             self.configuration.session?.dataTask(with: urlRequest) { (data, response, error) in
                 guard let response = response as? HTTPURLResponse else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.noResponse))
+                        completion(.failure(RESTAdapterError.noResponse(function: .delete, table: I.table)))
                     }
                     return
                 }
                 
                 guard error == nil else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: error!)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .delete, table: I.table, code: response.statusCode, error: error!)))
                     }
                     return
                 }
                 
                 guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .delete, table: I.table, code: response.statusCode, error: nil)))
                     }
                     return
                 }
@@ -418,7 +429,7 @@ extension RESTAdapter: Adapter {
                     DispatchQueue.main.async { completion(.success(true)) }
                 default:
                     DispatchQueue.main.async {
-                        completion(.failure(RESTAdapterError.HTTPResponse(code: response.statusCode, error: nil)))
+                        completion(.failure(RESTAdapterError.HTTPResponse(function: .delete, table: I.table, code: response.statusCode, error: nil)))
                     }
                 }
             }.resume()
@@ -427,19 +438,19 @@ extension RESTAdapter: Adapter {
     
     public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
         return Future<Bool> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .delete, table: I.table)))
         }
     }
     
     public func count<T>(table: T, options: [QueryOption]) -> Future<Int> where T : Table {
         return Future<Int> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .count, table: table)))
         }
     }
     
     public func count<T>(table: T, query: Query?, options: [QueryOption]) -> Future<Int> where T : Table {
         return Future<Int> { completion in
-            completion(.failure(RESTAdapterError.methodNotSupported))
+            completion(.failure(RESTAdapterError.methodNotSupported(function: .count, table: table)))
         }
     }
     
