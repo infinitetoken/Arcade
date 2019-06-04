@@ -113,6 +113,7 @@
 		F037F3022023998900ADC2FC /* Array+Offset.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F3002023998900ADC2FC /* Array+Offset.swift */; };
 		F037F30420239B7D00ADC2FC /* Array+Limit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F30320239B7D00ADC2FC /* Array+Limit.swift */; };
 		F037F30520239B7D00ADC2FC /* Array+Limit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F037F30320239B7D00ADC2FC /* Array+Limit.swift */; };
+		F03F0C6F22A722C60071D699 /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03F0C6E22A722C60071D699 /* Future.framework */; };
 		F03FE85B1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F03FE85C1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */; };
 		F058C2BE22A71612002FCEA1 /* Arcade.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F5FFF11FA9D9C300F42111 /* Arcade.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -264,6 +265,7 @@
 		F037F2FD2023930A00ADC2FC /* Sequence+Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Sort.swift"; sourceTree = "<group>"; };
 		F037F3002023998900ADC2FC /* Array+Offset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Offset.swift"; sourceTree = "<group>"; };
 		F037F30320239B7D00ADC2FC /* Array+Limit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Limit.swift"; sourceTree = "<group>"; };
+		F03F0C6E22A722C60071D699 /* Future.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Future.framework; path = Carthage/Build/watchOS/Future.framework; sourceTree = "<group>"; };
 		F03FE85A1FCE0B3200E49C77 /* NSComparisonPredicate+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSComparisonPredicate+Description.swift"; sourceTree = "<group>"; };
 		F058C2AF22A7157F002FCEA1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
 		F058C2B622A715B8002FCEA1 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,6 +340,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F03F0C6F22A722C60071D699 /* Future.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +537,7 @@
 		F0F500261FA9DAF500F42111 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F03F0C6E22A722C60071D699 /* Future.framework */,
 				F058C2D522A71914002FCEA1 /* FutureWatch.framework */,
 				F0D3DE48212708C10078232F /* Future.framework */,
 				F0D3DE4A212708D40078232F /* Future.framework */,
