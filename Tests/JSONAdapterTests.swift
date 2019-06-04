@@ -77,7 +77,7 @@ class JSONAdapterTests: XCTestCase {
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (owner) -> Future<Owner?> in
+        }).then({ (owner) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (owner) in
@@ -155,7 +155,7 @@ class JSONAdapterTests: XCTestCase {
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (owner) -> Future<Owner?> in
+        }).then({ (owner) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).then({ (fetchedOwner) -> Future<Owner> in
@@ -164,12 +164,11 @@ class JSONAdapterTests: XCTestCase {
             owner.name = "Foo"
             
             return adapter.update(storable: owner)
-        }).then({ (success) -> Future<Owner?> in
+        }).then({ (success) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (fetchedOwner) in
-            XCTAssertNotNil(fetchedOwner)
-            XCTAssertEqual(fetchedOwner?.name, "Foo")
+            XCTAssertEqual(fetchedOwner.name, "Foo")
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)

@@ -60,6 +60,25 @@ class FutureTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
+    func testBeforeAfter() {
+        let future = Future<Int>(1)
+        
+        let expectationBefore = XCTestExpectation(description: "Before")
+        let expectationAfter = XCTestExpectation(description: "After")
+        
+        future.subscribe({ (value) in
+            XCTAssertEqual(value, 1)
+        }, { (error) in
+            XCTFail(error.localizedDescription)
+        }, before: {
+            expectationBefore.fulfill()
+        }, after: {
+            expectationAfter.fulfill()
+        })
+        
+        wait(for: [expectationBefore, expectationAfter], timeout: 5.0)
+    }
+    
     func testTransform() {
         let future = Future<String>("TEST")
         

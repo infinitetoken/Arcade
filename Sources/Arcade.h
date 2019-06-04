@@ -6,7 +6,7 @@
 //  Copyright © 2017 A.C. Wright Design. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Foundation;
 
 //! Project version number for Arcade.
 FOUNDATION_EXPORT double ArcadeVersionNumber;

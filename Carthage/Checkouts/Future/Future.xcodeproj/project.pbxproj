@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F058C28E22A70E40002FCEA1 /* Future.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE472127028700902397 /* Future.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F058C28F22A70E41002FCEA1 /* Future.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE472127028700902397 /* Future.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F058C2C122A71749002FCEA1 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBAE622127030D00902397 /* Future.swift */; };
+		F058C2C222A71754002FCEA1 /* Future.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE472127028700902397 /* Future.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FBAE4E2127028700902397 /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FBAE442127028700902397 /* Future.framework */; };
 		F0FBAE552127028700902397 /* Future.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE472127028700902397 /* Future.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FBAE632127030D00902397 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBAE622127030D00902397 /* Future.swift */; };
 		F0FBAE722127033400902397 /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FBAE692127033400902397 /* Future.framework */; };
-		F0FBAE792127033400902397 /* FutureMobile.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE6B2127033400902397 /* FutureMobile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FBAE8E2127034000902397 /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FBAE852127034000902397 /* Future.framework */; };
-		F0FBAE952127034000902397 /* FutureTV.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FBAE872127034000902397 /* FutureTV.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0FBAE9C2127039A00902397 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBAE622127030D00902397 /* Future.swift */; };
 		F0FBAE9D2127039A00902397 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBAE622127030D00902397 /* Future.swift */; };
 		F0FBAE9F2127044D00902397 /* FutureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBAE9E2127044D00902397 /* FutureTests.swift */; };
@@ -46,28 +48,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F058C28D22A70DAC002FCEA1 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
+		F058C29522A70E82002FCEA1 /* Future.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Future.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0D3DE442127064D0078232F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		F0D3DE46212707DB0078232F /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		F0FBAE442127028700902397 /* Future.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Future.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FBAE472127028700902397 /* Future.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Future.h; sourceTree = "<group>"; };
-		F0FBAE482127028700902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE4D2127028700902397 /* FutureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FBAE542127028700902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE622127030D00902397 /* Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		F0FBAE692127033400902397 /* Future.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Future.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0FBAE6B2127033400902397 /* FutureMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FutureMobile.h; sourceTree = "<group>"; };
-		F0FBAE6C2127033400902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE712127033400902397 /* FutureMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FBAE782127033400902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE852127034000902397 /* Future.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Future.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0FBAE872127034000902397 /* FutureTV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FutureTV.h; sourceTree = "<group>"; };
-		F0FBAE882127034000902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE8D2127034000902397 /* FutureTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FutureTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0FBAE942127034000902397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0FBAE9E2127044D00902397 /* FutureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F058C29222A70E82002FCEA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FBAE402127028700902397 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -116,17 +121,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F058C28922A70C8C002FCEA1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F0FBAE622127030D00902397 /* Future.swift */,
+				F058C28B22A70C9F002FCEA1 /* Supporting Files */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		F058C28A22A70C93002FCEA1 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F0FBAE9E2127044D00902397 /* FutureTests.swift */,
+				F058C28C22A70CA9002FCEA1 /* Supporting Files */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		F058C28B22A70C9F002FCEA1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0FBAE472127028700902397 /* Future.h */,
+				F0FBAE542127028700902397 /* Info.plist */,
+				F0D3DE46212707DB0078232F /* LICENSE */,
+				F058C28D22A70DAC002FCEA1 /* Package.swift */,
+				F0D3DE442127064D0078232F /* README.md */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F058C28C22A70CA9002FCEA1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0FBAE782127033400902397 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		F0FBAE3A2127028700902397 = {
 			isa = PBXGroup;
 			children = (
-				F0FBAE60212702D200902397 /* FutureShared */,
-				F0FBAE462127028700902397 /* Future */,
-				F0FBAE6A2127033400902397 /* FutureMobile */,
-				F0FBAE862127034000902397 /* FutureTV */,
-				F0FBAE61212702E200902397 /* FutureTestsShared */,
-				F0FBAE512127028700902397 /* FutureTests */,
-				F0FBAE752127033400902397 /* FutureMobileTests */,
-				F0FBAE912127034000902397 /* FutureTVTests */,
+				F058C28922A70C8C002FCEA1 /* Sources */,
+				F058C28A22A70C93002FCEA1 /* Tests */,
 				F0FBAE452127028700902397 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -140,122 +177,22 @@
 				F0FBAE712127033400902397 /* FutureMobileTests.xctest */,
 				F0FBAE852127034000902397 /* Future.framework */,
 				F0FBAE8D2127034000902397 /* FutureTVTests.xctest */,
+				F058C29522A70E82002FCEA1 /* Future.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F0FBAE462127028700902397 /* Future */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE5E212702A300902397 /* Supporting Files */,
-			);
-			path = Future;
-			sourceTree = "<group>";
-		};
-		F0FBAE512127028700902397 /* FutureTests */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE5F212702BA00902397 /* Supporting Files */,
-			);
-			path = FutureTests;
-			sourceTree = "<group>";
-		};
-		F0FBAE5E212702A300902397 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE472127028700902397 /* Future.h */,
-				F0FBAE482127028700902397 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F0FBAE5F212702BA00902397 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE542127028700902397 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F0FBAE60212702D200902397 /* FutureShared */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE622127030D00902397 /* Future.swift */,
-				F0FBAEA52127062100902397 /* Supporting Files */,
-			);
-			path = FutureShared;
-			sourceTree = "<group>";
-		};
-		F0FBAE61212702E200902397 /* FutureTestsShared */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE9E2127044D00902397 /* FutureTests.swift */,
-			);
-			path = FutureTestsShared;
-			sourceTree = "<group>";
-		};
-		F0FBAE6A2127033400902397 /* FutureMobile */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAEA22127046E00902397 /* Supporting Files */,
-			);
-			path = FutureMobile;
-			sourceTree = "<group>";
-		};
-		F0FBAE752127033400902397 /* FutureMobileTests */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE782127033400902397 /* Info.plist */,
-			);
-			path = FutureMobileTests;
-			sourceTree = "<group>";
-		};
-		F0FBAE862127034000902397 /* FutureTV */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAEA32127048000902397 /* Supporting Files */,
-			);
-			path = FutureTV;
-			sourceTree = "<group>";
-		};
-		F0FBAE912127034000902397 /* FutureTVTests */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE942127034000902397 /* Info.plist */,
-			);
-			path = FutureTVTests;
-			sourceTree = "<group>";
-		};
-		F0FBAEA22127046E00902397 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE6B2127033400902397 /* FutureMobile.h */,
-				F0FBAE6C2127033400902397 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F0FBAEA32127048000902397 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F0FBAE872127034000902397 /* FutureTV.h */,
-				F0FBAE882127034000902397 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F0FBAEA52127062100902397 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F0D3DE46212707DB0078232F /* LICENSE */,
-				F0D3DE442127064D0078232F /* README.md */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F058C29022A70E82002FCEA1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F058C2C222A71754002FCEA1 /* Future.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FBAE412127028700902397 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,7 +205,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0FBAE792127033400902397 /* FutureMobile.h in Headers */,
+				F058C28E22A70E40002FCEA1 /* Future.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,13 +213,31 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0FBAE952127034000902397 /* FutureTV.h in Headers */,
+				F058C28F22A70E41002FCEA1 /* Future.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F058C29422A70E82002FCEA1 /* FutureWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F058C29A22A70E82002FCEA1 /* Build configuration list for PBXNativeTarget "FutureWatch" */;
+			buildPhases = (
+				F058C29022A70E82002FCEA1 /* Headers */,
+				F058C29122A70E82002FCEA1 /* Sources */,
+				F058C29222A70E82002FCEA1 /* Frameworks */,
+				F058C29322A70E82002FCEA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FutureWatch;
+			productName = FutureWatch;
+			productReference = F058C29522A70E82002FCEA1 /* Future.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		F0FBAE432127028700902397 /* Future */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0FBAE582127028700902397 /* Build configuration list for PBXNativeTarget "Future" */;
@@ -401,6 +356,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Aaron Wright";
 				TargetAttributes = {
+					F058C29422A70E82002FCEA1 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 					F0FBAE432127028700902397 = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1020;
@@ -446,11 +404,19 @@
 				F0FBAE702127033400902397 /* FutureMobileTests */,
 				F0FBAE842127034000902397 /* FutureTV */,
 				F0FBAE8C2127034000902397 /* FutureTVTests */,
+				F058C29422A70E82002FCEA1 /* FutureWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F058C29322A70E82002FCEA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FBAE422127028700902397 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -496,6 +462,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F058C29122A70E82002FCEA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F058C2C122A71749002FCEA1 /* Future.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FBAE3F2127028700902397 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -565,6 +539,66 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F058C29B22A70E82002FCEA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureWatch;
+				PRODUCT_NAME = Future;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Debug;
+		};
+		F058C29C22A70E82002FCEA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureWatch;
+				PRODUCT_NAME = Future;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Release;
+		};
 		F0FBAE562127028700902397 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -617,8 +651,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -675,8 +709,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -694,19 +728,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Future/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Future;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.Future;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -722,19 +756,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Future/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Future;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.Future;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -748,8 +782,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -769,8 +803,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -788,18 +822,18 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FutureMobile/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.FutureMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureMobile;
 				PRODUCT_NAME = Future;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -814,18 +848,18 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FutureMobile/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.FutureMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureMobile;
 				PRODUCT_NAME = Future;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -841,8 +875,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureMobileTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -862,8 +896,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureMobileTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -884,18 +918,18 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FutureTV/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.FutureTV;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureTV;
 				PRODUCT_NAME = Future;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -910,18 +944,18 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FutureTV/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.FutureTV;
+				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.FutureTV;
 				PRODUCT_NAME = Future;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -937,8 +971,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureTVTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -959,8 +993,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RLF8EEWY2Z;
-				INFOPLIST_FILE = FutureTVTests/Info.plist;
+				DEVELOPMENT_TEAM = 6J8NCZC8G6;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -979,6 +1013,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F058C29A22A70E82002FCEA1 /* Build configuration list for PBXNativeTarget "FutureWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F058C29B22A70E82002FCEA1 /* Debug */,
+				F058C29C22A70E82002FCEA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0FBAE3E2127028700902397 /* Build configuration list for PBXProject "Future" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

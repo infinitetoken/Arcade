@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Future",
+        "repositoryURL": "https://github.com/infinitetoken/Future",
+        "state": {
+          "branch": null,
+          "revision": "79bb5d11b00da94ea542117f0c6ab5fda45b93a7",
+          "version": "1.1.8"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

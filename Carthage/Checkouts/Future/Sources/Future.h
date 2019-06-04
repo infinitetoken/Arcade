@@ -6,7 +6,7 @@
 //  Copyright © 2018 Aaron Wright. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Foundation;
 
 //! Project version number for Future.
 FOUNDATION_EXPORT double FutureVersionNumber;

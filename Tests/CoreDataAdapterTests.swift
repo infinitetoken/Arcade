@@ -1,5 +1,5 @@
 //
-//  InMemoryAdapterTests.swift
+//  CoreDataAdapterTests.swift
 //  Arcade
 //
 //  Created by A.C. Wright Design on 11/1/17.
@@ -7,17 +7,25 @@
 //
 
 import XCTest
+import CoreData
 import Future
 @testable import Arcade
 
-class InMemoryAdapterTests: XCTestCase {
-    
-    var adapter: InMemoryAdapter {
-        return InMemoryAdapter()
+class CoreDataAdapterTests: XCTestCase {
+
+    var adapter: CoreDataAdapter? {
+        guard let url = Bundle(for: CoreDataAdapterTests.self).url(forResource: "TestModel", withExtension: "momd") else { return nil }
+        
+        let model = NSManagedObjectModel(contentsOf: url)
+        let persistentStoreDescription = NSPersistentStoreDescription()
+        persistentStoreDescription.type = NSInMemoryStoreType
+        
+        return CoreDataAdapter(persistentContainerName: "TestModel", persistentStoreDescriptions: [persistentStoreDescription], managedObjectModel: model)
     }
     
     func testCanConnect() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Connect")
         
         adapter.connect().subscribe({ (success) in
@@ -32,7 +40,8 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanDisconnect() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Disconnect")
         
         adapter.disconnect().subscribe({ (success) in
@@ -47,7 +56,8 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanInsert() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Insert")
         
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
@@ -56,6 +66,7 @@ class InMemoryAdapterTests: XCTestCase {
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
         }).subscribe({ (owner) in
+            XCTAssertNotNil(owner)
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
@@ -66,15 +77,19 @@ class InMemoryAdapterTests: XCTestCase {
     }
     
     func testCanFind() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Find")
-        
+
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        
+
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (owner) -> Future<Owner?> in
+        }).then({ (owner) -> Future<Owner> in
+            XCTAssertNotNil(owner)
+            return adapter.insert(storable: owner)
+        }).then({ (owner) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (owner) in
@@ -84,20 +99,21 @@ class InMemoryAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanFetch() {
-        let adapter = self.adapter
-        let expectation = XCTestExpectation(description: "Fetch")
+        guard let adapter = self.adapter else { return }
         
+        let expectation = XCTestExpectation(description: "Fetch")
+
         let uuid = UUID().uuidString
         let owner = Owner(uuid: uuid, name: "Test")
-        
+
         let expression = Expression.equal("uuid", uuid)
         let query = Query.expression(expression)
-        
+
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
@@ -111,12 +127,13 @@ class InMemoryAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
     
     func testCanSort() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Sort")
         
         let owner1 = Owner(uuid: UUID().uuidString, name: "Owner 1")
@@ -142,46 +159,47 @@ class InMemoryAdapterTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanUpdate() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Update")
-        
+
         var owner = Owner(uuid: UUID().uuidString, name: "Test")
-        
+
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
-        }).then({ (success) -> Future<Owner?> in
+        }).then({ (owner) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).then({ (fetchedOwner) -> Future<Owner> in
             XCTAssertNotNil(fetchedOwner)
-            
+
             owner.name = "Foo"
-            
+
             return adapter.update(storable: owner)
-        }).then({ (success) -> Future<Owner?> in
+        }).then({ (owner) -> Future<Owner> in
             XCTAssertNotNil(owner)
             return adapter.find(uuid: owner.uuid)
         }).subscribe({ (fetchedOwner) in
-            XCTAssertNotNil(fetchedOwner)
-            XCTAssertEqual(fetchedOwner?.name, "Foo")
+            XCTAssertEqual(fetchedOwner.name, "Foo")
             expectation.fulfill()
         }) { (error) in
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanDelete() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Delete")
-        
+
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        
+
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
@@ -198,19 +216,20 @@ class InMemoryAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
     func testCanCount() {
-        let adapter = self.adapter
+        guard let adapter = self.adapter else { return }
+        
         let expectation = XCTestExpectation(description: "Count")
-        
+
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
-        
+
         let expression = Expression.equal("name", "Test")
         let query = Query.expression(expression)
-        
+
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
             return adapter.insert(storable: owner)
@@ -224,8 +243,8 @@ class InMemoryAdapterTests: XCTestCase {
             XCTFail(error.localizedDescription)
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
     }
-
+    
 }
