@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F058C29422A70E82002FCEA1"
-               BuildableName = "FutureWatch.framework"
+               BuildableName = "Future.framework"
                BlueprintName = "FutureWatch"
                ReferencedContainer = "container:Future.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F058C29422A70E82002FCEA1"
-            BuildableName = "FutureWatch.framework"
+            BuildableName = "Future.framework"
             BlueprintName = "FutureWatch"
             ReferencedContainer = "container:Future.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F058C29422A70E82002FCEA1"
-            BuildableName = "FutureWatch.framework"
+            BuildableName = "Future.framework"
             BlueprintName = "FutureWatch"
             ReferencedContainer = "container:Future.xcodeproj">
          </BuildableReference>
