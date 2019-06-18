@@ -76,10 +76,8 @@ let arcade = Arcade(adapter: InMemoryAdapter())
 ```swift
 import Arcade
 
-arcade.connect().subscribe({ (success) in
-    // Connected!
-}) { (error) in
-    // Error
+arcade.connect() { (result) in
+    // Connected! (or Error)
 }
 ```
 
@@ -90,10 +88,8 @@ import Arcade
 
 let owner = Owner(uuid: UUID(), name: "Foo")
 
-arcade.insert(storable: owner).subscribe({ (owner) in
-    // Inserted!
-}) { (error) in
-    // Error
+arcade.insert(storable: owner) { (result) in
+    // Inserted! (or Error)
 }
 ```
 
@@ -104,10 +100,8 @@ import Arcade
 
 owner.name = "Fred"
 
-arcade.update(storable: owner).subscribe({ (owner) in
-    // Updated!
-}) { (error) in
-    // Error
+arcade.update(storable: owner) { (result) in
+    // Updated! (or Error)
 }
 ```
 
@@ -118,10 +112,8 @@ import Arcade
 
 let uuid = owner.uuid
 
-arcade.delete(uuid: uuid, type: Owner.self).subscribe({ (success) in
-    // Deleted!
-}) { (error) in
-    // Error
+arcade.delete(uuid: uuid, type: Owner.self) { (result) in
+    // Deleted! (or Error)
 }
 ```
 
@@ -134,14 +126,8 @@ import Arcade
 
 let future: Future<Owner> = arcade.find(uuid: owner.uuid)
 
-future.subscribe({ (owner) in
-    guard let owner = owner else {
-        // Not found
-    }
-
-    // Found it!
-}) { (error) in
-    // Error
+arcade.find(uuid: owner.uuid) { (result) in
+    // Found it! (or Error)
 }
 ```
 
@@ -154,10 +140,8 @@ let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
 let future: Future<Owner> = arcade.fetch(query: query)
 
-future.subscribe({ (owners) in
-    // Do something with owners...
-}) { (error) in
-    // Error
+arcade.fetch(query: query) { (result) in
+    // Do something with result... (or Error)
 }
 ```
 

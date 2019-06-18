@@ -10,6 +10,14 @@ import Foundation
 
 public struct RESTHelper {
     
+    public enum Method: String {
+        case get = "GET"
+        case post = "POST"
+        case put = "PUT"
+        case patch = "PATCH"
+        case delete = "DELETE"
+    }
+    
     public static func url(configuration: RESTConfiguration, forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
         var urlComponents = urlComponents
         urlComponents.scheme = configuration.apiScheme
@@ -65,31 +73,22 @@ public struct RESTHelper {
         return urlComponents
     }
     
-    public static func urlRequest(forURL url: URL, method: String, token: String?, data: Data?) -> URLRequest {
+    public static func urlRequest(forURL url: URL, method: Method, authorization: RESTAdapter.AdapterAuthorization?, data: Data?) -> URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         headers["Accept"] = "application/json"
         
-        if let token = token { headers["Authorization"] = "Bearer \(token)" }
-        
-        request.allHTTPHeaderFields = headers
-        request.httpBody = data
-        
-        return request
-    }
-    
-    public static func urlRequest(forURL url: URL, method: String, email: String, password: String, data: Data?) -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        
-        var headers = request.allHTTPHeaderFields ?? [:]
-        headers["Content-Type"] = "application/json"
-        headers["Accept"] = "application/json"
-        
-        if let auth = "\(email):\(password)".data(using: .utf8)?.base64EncodedString() { headers["Authorization"] = "Basic \(auth)" }
+        if let authorization = authorization {
+            switch authorization {
+            case .token(let token):
+                headers["Authorization"] = "Bearer \(token)"
+            case .credentials(let username, let password):
+                if let auth = "\(username):\(password)".data(using: .utf8)?.base64EncodedString() { headers["Authorization"] = "Basic \(auth)" }
+            }
+        }
         
         request.allHTTPHeaderFields = headers
         request.httpBody = data

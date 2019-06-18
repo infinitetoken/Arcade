@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public protocol CoreDataViewable {
     
     var viewable: Viewable { get }

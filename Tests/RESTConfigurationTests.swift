@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import Future
 @testable import Arcade
 
 class RESTConfigurationTests: XCTestCase {

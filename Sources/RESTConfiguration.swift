@@ -10,22 +10,18 @@ import Foundation
 
 public struct RESTConfiguration {
     
-    public var session: URLSession?
-    
-    public var apiKey: String?
     public var apiScheme: String
     public var apiHost: String
-    public var apiPort: Int?
+    public var apiPort: Int
     public var apiPath: String?
     
-    public init(apiKey: String?, apiScheme: String, apiHost: String, apiPort: Int?, apiPath: String?, session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
-        self.apiKey = apiKey
+    public var session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    
+    public init(apiScheme: String, apiHost: String, apiPort: Int = 80, apiPath: String?) {
         self.apiScheme = apiScheme
         self.apiHost = apiHost
         self.apiPort = apiPort
         self.apiPath = apiPath
-        
-        self.session = URLSession(configuration: URLSessionConfiguration.default)
     }
     
 }

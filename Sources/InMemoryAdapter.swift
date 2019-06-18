@@ -7,18 +7,37 @@
 //
 
 import Foundation
-import Future
-
-public enum InMemoryAdapterError: Error {
-    case insertFailed
-    case updateFailed
-    case deleteFailed
-    case noResult
-    case noTable
-    case error(error: Error)
-}
 
 open class InMemoryAdapter {
+    
+    public enum AdapterError: LocalizedError {
+        case insertFailed
+        case updateFailed
+        case deleteFailed
+        case noResult
+        case noTable
+        case notSupported
+        case error(error: Error)
+        
+        public var errorDescription: String? {
+            switch self {
+            case .insertFailed:
+                return "Insert failed"
+            case .updateFailed:
+                return "Update failed"
+            case .deleteFailed:
+                return "Delete failed"
+            case .noResult:
+                return "No result"
+            case .noTable:
+                return "No table"
+            case .notSupported:
+                return "Not supported"
+            case .error(let error):
+                return error.localizedDescription
+            }
+        }
+    }
     
     private var store: [String : AdapterTable] = [:]
     
@@ -101,77 +120,91 @@ public extension InMemoryAdapter {
 
 extension InMemoryAdapter: Adapter {
     
-    public func connect() -> Future<Bool> { return Future(true) }
-    public func disconnect() -> Future<Bool> { return Future(true) }
+    public func connect(completion: @escaping (Result<Bool, Error>) -> Void) { return completion(.failure(AdapterError.notSupported)) }
+    public func disconnect(completion: @escaping (Result<Bool, Error>) -> Void) { return completion(.failure(AdapterError.notSupported)) }
     
-    public func insert<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
+    public func insert<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Storable {
         var adapterTable = self.store[storable.table.name] ?? AdapterTable()
-        guard adapterTable.insert(storable) else { return Future(InMemoryAdapterError.insertFailed) }
+        guard adapterTable.insert(storable) else { return completion(.failure(AdapterError.insertFailed)) }
+        
         self.store[storable.table.name] = adapterTable
 
-        return Future(storable)
+        return completion(.success(storable))
     }
-    public func insert<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    
+    public func insert<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
-        guard adapterTable.insert(storables) else { return Future(InMemoryAdapterError.insertFailed) }
+        guard adapterTable.insert(storables) else { return completion(.failure(AdapterError.insertFailed)) }
+        
         self.store[I.table.name] = adapterTable
 
-        return Future(storables)
+        return completion(.success(storables))
     }
-    public func find<I>(uuid: String, options: [QueryOption] = []) -> Future<I> where I : Viewable {
-        guard let adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.noTable) }
+    
+    public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
+        guard let adapterTable = self.store[I.table.name] else { return completion(.failure(AdapterError.noTable)) }
         
         if let result = adapterTable.find(uuid) as? I {
-            return Future(result)
+            return completion(.success(result))
         } else {
-            return Future(InMemoryAdapterError.noResult)
+            return completion(.failure(AdapterError.noResult))
         }
     }
-    public func find<I>(uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
-        guard let adapterTable = self.store[I.table.name] else { return Future([]) }
-        return Future(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
+    
+    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
+        guard let adapterTable = self.store[I.table.name] else { return completion(.success([])) }
+        
+        return completion(.success(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? []))
     }
     
-    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
-        guard let adapterTable = self.store[I.table.name] else { return Future([]) }
-        return Future(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as? [I] ?? [])
+    public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
+        guard let adapterTable = self.store[I.table.name] else { return completion(.success([])) }
+        
+        return completion(.success(adapterTable.fetch(query, sorts: sorts, limit: limit, offset: offset) as? [I] ?? []))
     }
     
-    public func update<I>(storable: I, options: [QueryOption] = []) -> Future<I> where I : Storable {
+    public func update<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storable)
-            else { return Future(InMemoryAdapterError.updateFailed) }
+            else { return completion(.failure(AdapterError.updateFailed)) }
+        
         self.store[I.table.name] = adapterTable
 
-        return Future(storable)
+        return completion(.success(storable))
     }
-    public func update<I>(storables: [I], options: [QueryOption] = []) -> Future<[I]> where I : Storable {
+    
+    public func update<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
         guard var adapterTable = self.store[I.table.name],
             adapterTable.update(storables)
-            else { return Future(InMemoryAdapterError.updateFailed) }
+            else { return completion(.failure(AdapterError.updateFailed)) }
+        
         self.store[I.table.name] = adapterTable
 
-        return Future(storables)
+        return completion(.success(storables))
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
+    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         guard var adapterTable = self.store[I.table.name], adapterTable.delete(uuid)
-            else { return Future(InMemoryAdapterError.deleteFailed) }
+            else { return completion(.failure(AdapterError.deleteFailed)) }
+        
         self.store[I.table.name] = adapterTable
 
-        return Future(true)
-    }
-    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption] = []) -> Future<Bool> where I : Storable {
-        guard var adapterTable = self.store[I.table.name] else { return Future(InMemoryAdapterError.deleteFailed) }
-        guard adapterTable.delete(uuids) else { return Future(InMemoryAdapterError.deleteFailed) }
-        self.store[I.table.name] = adapterTable
-
-        return Future(true)
+        return completion(.success(true))
     }
     
-    public func count<T>(table: T, query: Query?, options: [QueryOption] = []) -> Future<Int> where T : Table {
-        guard let adapterTable = self.store[table.name] else { return Future(0) }
-        return Future(adapterTable.count(query: query))
+    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
+        guard var adapterTable = self.store[I.table.name] else { return completion(.failure(AdapterError.deleteFailed)) }
+        guard adapterTable.delete(uuids) else { return completion(.failure(AdapterError.deleteFailed)) }
+        
+        self.store[I.table.name] = adapterTable
+
+        return completion(.success(true))
+    }
+    
+    public func count<T>(table: T, query: Query?, options: [QueryOption], completion: @escaping (Result<Int, Error>) -> Void) where T : Table {
+        guard let adapterTable = self.store[table.name] else { return completion(.success(0)) }
+        
+        return completion(.success(adapterTable.count(query: query)))
     }
     
 }

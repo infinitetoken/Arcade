@@ -6,4 +6,9 @@
 //  Copyright © 2019 A.C. Wright Design. All rights reserved.
 //
 
-import Foundation
+import XCTest
+@testable import Arcade
+
+class DictionaryJSONTests: XCTestCase {
+
+}

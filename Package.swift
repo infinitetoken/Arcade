@@ -22,13 +22,9 @@ let package = Package(
             name: "Arcade",
             targets: ["Arcade"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/infinitetoken/Future", from: "1.0.0")
-    ],
     targets: [
         .target(
             name: "Arcade",
-            dependencies: ["Future"],
             path: "Sources"),
         .testTarget(
             name: "ArcadeTests",
