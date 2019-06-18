@@ -138,7 +138,6 @@ import Arcade
 
 let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
-let future: Future<Owner> = arcade.fetch(query: query)
 
 arcade.fetch(query: query) { (result) in
     // Do something with result... (or Error)
