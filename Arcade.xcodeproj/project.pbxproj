@@ -242,6 +242,7 @@
 		F0022B5E226F810300EE53EA /* RESTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelper.swift; sourceTree = "<group>"; };
 		F0022B62226F830500EE53EA /* RESTHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelperTests.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
+		F0127E3A22BAB01E0074788B /* Arcade.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Arcade.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
 		F01EA0A52101C5300040FA96 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -595,6 +596,7 @@
 		F0F5FFE41FA9D9C300F42111 = {
 			isa = PBXGroup;
 			children = (
+				F0127E3A22BAB01E0074788B /* Arcade.playground */,
 				F0F5002B1FA9DB9500F42111 /* Sources */,
 				F0F5002C1FA9DB9C00F42111 /* Tests */,
 				F0F500261FA9DAF500F42111 /* Frameworks */,
@@ -1242,6 +1244,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1271,6 +1274,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1353,6 +1357,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
@@ -1385,6 +1390,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
 				PRODUCT_NAME = Arcade;
@@ -1538,6 +1544,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1568,6 +1575,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1636,6 +1644,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1667,6 +1676,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
