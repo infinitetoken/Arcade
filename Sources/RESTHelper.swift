@@ -18,7 +18,7 @@ public struct RESTHelper {
         case delete = "DELETE"
     }
     
-    public static func url(configuration: RESTConfiguration, forTable table: Table?, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
+    public static func url(configuration: RESTAdapter.AdapterConfiguration, forTable table: Table?, id: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
         var urlComponents = urlComponents
         urlComponents.scheme = configuration.apiScheme
         
@@ -28,7 +28,7 @@ public struct RESTHelper {
             urlComponents.port = configuration.apiPort
         }
         
-        if let uuid = uuid { urlComponents.path += "/\(uuid)" }
+        if let id = id { urlComponents.path += "/\(id)" }
         
         options.forEach {
             if let value = $0.value as? String {
@@ -43,14 +43,14 @@ public struct RESTHelper {
         return urlComponents.url
     }
     
-    public static func url(configuration: RESTConfiguration, forResource resource: String, uuid: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
+    public static func url(configuration: RESTAdapter.AdapterConfiguration, forResource resource: String, id: String?, urlComponents: URLComponents = URLComponents(), options: [QueryOption] = []) -> URL? {
         var urlComponents = urlComponents
         urlComponents.scheme = configuration.apiScheme
         urlComponents.host = configuration.apiHost
         urlComponents.path = configuration.apiPath != nil ? "/\(configuration.apiPath!)/\(resource)" : "/\(resource)"
         urlComponents.port = configuration.apiPort
         
-        if let uuid = uuid { urlComponents.path += "/\(uuid)" }
+        if let id = id { urlComponents.path += "/\(id)" }
         
         options.forEach {
             if let value = $0.value as? String {

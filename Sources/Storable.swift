@@ -8,7 +8,7 @@
 
 import Foundation
 
-public func !=(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid != rhs.uuid }
-public func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.uuid == rhs.uuid }
+public func !=(lhs: Storable, rhs: Storable) -> Bool { return lhs.id != rhs.id }
+public func ==(lhs: Storable, rhs: Storable) -> Bool { return lhs.id == rhs.id }
 
 public protocol Storable: Viewable {}

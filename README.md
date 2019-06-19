@@ -41,7 +41,7 @@ struct Owner: Storable {
 
     static var table: Table = AppTable.owner
 
-    var uuid: String
+    var id: String
     var name: String?
 
 }
@@ -86,7 +86,7 @@ arcade.connect() { (result) in
 ```swift
 import Arcade
 
-let owner = Owner(uuid: UUID(), name: "Foo")
+let owner = Owner(id: id(), name: "Foo")
 
 arcade.insert(storable: owner) { (result) in
     // Inserted! (or Error)
@@ -110,23 +110,23 @@ arcade.update(storable: owner) { (result) in
 ```swift
 import Arcade
 
-let uuid = owner.uuid
+let id = owner.id
 
-arcade.delete(uuid: uuid, type: Owner.self) { (result) in
+arcade.delete(id: id, type: Owner.self) { (result) in
     // Deleted! (or Error)
 }
 ```
 
 ### Fetching
 
-To find a specific item by UUID:
+To find a specific item by id:
 
 ```swift
 import Arcade
 
-let future: Future<Owner> = arcade.find(uuid: owner.uuid)
+let future: Future<Owner> = arcade.find(id: owner.id)
 
-arcade.find(uuid: owner.uuid) { (result) in
+arcade.find(id: owner.id) { (result) in
     // Found it! (or Error)
 }
 ```
@@ -154,13 +154,13 @@ CoreData entites should conform to `CoreDataStorable`:
 @objc(OwnerEntity)
 class OwnerEntity: NSManagedObject {
 
-    @NSManaged var uuid: UUID
+    @NSManaged var id: id
     @NSManaged var name: String?
 
     override func awakeFromInsert() {
         super.awakeFromInsert()
 
-        self.uuid = UUID()
+        self.id = id()
     }
 
 }
@@ -168,16 +168,16 @@ class OwnerEntity: NSManagedObject {
 extension OwnerEntity: CoreDataStorable {
 
     public var viewable: Viewable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
 
     public var storable: Storable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
 
     public func update(withStorable dictionary: [String : Any]) -> Bool {
-        if let uuid = dictionary["uuid"] as? UUID {
-            self.uuid = uuid
+        if let id = dictionary["id"] as? id {
+            self.id = id
         }
     
         if let name = dictionary["name"] as? String {

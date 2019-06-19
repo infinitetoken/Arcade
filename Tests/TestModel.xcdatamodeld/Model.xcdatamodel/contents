@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17F70a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14838.19" systemVersion="19A487l" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="NO" userDefinedModelVersionIdentifier="">
     <entity name="OwnerEntity" representedClassName="OwnerEntity" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="owner" inverseEntity="PetEntity" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="owner" inverseEntity="PetEntity"/>
     </entity>
     <entity name="PetEntity" representedClassName="PetEntity" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OwnerEntity" inverseName="pets" inverseEntity="OwnerEntity" syncable="YES"/>
-        <relationship name="petToys" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetToyEntity" inverseName="pet" inverseEntity="PetToyEntity" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OwnerEntity" inverseName="pets" inverseEntity="OwnerEntity"/>
+        <relationship name="petToys" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetToyEntity" inverseName="pet" inverseEntity="PetToyEntity"/>
     </entity>
     <entity name="PetToyEntity" representedClassName="PetToyEntity" syncable="YES">
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="petToys" inverseEntity="PetEntity" syncable="YES"/>
-        <relationship name="toy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToyEntity" inverseName="petToys" inverseEntity="ToyEntity" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="petToys" inverseEntity="PetEntity"/>
+        <relationship name="toy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToyEntity" inverseName="petToys" inverseEntity="ToyEntity"/>
     </entity>
     <entity name="ToyEntity" representedClassName="ToyEntity" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="petToys" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetToyEntity" inverseName="toy" inverseEntity="PetToyEntity" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="petToys" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetToyEntity" inverseName="toy" inverseEntity="PetToyEntity"/>
     </entity>
     <elements>
-        <element name="OwnerEntity" positionX="-63" positionY="0" width="128" height="90"/>
-        <element name="PetEntity" positionX="-54" positionY="9" width="128" height="105"/>
-        <element name="PetToyEntity" positionX="-18" positionY="27" width="128" height="90"/>
-        <element name="ToyEntity" positionX="-36" positionY="18" width="128" height="90"/>
+        <element name="OwnerEntity" positionX="-63" positionY="0" width="128" height="88"/>
+        <element name="PetEntity" positionX="-54" positionY="9" width="128" height="103"/>
+        <element name="PetToyEntity" positionX="-18" positionY="27" width="128" height="88"/>
+        <element name="ToyEntity" positionX="-36" positionY="18" width="128" height="88"/>
     </elements>
 </model>

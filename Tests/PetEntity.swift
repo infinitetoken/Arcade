@@ -13,7 +13,7 @@ import Arcade
 @objc(PetEntity)
 class PetEntity: NSManagedObject {
     
-    @NSManaged var uuid: String
+    @NSManaged var id: String
     @NSManaged var name: String?
     
     @NSManaged var owner: OwnerEntity?
@@ -22,7 +22,7 @@ class PetEntity: NSManagedObject {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
-        self.uuid = UUID().uuidString
+        self.id = UUID().uuidString
     }
     
 }
@@ -30,17 +30,17 @@ class PetEntity: NSManagedObject {
 extension PetEntity: CoreDataStorable {
     
     public var viewable: Viewable {
-        return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
+        return Pet(id: self.id, name: self.name, ownerID: self.owner?.id)
     }
     
     public var storable: Storable {
-        return Pet(uuid: self.uuid, name: self.name, ownerID: self.owner?.uuid)
+        return Pet(id: self.id, name: self.name, ownerID: self.owner?.id)
     }
     
     public func update(with storable: Storable) -> Bool {
         guard let pet = storable as? Pet else { return false }
         
-        self.uuid = pet.uuid
+        self.id = pet.id
         self.name = pet.name
         
         if let owner = pet.ownerID, let managedObjectContext = self.managedObjectContext {

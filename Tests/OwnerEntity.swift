@@ -13,7 +13,7 @@ import Arcade
 @objc(OwnerEntity)
 class OwnerEntity: NSManagedObject {
     
-    @NSManaged var uuid: String
+    @NSManaged var id: String
     @NSManaged var name: String?
     
     @NSManaged var pets: Set<PetEntity>
@@ -21,7 +21,7 @@ class OwnerEntity: NSManagedObject {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
-        self.uuid = UUID().uuidString
+        self.id = UUID().uuidString
     }
     
 }
@@ -29,17 +29,17 @@ class OwnerEntity: NSManagedObject {
 extension OwnerEntity: CoreDataStorable {
     
     public var viewable: Viewable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
     
     public var storable: Storable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
     
     public func update(with storable: Storable) -> Bool {
         guard let owner = storable as? Owner else { return false }
         
-        self.uuid = owner.uuid
+        self.id = owner.id
         self.name = owner.name
         
         return true

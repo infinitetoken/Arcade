@@ -13,9 +13,6 @@
 		AC086A632231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
 		AC086A642231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
 		AC086A652231B0B50056DBB3 /* CoreDataViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */; };
-		ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
-		ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
-		ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		ACAA63C3218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
 		ACAA63C4218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
 		ACAA63C5218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
@@ -115,7 +112,6 @@
 		F058C2DB22A71941002FCEA1 /* InMemoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F86D0C1FA9F2F00036124E /* InMemoryAdapter.swift */; };
 		F058C2DC22A71945002FCEA1 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AE6291FBF711900C21931 /* JSONAdapter.swift */; };
 		F058C2DD22A7194A002FCEA1 /* RESTAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F027933D215DF96100A0E517 /* RESTAdapter.swift */; };
-		F058C2DE22A7194A002FCEA1 /* RESTConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */; };
 		F058C2DF22A7194A002FCEA1 /* RESTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0022B5E226F810300EE53EA /* RESTHelper.swift */; };
 		F058C2E022A7194A002FCEA1 /* RESTQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0279339215DF89200A0E517 /* RESTQueryBuilder.swift */; };
 		F058C2E122A7194A002FCEA1 /* RESTResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */; };
@@ -158,9 +154,6 @@
 		F08E0A491FA9FAE300763001 /* InMemoryAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A471FA9FAE300763001 /* InMemoryAdapterTests.swift */; };
 		F08E0A4B1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
 		F08E0A4C1FA9FAEE00763001 /* CoreDataAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08E0A4A1FA9FAEE00763001 /* CoreDataAdapterTests.swift */; };
-		F0D3DE4E2127090F0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE48212708C10078232F /* Future.framework */; };
-		F0D3DE4F2127091C0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE4A212708D40078232F /* Future.framework */; };
-		F0D3DE502127092D0078232F /* Future.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D3DE4C212708E10078232F /* Future.framework */; };
 		F0D8C8AD22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
 		F0D8C8AE22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
 		F0D8C8AF22415DAE00719593 /* RESTResponseCodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8C8AC22415DAE00719593 /* RESTResponseCodesTests.swift */; };
@@ -236,13 +229,11 @@
 /* Begin PBXFileReference section */
 		AC08682D22319BC00056DBB3 /* Viewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		AC086A622231B0B50056DBB3 /* CoreDataViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewable.swift; sourceTree = "<group>"; };
-		ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTConfiguration.swift; sourceTree = "<group>"; };
 		ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTResponseCodes.swift; sourceTree = "<group>"; };
 		ACC41EB2221CBF9E00B6BB66 /* QueryOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryOption.swift; sourceTree = "<group>"; };
 		F0022B5E226F810300EE53EA /* RESTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelper.swift; sourceTree = "<group>"; };
 		F0022B62226F830500EE53EA /* RESTHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTHelperTests.swift; sourceTree = "<group>"; };
 		F004FF101FAA1154008EAD16 /* TestTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTable.swift; sourceTree = "<group>"; };
-		F0127E3A22BAB01E0074788B /* Arcade.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Arcade.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F01AE6291FBF711900C21931 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F01AE62C1FBF721900C21931 /* JSONAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterTests.swift; sourceTree = "<group>"; };
 		F01EA0A52101C5300040FA96 /* Arcade.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arcade.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,7 +317,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D3DE502127092D0078232F /* Future.framework in Frameworks */,
 				F01EA0AE2101C5300040FA96 /* Arcade.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,7 +339,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D3DE4F2127091C0078232F /* Future.framework in Frameworks */,
 				F0F500171FA9D9F700F42111 /* Arcade.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,7 +354,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D3DE4E2127090F0078232F /* Future.framework in Frameworks */,
 				F0F5FFF81FA9D9C300F42111 /* Arcade.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				F027933D215DF96100A0E517 /* RESTAdapter.swift */,
-				ACAA63B6218B8AD700ADB9C2 /* RESTConfiguration.swift */,
 				F0022B5E226F810300EE53EA /* RESTHelper.swift */,
 				F0279339215DF89200A0E517 /* RESTQueryBuilder.swift */,
 				ACAA63C2218CCBAD00ADB9C2 /* RESTResponseCodes.swift */,
@@ -596,7 +583,6 @@
 		F0F5FFE41FA9D9C300F42111 = {
 			isa = PBXGroup;
 			children = (
-				F0127E3A22BAB01E0074788B /* Arcade.playground */,
 				F0F5002B1FA9DB9500F42111 /* Sources */,
 				F0F5002C1FA9DB9C00F42111 /* Tests */,
 				F0F500261FA9DAF500F42111 /* Frameworks */,
@@ -982,7 +968,6 @@
 				AC086A652231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				F059F36922B9646400307725 /* Array+Offset.swift in Sources */,
 				ACAA63C5218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
-				ACAA63BB218B98EF00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F059F36522B9646400307725 /* Array+Limit.swift in Sources */,
 				F01EA0BD2101C5A50040FA96 /* Arcade.swift in Sources */,
 				F01EA0C32101C5C20040FA96 /* Sequence+Sort.swift in Sources */,
@@ -1038,7 +1023,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F058C2DE22A7194A002FCEA1 /* RESTConfiguration.swift in Sources */,
 				F058C2EC22A7195A002FCEA1 /* Comparison.swift in Sources */,
 				F058C2EF22A7195E002FCEA1 /* Sort.swift in Sources */,
 				F058C2D822A7193D002FCEA1 /* CoreDataAdapter.swift in Sources */,
@@ -1082,7 +1066,6 @@
 				AC086A642231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				ACAA63C4218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
 				F059F36822B9646400307725 /* Array+Offset.swift in Sources */,
-				ACAA63BA218B98EE00ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D241FA9F2F10036124E /* Query.swift in Sources */,
 				F059F36422B9646400307725 /* Array+Limit.swift in Sources */,
 				F0F86D1A1FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
@@ -1151,7 +1134,6 @@
 				AC086A632231B0B50056DBB3 /* CoreDataViewable.swift in Sources */,
 				ACAA63C3218CCBAD00ADB9C2 /* RESTResponseCodes.swift in Sources */,
 				F059F36722B9646400307725 /* Array+Offset.swift in Sources */,
-				ACAA63B7218B8AD700ADB9C2 /* RESTConfiguration.swift in Sources */,
 				F0F86D231FA9F2F10036124E /* Query.swift in Sources */,
 				F059F36322B9646400307725 /* Array+Limit.swift in Sources */,
 				F0F86D191FA9F2F10036124E /* InMemoryAdapter.swift in Sources */,
@@ -1244,7 +1226,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1274,7 +1256,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1357,7 +1339,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
@@ -1390,7 +1372,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
 				PRODUCT_NAME = Arcade;
@@ -1544,7 +1526,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1575,7 +1557,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1644,7 +1626,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1676,7 +1658,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";

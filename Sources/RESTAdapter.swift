@@ -56,17 +56,35 @@ open class RESTAdapter {
         case update = "Update"
     }
     
+    public struct AdapterConfiguration {
+        
+        public var apiScheme: String
+        public var apiHost: String
+        public var apiPort: Int
+        public var apiPath: String?
+        
+        public var session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+        
+        public init(apiScheme: String, apiHost: String, apiPort: Int = 80, apiPath: String?) {
+            self.apiScheme = apiScheme
+            self.apiHost = apiHost
+            self.apiPort = apiPort
+            self.apiPath = apiPath
+        }
+        
+    }
+    
     public enum AdapterAuthorization {
         case token(String)
         case credentials(String, String)
     }
     
-    public var configuration: RESTConfiguration
+    public var configuration: AdapterConfiguration
     public var authorization: AdapterAuthorization?
     
     // MARK: - Lifecycle
     
-    public init(configuration: RESTConfiguration, authorization: AdapterAuthorization) {
+    public init(configuration: AdapterConfiguration, authorization: AdapterAuthorization?) {
         self.configuration = configuration
         self.authorization = authorization
     }
@@ -84,7 +102,7 @@ extension RESTAdapter: Adapter {
     }
     
     public func insert<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Storable {
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, options: options) else {
+        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, id: nil, options: options) else {
             completion(.failure(AdapterError.urlError(function: .insert, table: storable.table)))
             return
         }
@@ -142,8 +160,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
+    public func find<I>(id: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
+        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, id: id, options: options) else {
             completion(.failure(AdapterError.urlError(function: .find, table: I.table)))
             return
         }
@@ -212,7 +230,7 @@ extension RESTAdapter: Adapter {
             return
         }
         
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, urlComponents: urlComponents, options: options) else {
+        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, id: nil, urlComponents: urlComponents, options: options) else {
             completion(.failure(AdapterError.urlError(function: .fetch, table: I.table)))
             return
         }
@@ -264,7 +282,7 @@ extension RESTAdapter: Adapter {
     }
     
     public func update<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Storable {
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: storable.uuid, options: options) else {
+        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, id: storable.id, options: options) else {
             completion(.failure(AdapterError.urlError(function: .update, table: I.table)))
             return
         }
@@ -322,8 +340,8 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
+    public func delete<I>(id: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
+        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, id: id, options: options) else {
             completion(.failure(AdapterError.urlError(function: .delete, table: I.table)))
             return
         }

@@ -13,7 +13,7 @@ import Arcade
 @objc(PetToyEntity)
 class PetToyEntity: NSManagedObject {
     
-    @NSManaged var uuid: String
+    @NSManaged var id: String
     
     @NSManaged var pet: PetEntity?
     @NSManaged var toy: ToyEntity?
@@ -21,7 +21,7 @@ class PetToyEntity: NSManagedObject {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
-        self.uuid = UUID().uuidString
+        self.id = UUID().uuidString
     }
     
 }
@@ -29,17 +29,17 @@ class PetToyEntity: NSManagedObject {
 extension PetToyEntity: CoreDataStorable {
     
     public var viewable: Viewable {
-        return PetToy(uuid: self.uuid, petID: self.pet?.uuid, toyID: self.toy?.uuid)
+        return PetToy(id: self.id, petID: self.pet?.id, toyID: self.toy?.id)
     }
     
     public var storable: Storable {
-        return PetToy(uuid: self.uuid, petID: self.pet?.uuid, toyID: self.toy?.uuid)
+        return PetToy(id: self.id, petID: self.pet?.id, toyID: self.toy?.id)
     }
     
     public func update(with storable: Storable) -> Bool {
         guard let petToy = storable as? PetToy else { return false }
         
-        self.uuid = petToy.uuid
+        self.id = petToy.id
         
         if let pet = petToy.petID, let managedObjectContext = self.managedObjectContext {
             self.pet = PetEntity.object(with: pet, entityName: "PetEntity", in: managedObjectContext) as? PetEntity

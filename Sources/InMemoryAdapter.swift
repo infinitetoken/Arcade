@@ -60,7 +60,7 @@ public extension InMemoryAdapter {
             return true
         }
         
-        func find(_ uuid: String) -> Viewable? { return self.viewables.filter { $0.uuid == uuid }.first }
+        func find(_ id: String) -> Viewable? { return self.viewables.filter { $0.id == id }.first }
         
         func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
             if let query = query {
@@ -73,15 +73,15 @@ public extension InMemoryAdapter {
         }
         
         mutating func update(_ storable: Storable) -> Bool {
-            if let existingStorable = find(storable.uuid) {
-                return delete(existingStorable.uuid) && insert(storable)
+            if let existingStorable = find(storable.id) {
+                return delete(existingStorable.id) && insert(storable)
             } else {
                 return insert(storable)
             }
         }
         
-        mutating func delete(_ uuid: String) -> Bool {
-            self.viewables = self.viewables.filter {$0.uuid != uuid}
+        mutating func delete(_ id: String) -> Bool {
+            self.viewables = self.viewables.filter {$0.id != id}
             return true
         }
         
@@ -109,10 +109,10 @@ extension InMemoryAdapter: Adapter {
         return completion(.success(storable))
     }
     
-    public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
+    public func find<I>(id: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
         guard let adapterTable = self.store[I.table.name] else { return completion(.failure(AdapterError.noTable)) }
         
-        if let result = adapterTable.find(uuid) as? I {
+        if let result = adapterTable.find(id) as? I {
             return completion(.success(result))
         } else {
             return completion(.failure(AdapterError.noResult))
@@ -135,8 +135,8 @@ extension InMemoryAdapter: Adapter {
         return completion(.success(storable))
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
-        guard var adapterTable = self.store[I.table.name], adapterTable.delete(uuid)
+    public func delete<I>(id: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
+        guard var adapterTable = self.store[I.table.name], adapterTable.delete(id)
             else { return completion(.failure(AdapterError.deleteFailed)) }
         
         self.store[I.table.name] = adapterTable

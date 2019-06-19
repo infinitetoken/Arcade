@@ -14,10 +14,10 @@ public protocol Adapter {
     func connect(completion: @escaping (Result<Bool, Error>) -> Void)
     func disconnect(completion: @escaping (Result<Bool, Error>) -> Void)
     func insert<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I: Storable
-    func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I: Viewable
+    func find<I>(id: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I: Viewable
     func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I: Viewable
     func update<I>(storable: I, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I: Storable
-    func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I: Storable
+    func delete<I>(id: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I: Storable
     func count<T>(table: T, query: Query?, options: [QueryOption], completion: @escaping (Result<Int, Error>) -> Void) where T: Table
     
 }
@@ -54,9 +54,9 @@ extension Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption]) -> Single<I> where I: Viewable {
+    public func find<I>(id: String, options: [QueryOption]) -> Single<I> where I: Viewable {
         return Single<I> { promise in
-            self.find(uuid: uuid, options: options) { (result) in
+            self.find(id: id, options: options) { (result) in
                 promise(result)
             }
         }
@@ -78,9 +78,9 @@ extension Adapter {
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption]) -> Success where I: Storable {
+    public func delete<I>(id: String, type: I.Type, options: [QueryOption]) -> Success where I: Storable {
         return Success { promise in
-            self.delete(uuid: uuid, type: type, options: options) { (result) in
+            self.delete(id: id, type: type, options: options) { (result) in
                 promise(result)
             }
         }

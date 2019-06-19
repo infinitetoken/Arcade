@@ -13,7 +13,7 @@ struct PetToy: Storable {
     
     static var table: Table = TestTable.petToy
     
-    var uuid: String = UUID().uuidString
+    var id: String = UUID().uuidString
     
     var petID: String?
     var toyID: String?
@@ -23,7 +23,7 @@ struct PetToy: Storable {
 extension PetToy {
     
     enum CodingKeys: CodingKey {
-        case uuid
+        case id
         case petID
         case toyID
     }
@@ -31,7 +31,7 @@ extension PetToy {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(uuid, forKey: .uuid)
+        try container.encode(id, forKey: .id)
         try container.encodeIfPresent(petID, forKey: .petID)
         try container.encodeIfPresent(toyID, forKey: .toyID)
     }
@@ -39,7 +39,7 @@ extension PetToy {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.uuid = try container.decode(String.self, forKey: .uuid)
+        self.id = try container.decode(String.self, forKey: .id)
         self.petID = try container.decodeIfPresent(String.self, forKey: .petID)
         self.toyID = try container.decodeIfPresent(String.self, forKey: .toyID)
     }

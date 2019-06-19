@@ -111,13 +111,13 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
+    public func find<I>(id: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
             else { completion(.failure(AdapterError.entityNotFound)); return }
         
-        let expression = Expression.equal("uuid", uuid)
+        let expression = Expression.equal("id", id)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()
@@ -188,7 +188,7 @@ extension CoreDataAdapter: Adapter {
             let entityName = entity.name
             else { completion(.failure(AdapterError.entityNotFound)); return }
         
-        let expression = Expression.equal("uuid", storable.uuid)
+        let expression = Expression.equal("id", storable.id)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()
@@ -222,13 +222,13 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
+    public func delete<I>(id: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
             let entityName = entity.name
             else { completion(.failure(AdapterError.entityNotFound)); return }
         
-        let expression = Expression.equal("uuid", uuid)
+        let expression = Expression.equal("id", id)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = expression.predicate()

@@ -8,14 +8,14 @@
 
 import Foundation
 
-public func !=(lhs: Viewable, rhs: Viewable) -> Bool { return lhs.uuid != rhs.uuid }
-public func ==(lhs: Viewable, rhs: Viewable) -> Bool { return lhs.uuid == rhs.uuid }
+public func !=(lhs: Viewable, rhs: Viewable) -> Bool { return lhs.id != rhs.id }
+public func ==(lhs: Viewable, rhs: Viewable) -> Bool { return lhs.id == rhs.id }
 
 public protocol Viewable: Codable {
     
     static var table: Table { get }
     
-    var uuid: String { get set }
+    var id: String { get set }
     
 }
 
