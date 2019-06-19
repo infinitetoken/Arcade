@@ -142,10 +142,6 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        completion(.failure(AdapterError.methodNotSupported(function: .insert, table: I.table)))
-    }
-    
     public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
         guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
             completion(.failure(AdapterError.urlError(function: .find, table: I.table)))
@@ -204,80 +200,6 @@ extension RESTAdapter: Adapter {
                 }
             }
         }.resume()
-    }
-    
-    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
-        let expression = Expression.inside("id", uuids)
-        let query = Query.expression(expression)
-        
-        var urlComponents: URLComponents
-        
-        do {
-            urlComponents = try RESTHelper.urlComponents(forQuery: query, search: nil, sorts: sorts, limit: limit, offset: offset)
-        } catch {
-            completion(.failure(error))
-            return
-        }
-        
-        guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: nil, urlComponents: urlComponents, options: options) else {
-            completion(.failure(AdapterError.urlError(function: .find, table: I.table)))
-            return
-        }
-        
-        let urlRequest = RESTHelper.urlRequest(forURL: url, method: .get, authorization: self.authorization, data: nil)
-        
-        self.configuration.session.dataTask(with: urlRequest) { (data, response, error) in
-            guard let response = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    completion(.failure(AdapterError.noResponse(function: .find, table: I.table)))
-                }
-                return
-            }
-            
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    completion(.failure(AdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: error!)))
-                }
-                return
-            }
-            
-            guard let responseCode = RESTResponseCodes(rawValue: response.statusCode) else {
-                DispatchQueue.main.async {
-                    completion(.failure(AdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
-                }
-                return
-            }
-            
-            switch responseCode {
-            case .OK:
-                if let data = data {
-                    do {
-                        let viewables = try RESTHelper.decodeArray(from: data, table: I.table) as [I]
-                        DispatchQueue.main.async { completion(.success(viewables)) }
-                    } catch {
-                        DispatchQueue.main.async { completion(.failure(error)) }
-                    }
-                } else {
-                    DispatchQueue.main.async { completion(.failure(AdapterError.noData(function: .find, table: I.table))) }
-                }
-            case .NotFound:
-                DispatchQueue.main.async {
-                    completion(.success([]))
-                }
-            case .NoContent:
-                DispatchQueue.main.async {
-                    completion(.success([]))
-                }
-            default:
-                DispatchQueue.main.async {
-                    completion(.failure(AdapterError.HTTPResponse(function: .find, table: I.table, code: response.statusCode, error: nil)))
-                }
-            }
-        }.resume()
-    }
-    
-    public func fetch<I>(query: Query?, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
-        self.fetch(query: query, sorts: [], limit: 0, offset: 0, options: options, completion: completion)
     }
     
     public func fetch<I>(query: Query?, sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
@@ -400,10 +322,6 @@ extension RESTAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        completion(.failure(AdapterError.methodNotSupported(function: .update, table: I.table)))
-    }
-    
     public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         guard let url = RESTHelper.url(configuration: self.configuration, forTable: I.table, uuid: uuid, options: options) else {
             completion(.failure(AdapterError.urlError(function: .delete, table: I.table)))
@@ -443,14 +361,6 @@ extension RESTAdapter: Adapter {
                 }
             }
         }.resume()
-    }
-    
-    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
-        completion(.failure(AdapterError.methodNotSupported(function: .delete, table: I.table)))
-    }
-    
-    public func count<T>(table: T, options: [QueryOption], completion: @escaping (Result<Int, Error>) -> Void) where T: Table {
-        completion(.failure(AdapterError.methodNotSupported(function: .count, table: table)))
     }
     
     public func count<T>(table: T, query: Query?, options: [QueryOption], completion: @escaping (Result<Int, Error>) -> Void) where T: Table {

@@ -83,17 +83,8 @@ public extension JSONAdapter {
             self.viewables.append(storable)
             return true
         }
-        mutating func insert(_ storables: [Storable]) -> Bool {
-            self.viewables.append(contentsOf: storables)
-            return true
-        }
         
         func find(_ uuid: String) -> Viewable? { return viewables.filter { $0.uuid == uuid }.first }
-        func find(_ uuids: [String], sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
-            var viewables = self.viewables.filter { uuids.contains($0.uuid) }
-            viewables = self.sort(viewables: viewables, sorts: sorts)
-            return viewables.offset(by: offset).limit(to: limit)
-        }
         
         func fetch(_ query: Query?, sorts: [Sort] = [], limit: Int = 0, offset: Int = 0) -> [Viewable] {
             if let query = query {
@@ -112,19 +103,9 @@ public extension JSONAdapter {
                 return insert(storable)
             }
         }
-        mutating func update(_ storables: [Storable]) -> Bool {
-            let results = storables.map { (storable) -> Bool in
-                return update(storable)
-            }
-            return !results.contains(false)
-        }
         
         mutating func delete(_ uuid: String) -> Bool {
             viewables = viewables.filter { $0.uuid != uuid }
-            return true
-        }
-        mutating func delete(_ uuids: [String]) -> Bool {
-            viewables = viewables.filter { !(uuids.contains($0.uuid)) }
             return true
         }
         
@@ -168,21 +149,6 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        var adapterTable = self.store[I.table.name] ?? AdapterTable()
-        
-        guard adapterTable.insert(storables) else { completion(.failure(AdapterError.insertFailed)); return }
-        
-        self.store[I.table.name] = adapterTable
-        
-        self.save(storables: adapterTable.viewables as! [I]) { (result) in
-            switch result {
-            case .success(_): completion(.success(storables))
-            case .failure(let error): completion(.failure(error))
-            }
-        }
-    }
-    
     public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
         self.load() { (result: Result<[I], Error>) in
             switch result {
@@ -194,18 +160,6 @@ extension JSONAdapter: Adapter {
                 } else {
                     completion(.failure(AdapterError.noResult))
                 }
-            case .failure(let error): completion(.failure(error))
-            }
-        }
-    }
-
-    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
-        self.load() { (result: Result<[I], Error>) in
-            switch result {
-            case .success(let viewables):
-                let adapterTable = AdapterTable(viewables: viewables)
-                self.store[I.table.name] = adapterTable
-                completion(.success(adapterTable.find(uuids, sorts: sorts, limit: limit, offset: offset) as? [I] ?? []))
             case .failure(let error): completion(.failure(error))
             }
         }
@@ -238,21 +192,6 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        var adapterTable = self.store[I.table.name] ?? AdapterTable()
-        
-        guard adapterTable.update(storables) else { completion(.failure(AdapterError.updateFailed)); return }
-        
-        self.store[I.table.name] = adapterTable
-        
-        self.save(storables: adapterTable.viewables as! [I]) { (result) in
-            switch result {
-            case .success(_): completion(.success(storables))
-            case .failure(let error): completion(.failure(error))
-            }
-        }
-    }
-    
     public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         var adapterTable = self.store[I.table.name] ?? AdapterTable()
         guard let _ = adapterTable.find(uuid),
@@ -269,25 +208,15 @@ extension JSONAdapter: Adapter {
         }
     }
     
-    public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
-        var adapterTable = self.store[I.table.name] ?? AdapterTable()
-        guard adapterTable.delete(uuids) else { completion(.failure(AdapterError.deleteFailed)); return }
-        
-        self.store[I.table.name] = adapterTable
-        
-        self.save(storables: adapterTable.viewables as! [I]) { (result) in
-            switch result {
-            case .success(let success): completion(.success(success))
-            case .failure(let error): completion(.failure(error))
-            }
-        }
-    }
-    
     public func count<T>(table: T, query: Query?, options: [QueryOption], completion: @escaping (Result<Int, Error>) -> Void) where T : Table {
         guard let adapterTable = self.store[table.name] else { completion(.success(0)); return }
         
         completion(.success(adapterTable.count(query: query)))
     }
+    
+}
+
+extension JSONAdapter {
     
     private func save<I>(storables: [I], options: [QueryOption] = [], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         self.operationQueue.addOperation {

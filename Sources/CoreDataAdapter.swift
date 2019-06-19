@@ -111,30 +111,6 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func insert<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        guard let managedObjectContext = self.persistentContainer?.viewContext
-            else { completion(.failure(AdapterError.notConnected)); return }
-        guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext)
-            else { completion(.failure(AdapterError.entityNotFound)); return }
-        guard let error: AdapterError = storables.reduce(nil, {
-                    guard $0 == nil else { return $0 }
-                    guard let object = NSManagedObject(entity: entity, insertInto: managedObjectContext) as? CoreDataStorable
-                        else { return AdapterError.entityNotStorable }
-                    guard object.update(with: $1) else { return AdapterError.updateFailed }
-                    return nil
-                }) else {
-                    switch self.save() {
-                    case .success(_): completion(.success(storables))
-                    case .failure(_): completion(.failure(AdapterError.saveFailed))
-                    }
-                    return
-                }
-        
-        managedObjectContext.undo()
-        
-        completion(.failure(error))
-    }
-    
     public func find<I>(uuid: String, options: [QueryOption], completion: @escaping (Result<I, Error>) -> Void) where I : Viewable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
@@ -161,36 +137,6 @@ extension CoreDataAdapter: Adapter {
                     completion(.failure(AdapterError.noResult))
                 }
             }
-        }
-        
-        do {
-            try managedObjectContext.execute(asynchronousFetchRequest)
-        } catch {
-            completion(.failure(AdapterError.error(error: error)))
-        }
-    }
-    
-    public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Viewable {
-        guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
-        guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
-            let entityName = entity.name
-            else { completion(.failure(AdapterError.entityNotFound)); return }
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.fetchLimit = limit
-        fetchRequest.fetchOffset = offset
-        fetchRequest.sortDescriptors = sorts.map({ (sort) -> NSSortDescriptor in
-            return sort.sortDescriptor()
-        })
-        fetchRequest.predicate = Expression.comparison("uuid", Comparison.inside, uuids, []).predicate()
-        
-        let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-            guard let results = asynchronousFetchResult.finalResult as? [CoreDataViewable] else {
-                completion(.failure(AdapterError.noResult))
-                return
-            }
-            
-            DispatchQueue.main.async { completion(.success(results.map { $0.viewable } as! [I])) }
         }
         
         do {
@@ -276,51 +222,6 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    public func update<I>(storables: [I], options: [QueryOption], completion: @escaping (Result<[I], Error>) -> Void) where I : Storable {
-        guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
-        guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
-            let entityName = entity.name
-            else { completion(.failure(AdapterError.entityNotFound)); return }
-        
-        let expression = Expression.comparison("uuid", Comparison.inside, storables.map{ $0.uuid }, [])
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.fetchLimit = storables.count
-        fetchRequest.predicate = expression.predicate()
-        
-        let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-            guard let results = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                completion(.failure(AdapterError.noResult))
-                return
-            }
-            DispatchQueue.main.async {
-                if let error = results.reduce(nil, { (error, coreDataStorable) -> AdapterError? in
-                    guard error == nil else { return error }
-                    guard let storable: Storable = storables.reduce(nil, {
-                        guard $0 == nil else { return $0 }
-                        guard coreDataStorable.storable.uuid == $1.uuid else { return nil }
-                        return $1
-                    }), coreDataStorable.update(with: storable)
-                        else { return AdapterError.updateFailed }
-                    return nil
-                }) {
-                    managedObjectContext.undo()
-                    completion(.failure(error))
-                } else {
-                    switch self.save() {
-                    case .success(_): completion(.success(storables))
-                    case .failure(_): completion(.failure(AdapterError.updateFailed))
-                    }
-                }
-            }
-        }
-        
-        do {
-            try managedObjectContext.execute(asynchronousFetchRequest)
-        } catch {
-            completion(.failure(AdapterError.error(error: error)))
-        }
-    }
-    
     public func delete<I>(uuid: String, type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
         guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
         guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
@@ -348,40 +249,6 @@ extension CoreDataAdapter: Adapter {
             }
         }
         
-        do {
-            try managedObjectContext.execute(asynchronousFetchRequest)
-        } catch {
-            completion(.failure(AdapterError.error(error: error)))
-        }
-    }
-    
-   public func delete<I>(uuids: [String], type: I.Type, options: [QueryOption], completion: @escaping (Result<Bool, Error>) -> Void) where I : Storable {
-        guard let managedObjectContext = self.persistentContainer?.viewContext else { completion(.failure(AdapterError.notConnected)); return }
-        guard let entity = NSEntityDescription.entity(forEntityName: I.table.name, in: managedObjectContext),
-            let entityName = entity.name
-            else { completion(.failure(AdapterError.entityNotFound)); return }
-        
-        let expression = Expression.comparison("uuid", Comparison.inside, uuids, [])
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.fetchLimit = uuids.count
-        fetchRequest.predicate = expression.predicate()
-        
-        let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (asynchronousFetchResult) in
-            guard let results = asynchronousFetchResult.finalResult as? [CoreDataStorable] else {
-                completion(.failure(AdapterError.noResult))
-                return
-            }
-            
-            DispatchQueue.main.async {
-                guard results.count == uuids.count else {
-                    completion(.failure(AdapterError.entityNotFound))
-                    return
-                }
-                results.forEach { managedObjectContext.delete($0 as! NSManagedObject) }
-                completion(self.save())
-            }
-        }
-    
         do {
             try managedObjectContext.execute(asynchronousFetchRequest)
         } catch {
