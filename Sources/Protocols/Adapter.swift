@@ -25,10 +25,10 @@ public protocol Adapter {
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Adapter {
     
-    public typealias Success = Publishers.Future<Bool, Error>
-    public typealias Single<I> = Publishers.Future<I, Error>
-    public typealias Multiple<I> = Publishers.Future<[I], Error>
-    public typealias Count = Publishers.Future<Int, Error>
+    public typealias Success = Future<Bool, Error>
+    public typealias Single<I> = Future<I, Error>
+    public typealias Multiple<I> = Future<[I], Error>
+    public typealias Count = Future<Int, Error>
     
     public func connect() -> Success {
         return Success { promise in
