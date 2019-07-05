@@ -92,13 +92,13 @@ public struct RESTQueryBuilder {
     
     public func validateQuery(query: Query) -> Bool {
         switch query {
-        case .expression(let expression):
+        case .expression(let expression, _, _):
             return self.validateExpression(expression: expression)
-        case .and(let expressions):
+        case .and(let expressions, _, _):
             return !expressions.map({ (expression) -> Bool in
                 self.validateExpression(expression: expression)
             }).contains(false)
-        case .or(let expressions):
+        case .or(let expressions, _, _):
             return !expressions.map({ (expression) -> Bool in
                 self.validateExpression(expression: expression)
             }).contains(false)
