@@ -35,6 +35,9 @@ xcuserdata/
 
 # End of https://www.gitignore.io/api/xcode
 
+Carthage
+
 .DS_Store
 
 .build
+.swiftpm
