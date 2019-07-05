@@ -9,27 +9,30 @@
 import Foundation
 
 public enum Query {
-    case expression(Expression)
-    case and([Expression])
-    case or([Expression])
-    case compoundAnd([Query])
-    case compoundOr([Query])
+    public typealias Join = Table
+    public typealias Include = Table
+    
+    case expression(Expression, [Join], [Include])
+    case and([Expression], [Join], [Include])
+    case or([Expression], [Join], [Include])
+    case compoundAnd([Query], [Join], [Include])
+    case compoundOr([Query], [Join], [Include])
 }
 
 public extension Query {
  
     var dictionary: [String : Any] {
         switch self {
-        case .expression(let expression):
-            return ["expression" : expression.dictionary]
-        case .and(let expressions):
-            return ["and" : expressions.map { $0.dictionary }]
-        case .or(let expressions):
-            return ["or" : expressions.map { $0.dictionary }]
-        case .compoundAnd(let queries):
-            return ["and" : queries.map { $0.dictionary }]
-        case .compoundOr(let queries):
-            return ["or" : queries.map { $0.dictionary }]
+        case .expression(let expression, let joins, let includes):
+            return ["expression" : expression.dictionary, "joins" : joins.map { $0.name }, "includes" : includes.map { $0.name }]
+        case .and(let expressions, let joins, let includes):
+            return ["and" : expressions.map { $0.dictionary }, "joins" : joins.map { $0.name }, "includes" : includes.map { $0.name }]
+        case .or(let expressions, let joins, let includes):
+            return ["or" : expressions.map { $0.dictionary }, "joins" : joins.map { $0.name }, "includes" : includes.map { $0.name }]
+        case .compoundAnd(let queries, let joins, let includes):
+            return ["and" : queries.map { $0.dictionary }, "joins" : joins.map { $0.name }, "includes" : includes.map { $0.name }]
+        case .compoundOr(let queries, let joins, let includes):
+            return ["or" : queries.map { $0.dictionary }, "joins" : joins.map { $0.name }, "includes" : includes.map { $0.name }]
         }
     }
     
@@ -39,11 +42,11 @@ public extension Query {
     
     func predicate() -> NSPredicate {
         switch self {
-        case let .expression(exp): return exp.predicate()
-        case let .and(exps): return NSCompoundPredicate.init(andPredicateWithSubpredicates: exps.map { $0.predicate() })
-        case let .or(exps): return NSCompoundPredicate.init(orPredicateWithSubpredicates: exps.map { $0.predicate() })
-        case let .compoundAnd(queries): return NSCompoundPredicate.init(andPredicateWithSubpredicates: queries.map { $0.predicate() })
-        case let .compoundOr(queries): return NSCompoundPredicate.init(orPredicateWithSubpredicates: queries.map { $0.predicate() })
+        case let .expression(exp, _, _): return exp.predicate()
+        case let .and(exps, _, _): return NSCompoundPredicate.init(andPredicateWithSubpredicates: exps.map { $0.predicate() })
+        case let .or(exps, _, _): return NSCompoundPredicate.init(orPredicateWithSubpredicates: exps.map { $0.predicate() })
+        case let .compoundAnd(queries, _, _): return NSCompoundPredicate.init(andPredicateWithSubpredicates: queries.map { $0.predicate() })
+        case let .compoundOr(queries, _, _): return NSCompoundPredicate.init(orPredicateWithSubpredicates: queries.map { $0.predicate() })
         }
     }
     
@@ -61,11 +64,11 @@ extension Query: CustomStringConvertible {
     
     public var description: String {
         switch self {
-            case let .expression(exp): return exp.description
-            case let .and(exps): return exps.map { $0.description }.joined(separator: " && ")
-            case let .or(exps): return exps.map { $0.description }.joined(separator: " || ")
-            case let .compoundAnd(queries): return queries.map { "(\($0.description))" }.joined(separator: " && ")
-            case let .compoundOr(queries): return queries.map { "(\($0.description))" }.joined(separator: " || ")
+            case let .expression(exp, joins, includes): return exp.description + " Joins: \(joins.map { $0.name }.joined(separator: ","))" + " Includes: \(includes.map { $0.name }.joined(separator: ","))"
+            case let .and(exps, joins, includes): return exps.map { $0.description }.joined(separator: " && ") + " Joins: \(joins.map { $0.name }.joined(separator: ","))" + " Includes: \(includes.map { $0.name }.joined(separator: ","))"
+            case let .or(exps, joins, includes): return exps.map { $0.description }.joined(separator: " || ") + " Joins: \(joins.map { $0.name }.joined(separator: ","))" + " Includes: \(includes.map { $0.name }.joined(separator: ","))"
+            case let .compoundAnd(queries, joins, includes): return queries.map { "(\($0.description))" }.joined(separator: " && ") + " Joins: \(joins.map { $0.name }.joined(separator: ","))" + " Includes: \(includes.map { $0.name }.joined(separator: ","))"
+            case let .compoundOr(queries, joins, includes): return queries.map { "(\($0.description))" }.joined(separator: " || ") + " Joins: \(joins.map { $0.name }.joined(separator: ","))" + " Includes: \(includes.map { $0.name }.joined(separator: ","))"
         }
     }
     

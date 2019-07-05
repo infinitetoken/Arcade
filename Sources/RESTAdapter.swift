@@ -190,7 +190,7 @@ extension RESTAdapter: Adapter {
     public func find<I>(uuids: [String], sorts: [Sort], limit: Int, offset: Int, options: [QueryOption] = []) -> Future<[I]> where I : Viewable {
         return Future<[I]> { completion in
             let expression = Expression.inside("id", uuids)
-            let query = Query.expression(expression)
+            let query = Query.expression(expression, [], [])
             
             var urlComponents: URLComponents
             
