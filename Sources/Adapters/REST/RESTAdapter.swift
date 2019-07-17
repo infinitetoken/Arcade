@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Pinball
 
 open class RESTAdapter {
     
