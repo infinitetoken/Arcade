@@ -28,11 +28,11 @@ class QueryTests: XCTestCase {
     }
 
     func testDescription() {
-        XCTAssertEqual(Query.expression(self.one).description, "foo equal_to bar")
-        XCTAssertEqual(Query.and([self.one, self.two]).description, "foo equal_to bar && foo equal_to bar")
-        XCTAssertEqual(Query.or([self.one, self.two]).description, "foo equal_to bar || foo equal_to bar")
-        XCTAssertEqual(Query.compoundAnd([Query.expression(self.one), Query.expression(self.two)]).description, "(foo equal_to bar) && (foo equal_to bar)")
-        XCTAssertEqual(Query.compoundOr([Query.expression(self.one), Query.expression(self.two)]).description, "(foo equal_to bar) || (foo equal_to bar)")
+        XCTAssertEqual(Query.expression(self.one).description, "foo equal_to bar Joins:  Includes: ")
+        XCTAssertEqual(Query.and([self.one, self.two]).description, "foo equal_to bar && foo equal_to bar Joins:  Includes: ")
+        XCTAssertEqual(Query.or([self.one, self.two]).description, "foo equal_to bar || foo equal_to bar Joins:  Includes: ")
+        XCTAssertEqual(Query.compoundAnd([Query.expression(self.one), Query.expression(self.two)]).description, "(foo equal_to bar Joins:  Includes: ) && (foo equal_to bar Joins:  Includes: ) Joins:  Includes: ")
+        XCTAssertEqual(Query.compoundOr([Query.expression(self.one), Query.expression(self.two)]).description, "(foo equal_to bar Joins:  Includes: ) || (foo equal_to bar Joins:  Includes: ) Joins:  Includes: ")
     }
     
     func testPredicate() {
