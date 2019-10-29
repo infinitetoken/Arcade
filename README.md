@@ -1,32 +1,10 @@
 # Arcade
 
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 Arcade is a lightweight persistence layer for Swift structures or objects!
 
-- [Installation](#installation)
 - [Usage](#usage)
 - [CoreData](#coredata)
 - [License](#license)
-
-## Installation with Carthage
-
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-
-You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
-```
-
-To integrate Arcade into your Xcode project using Carthage, specify it in your `Cartfile`:
-
-```ogdl
-github "infinitetoken/Arcade" ~> 1.0
-```
-
-Run `carthage update` to build the framework and drag the built `Arcade.framework` into your Xcode project.
 
 ## Usage
 
@@ -41,7 +19,7 @@ struct Owner: Storable {
 
     static var table: Table = AppTable.owner
 
-    var uuid: String
+    var id: String
     var name: String?
 
 }
@@ -76,10 +54,8 @@ let arcade = Arcade(adapter: InMemoryAdapter())
 ```swift
 import Arcade
 
-arcade.connect().subscribe({ (success) in
-    // Connected!
-}) { (error) in
-    // Error
+arcade.connect() { (result) in
+    // Connected! (or Error)
 }
 ```
 
@@ -88,12 +64,10 @@ arcade.connect().subscribe({ (success) in
 ```swift
 import Arcade
 
-let owner = Owner(uuid: UUID(), name: "Foo")
+let owner = Owner(id: id(), name: "Foo")
 
-arcade.insert(storable: owner).subscribe({ (owner) in
-    // Inserted!
-}) { (error) in
-    // Error
+arcade.insert(storable: owner) { (result) in
+    // Inserted! (or Error)
 }
 ```
 
@@ -104,10 +78,8 @@ import Arcade
 
 owner.name = "Fred"
 
-arcade.update(storable: owner).subscribe({ (owner) in
-    // Updated!
-}) { (error) in
-    // Error
+arcade.update(storable: owner) { (result) in
+    // Updated! (or Error)
 }
 ```
 
@@ -116,32 +88,24 @@ arcade.update(storable: owner).subscribe({ (owner) in
 ```swift
 import Arcade
 
-let uuid = owner.uuid
+let id = owner.id
 
-arcade.delete(uuid: uuid, type: Owner.self).subscribe({ (success) in
-    // Deleted!
-}) { (error) in
-    // Error
+arcade.delete(id: id, type: Owner.self) { (result) in
+    // Deleted! (or Error)
 }
 ```
 
 ### Fetching
 
-To find a specific item by UUID:
+To find a specific item by id:
 
 ```swift
 import Arcade
 
-let future: Future<Owner> = arcade.find(uuid: owner.uuid)
+let future: Future<Owner> = arcade.find(id: owner.id)
 
-future.subscribe({ (owner) in
-    guard let owner = owner else {
-        // Not found
-    }
-
-    // Found it!
-}) { (error) in
-    // Error
+arcade.find(id: owner.id) { (result) in
+    // Found it! (or Error)
 }
 ```
 
@@ -152,12 +116,9 @@ import Arcade
 
 let expression = Expression.equal("name", "Foo")
 let query = Query.expression(expression)
-let future: Future<Owner> = arcade.fetch(query: query)
 
-future.subscribe({ (owners) in
-    // Do something with owners...
-}) { (error) in
-    // Error
+arcade.fetch(query: query) { (result) in
+    // Do something with result... (or Error)
 }
 ```
 
@@ -171,13 +132,13 @@ CoreData entites should conform to `CoreDataStorable`:
 @objc(OwnerEntity)
 class OwnerEntity: NSManagedObject {
 
-    @NSManaged var uuid: UUID
+    @NSManaged var id: id
     @NSManaged var name: String?
 
     override func awakeFromInsert() {
         super.awakeFromInsert()
 
-        self.uuid = UUID()
+        self.id = id()
     }
 
 }
@@ -185,16 +146,16 @@ class OwnerEntity: NSManagedObject {
 extension OwnerEntity: CoreDataStorable {
 
     public var viewable: Viewable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
 
     public var storable: Storable {
-        return Owner(uuid: self.uuid, name: self.name)
+        return Owner(id: self.id, name: self.name)
     }
 
     public func update(withStorable dictionary: [String : Any]) -> Bool {
-        if let uuid = dictionary["uuid"] as? UUID {
-            self.uuid = uuid
+        if let id = dictionary["id"] as? id {
+            self.id = id
         }
     
         if let name = dictionary["name"] as? String {

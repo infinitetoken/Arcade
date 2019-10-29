@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "Future",
-        "repositoryURL": "https://github.com/infinitetoken/Future",
+        "package": "Pinball",
+        "repositoryURL": "https://github.com/infinitetoken/Pinball",
         "state": {
           "branch": null,
-          "revision": "79bb5d11b00da94ea542117f0c6ab5fda45b93a7",
-          "version": "1.1.8"
+          "revision": "d77aee762384c58571fbca221dece72cbde2c5b8",
+          "version": "1.0.0"
         }
       }
     ]

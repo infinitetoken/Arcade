@@ -1,11 +1,5 @@
-// swift-tools-version:5.0
-//
-//  Package.swift
-//  Arcade
-//
-//  Created by Aaron Wright on 5/1/18.
-//  Copyright © 2018 Aaron Wright. All rights reserved.
-//
+// swift-tools-version:5.1
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -23,17 +17,16 @@ let package = Package(
             targets: ["Arcade"])
     ],
     dependencies: [
-        .package(url: "https://github.com/infinitetoken/Future", from: "1.0.0")
+        .package(url: "https://github.com/infinitetoken/Pinball", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "Arcade",
-            dependencies: ["Future"],
+            dependencies: ["Pinball"],
             path: "Sources"),
         .testTarget(
             name: "ArcadeTests",
             dependencies: ["Arcade"],
             path: "Tests"),
-    ],
-    swiftLanguageVersions: [.v5]
+    ]
 )
