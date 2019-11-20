@@ -1255,6 +1255,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1287,6 +1288,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeTV;
 				PRODUCT_NAME = Arcade;
 				SDKROOT = appletvos;
@@ -1378,6 +1380,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
@@ -1413,6 +1416,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.infinitetoken.ArcadeWatch;
 				PRODUCT_NAME = Arcade;
@@ -1569,6 +1573,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1602,6 +1607,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.Arcade;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1679,6 +1685,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1713,6 +1720,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.22.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acwrightdesign.ArcadeMobile;
 				PRODUCT_NAME = Arcade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
