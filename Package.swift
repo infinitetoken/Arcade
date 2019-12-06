@@ -16,9 +16,7 @@ let package = Package(
             name: "Arcade",
             targets: ["Arcade"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/infinitetoken/Pinball", from: "1.0.0")
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Arcade",
