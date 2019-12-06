@@ -20,7 +20,6 @@ let package = Package(
     targets: [
         .target(
             name: "Arcade",
-            dependencies: ["Pinball"],
             path: "Sources"),
         .testTarget(
             name: "ArcadeTests",
