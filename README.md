@@ -2,9 +2,22 @@
 
 Arcade is a lightweight persistence layer for Swift structures or objects!
 
+- [Installation](#installation)
 - [Usage](#usage)
 - [CoreData](#coredata)
 - [License](#license)
+
+## Installation
+
+Arcade can be installed using the Swift Package Manager. Add the following to your `Package.swift` file:
+
+```swift
+
+dependencies: [
+    .Package(url: "https://github.com/infinitetoken/Arcade.git", from: "1.0.0")
+]
+
+```
 
 ## Usage
 
