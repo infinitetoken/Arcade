@@ -6,15 +6,17 @@
 //  Copyright © 2018 A.C. Wright Design. All rights reserved.
 //
 
-import XCTest
-@testable import Arcade
+#if !os(watchOS)
+    import XCTest
+    @testable import Arcade
 
-class NSComparisionDescriptionTests: XCTestCase {
-    
-    func testDescription() {
-        let options: NSComparisonPredicate.Options = [.caseInsensitive, .diacriticInsensitive, .normalized]
+    class NSComparisionDescriptionTests: XCTestCase {
         
-        XCTAssertEqual(options.description, "cdn")
+        func testDescription() {
+            let options: NSComparisonPredicate.Options = [.caseInsensitive, .diacriticInsensitive, .normalized]
+            
+            XCTAssertEqual(options.description, "cdn")
+        }
+        
     }
-    
-}
+#endif

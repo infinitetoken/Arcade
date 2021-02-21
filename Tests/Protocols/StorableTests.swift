@@ -6,21 +6,23 @@
 //  Copyright © 2018 A.C. Wright Design. All rights reserved.
 //
 
-import XCTest
-@testable import Arcade
+#if !os(watchOS)
+    import XCTest
+    @testable import Arcade
 
-class StorableTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
+    class StorableTests: XCTestCase {
         
-        Arcade.shared.addAdapter(InMemoryAdapter(), forKey: "Test")
-    }
-    
-    override func tearDown() {
-        super.tearDown()
+        override func setUp() {
+            super.setUp()
+            
+            Arcade.shared.addAdapter(InMemoryAdapter(), forKey: "Test")
+        }
         
-        Arcade.shared.removeAdapter(forKey: "Test")
+        override func tearDown() {
+            super.tearDown()
+            
+            Arcade.shared.removeAdapter(forKey: "Test")
+        }
+        
     }
-    
-}
+#endif

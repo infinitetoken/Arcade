@@ -6,10 +6,11 @@
 //  Copyright © 2018 A.C. Wright Design. All rights reserved.
 //
 
-import XCTest
-@testable import Arcade
+#if !os(watchOS)
+    import XCTest
+    @testable import Arcade
 
-class RESTAdapterTests: XCTestCase {
-    
-}
-
+    class RESTAdapterTests: XCTestCase {
+        
+    }
+#endif
