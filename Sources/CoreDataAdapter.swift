@@ -43,7 +43,7 @@ open class CoreDataAdapter {
 
 extension CoreDataAdapter: Adapter {
     
-    open func connect() -> Future<Bool> {
+    public func connect() -> Future<Bool> {
         return Future { completion in
             if let _ = self.persistentContainer {
                 completion(.success(true))
@@ -75,7 +75,7 @@ extension CoreDataAdapter: Adapter {
         }
     }
     
-    open func disconnect() -> Future<Bool> {
+    public func disconnect() -> Future<Bool> {
         return Future(true)
     }
     

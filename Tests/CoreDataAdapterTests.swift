@@ -112,7 +112,7 @@ class CoreDataAdapterTests: XCTestCase {
         let owner = Owner(uuid: uuid, name: "Test")
 
         let expression = Expression.equal("uuid", uuid)
-        let query = Query.expression(expression)
+        let query = Query.expression(expression, [], [])
 
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
@@ -228,7 +228,7 @@ class CoreDataAdapterTests: XCTestCase {
         let owner = Owner(uuid: UUID().uuidString, name: "Test")
 
         let expression = Expression.equal("name", "Test")
-        let query = Query.expression(expression)
+        let query = Query.expression(expression, [], [])
 
         adapter.connect().then({ (success) -> Future<Owner> in
             XCTAssertTrue(success)
